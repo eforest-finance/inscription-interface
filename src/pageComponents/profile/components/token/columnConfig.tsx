@@ -116,7 +116,7 @@ export default function getColumns({
           render: (text, record) => <div>{thousandsNumber(divideDecimalsSupply(text, record.decimals))}</div>,
         },
         {
-          title: 'Current Supply',
+          title: 'Total Issued',
           className: 'w-[196px] min-w-[109px]',
           dataIndex: 'currentSupply',
           key: 'currentSupply',
