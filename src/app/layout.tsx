@@ -11,8 +11,8 @@ import React from 'react';
 import Script from 'next/script';
 
 export const metadata = {
-  title: 'Symbol Market',
-  description: 'Symbol Market',
+  title: 'AELF Inscriptions',
+  description: 'AELF Inscriptions',
   viewport: {
     width: 'device-width',
     initialScale: 1,
@@ -26,15 +26,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <head>
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
-        <link rel="shortcut icon" href="/symbolmarket/favicon.ico" />
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-FQKF3Y8ZLV" />
+        <link rel="shortcut icon" href="/aelfinscription/favicon.ico" />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-J0D8TQCBTF" />
         <Script id="google-analytics">
           {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
-          gtag('config', 'G-FQKF3Y8ZLV');
+          gtag('config', ''G-J0D8TQCBTF');
         `}
         </Script>
       </head>

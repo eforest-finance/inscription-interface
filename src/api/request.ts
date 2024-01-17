@@ -63,13 +63,6 @@ export const fetchSyncResult = async (params: ISyncChainParams): Promise<ISyncCh
   return request.get<ISyncChainResult>('app/nft/syncResult', { params });
 };
 
-export const fetchSyncResultExists = async (params: {
-  IssueChainId: string;
-  TokenSymbol: string;
-}): Promise<{ exist: boolean }> => {
-  return request.get<{ exist: boolean }>('app/token/token-exist', { params });
-};
-
 export const fetchSyncResults = async (data: {
   skipCount?: string;
   maxResultCount?: string;
@@ -83,4 +76,12 @@ export const fetchSaveTokenInfos = async (data: ISaveTokenInfosParams): Promise<
 
 export const getUsersAddress = async (params: IUsersAddressReq): Promise<IUsersAddressRes> => {
   return request.get<IUsersAddressRes>('app/users/by-address', { params });
+};
+
+export const inscribed = async (data: IInscribedReq): Promise<IInscribedRes> => {
+  return request.post<IInscribedReq, IInscribedRes>('app/inscription/inscribed', data);
+};
+
+export const getMintOfInscription = async (params: IMintOfInscriptionParams): Promise<IMintOfInscriptionRes> => {
+  return request.get<IMintOfInscriptionRes>('app/inscription/inscription', { params });
 };

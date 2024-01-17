@@ -20,9 +20,6 @@ import { ReactComponent as ArrowDown } from 'assets/images/down-arrow-thin.svg';
 import useResponsive from 'hooks/useResponsive';
 import { ReactComponent as ARROWLEFTUP } from 'assets/images/arrow-left-up.svg';
 import { InputNumberCustom } from './InputNumberCustom';
-import { CreateTokenProgressModal } from 'components/CreateTokenProgressModal/index';
-import { store } from 'redux/store';
-import { setCreateTokenProgress } from 'redux/reducer/info';
 
 export default function Create() {
   const [loading, setLoading] = useState(false);
@@ -47,7 +44,6 @@ export default function Create() {
   const { isMobile } = useResponsive();
 
   const niceModal = useModal(CreateTokenSuccessModal);
-  const progressModal = useModal(CreateTokenProgressModal);
   const loadModal = useModal(LoadingModal);
   const { create } = useCreateService();
   const { isOK, checkLogin } = useCheckLoginAndToken();
@@ -61,6 +57,7 @@ export default function Create() {
     }
     const mainAddress = await getAccountInfoSync();
     if (!mainAddress) return;
+    loadModal.show();
 
     const totalSupply = getDecimalsSupply(formValues.totalSupply, formValues.decimals);
     const params: ICreateTokenParams = {
@@ -75,28 +72,14 @@ export default function Create() {
 
     delete params.tokenImage;
 
-    store.dispatch(
-      setCreateTokenProgress({
-        currentStep: '',
-        error: false,
-      }),
-    );
-
     try {
-      progressModal.show({
+      await create(params, values.tokenImage);
+      await sleep(10000);
+      loadModal.hide();
+      niceModal.show({
+        seedName: seedInfo.current?.seedName,
+        symbol: seedInfo.current?.symbol,
         tokenImage: values.tokenImage,
-        tokenName: params.symbol || '',
-        needSync: params.issueChain !== SupportedELFChainId.MAIN_NET,
-        createMethod: async () => {
-          await create(params, values.tokenImage);
-        },
-        onSuccess: () => {
-          niceModal.show({
-            seedName: seedInfo.current?.seedName,
-            symbol: seedInfo.current?.symbol,
-            tokenImage: values.tokenImage,
-          });
-        },
       });
     } catch (err) {
       console.error(err, 'err');

@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import useScrollAndJudgeHomePage from 'hooks/useScrollAndJudgeHomePage';
 import { ReactComponent as LogoText } from 'assets/images/logo-text.svg';
 
-const logo = '/symbolmarket/images/logo.svg';
+const logo = '/aelfinscription/images/logo.svg';
 
 interface ILogoDom {
   onClickHandler: () => void;

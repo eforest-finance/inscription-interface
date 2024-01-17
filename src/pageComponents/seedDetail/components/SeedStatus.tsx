@@ -55,7 +55,7 @@ function getStatusTileOrDesc(seedDetailInfo: ISeedDetailInfo) {
     statusTitle: '',
     statusTagTypeStr: 'success',
   };
-  const { seedType, status, notSupportSeedStatus, tokenType, canBeBid } = seedDetailInfo || {};
+  const { seedType, status, notSupportSeedStatus, tokenType } = seedDetailInfo || {};
 
   if (seedType === SEED_TYPE.REGULAR) {
     if (status === SEED_STATUS.AVAILABLE) {
@@ -75,10 +75,6 @@ function getStatusTileOrDesc(seedDetailInfo: ISeedDetailInfo) {
     // for bid available
     if (status === SEED_STATUS.AVAILABLE) {
       res.statusTitle = 'Available for Bid';
-      return res;
-    }
-    if (status === SEED_STATUS.UNREGISTERED && !canBeBid) {
-      res.statusTitle = 'The SEED is being created.';
       return res;
     }
   }

@@ -3,13 +3,16 @@ import { useCallback } from 'react';
 import { useSelector } from 'redux/store';
 import { addPrefixSuffix } from 'utils/addressFormatting';
 
-export function useFetchSymbolList() {
+export function useFetchSymbolList(chainID?: string) {
   const info = useSelector((store: any) => store.elfInfo.elfInfo);
   const { walletInfo } = useSelector((store) => store.userInfo);
   const mainAddress = walletInfo?.aelfChainAddress;
-  const AddressList = mainAddress
-    ? [addPrefixSuffix(mainAddress, 'AELF'), addPrefixSuffix(walletInfo.address, info.curChain)]
-    : [addPrefixSuffix(walletInfo.address, info.curChain)];
+  const AddressList =
+    chainID && chainID === 'AELF' && mainAddress
+      ? [addPrefixSuffix(mainAddress, 'AELF')]
+      : mainAddress
+      ? [addPrefixSuffix(mainAddress, 'AELF'), addPrefixSuffix(walletInfo.address, info.curChain)]
+      : [addPrefixSuffix(walletInfo.address, info.curChain)];
   const handleFetchSeedList = useCallback(
     async (searchText: string, tokenType: number) => {
       if (!mainAddress) return [];

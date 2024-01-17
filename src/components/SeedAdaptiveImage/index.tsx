@@ -15,7 +15,7 @@ function SeedAdaptiveImage({ seedInfo, className }: { seedInfo: ISpecialSeedItem
     <div className={`${styles.adaptive} ${className}`}>
       <Image src={seedImg} alt="" className="w-full h-auto rounded-md" />
       <div className={styles['seed-text']}>
-        <span className={`break-all inline-block text-2xl !text-white`}>SEED-{symbol}</span>
+        <span className={`break-all inline-block text-2xl !text-white`}>{symbol}</span>
       </div>
       <SeedBadge isLargeBadge={true} tokenType={tokenType} />
     </div>

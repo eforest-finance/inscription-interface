@@ -23,7 +23,7 @@
     }
     &::before {
       content: '';
-      background-image: url('/symbolmarket/images/badgeLeft.png');
+      background-image: url('/aelfinscription/images/badgeLeft.png');
       height: 28px;
       width: 12px;
       display: inline-block;
@@ -36,7 +36,7 @@
     }
     &::after {
       content: '';
-      background-image: url('/symbolmarket/images/badgeRight.png');
+      background-image: url('/aelfinscription/images/badgeRight.png');
       height: 28px;
       width: 12px;
       display: inline-block;

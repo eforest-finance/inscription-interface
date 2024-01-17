@@ -5,6 +5,7 @@ import { Layout as AntdLayout } from 'antd';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import Loading from 'components/Loading';
+import InscriptionHeader from 'components/InscriptionHeader';
 
 import dynamic from 'next/dynamic';
 import useScrollAndJudgeHomePage from 'hooks/useScrollAndJudgeHomePage';
@@ -14,11 +15,12 @@ import { setIsMobile } from 'redux/reducer/info';
 import isMobile from 'utils/isMobile';
 import { useWalletInit, useBroadcastChannel } from 'hooks/useWallet';
 import { useScrollTop } from 'hooks/useRedirectHome';
+import { InscriptionFooter } from 'components/InscriptionFooter';
 
 const Layout = dynamic(async () => {
   return (props: React.PropsWithChildren<{}>) => {
     const { children } = props;
-    const { showHeaderMask, isHomePage, isAssetsPage } = useScrollAndJudgeHomePage();
+    const { showHeaderMask, isHomePage, isNoHeaderPage, isAssets, isInscriptionPage } = useScrollAndJudgeHomePage();
 
     useWalletInit();
     useBroadcastChannel();
@@ -43,14 +45,16 @@ const Layout = dynamic(async () => {
     return (
       <>
         <AntdLayout className="flex w-[100vw] h-[100vh] max-w-[1440px] px-4 pcMin:px-10 pcMin:min-w-[500px] lg:mx-auto lg:my-0 flex-col bg-dark-bgc">
-          {!isAssetsPage && <Header showHeaderMask={showHeaderMask} isHomePage={isHomePage} />}
+          {!isNoHeaderPage && <Header showHeaderMask={showHeaderMask} isHomePage={isHomePage} />}
+          {isInscriptionPage && !isAssets && <InscriptionHeader />}
           <AntdLayout.Content
             className={`marketplace-content flex-1 flex flex-col mt-16 z-10`}
             id="marketplace-content">
             <Suspense fallback={<Loading />}>
               <div className="flex-1">{children}</div>
             </Suspense>
-            <Footer />
+            {!isNoHeaderPage && <Footer />}
+            {isInscriptionPage && !isAssets && <InscriptionFooter />}
           </AntdLayout.Content>
         </AntdLayout>
       </>

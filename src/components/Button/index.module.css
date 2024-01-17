@@ -1,31 +1,5 @@
-.button:global(.ant-btn) {
-  @apply rounded-[8px] font-inter h-[52px];
-}
-.button:global(.ant-btn-primary) {
-  @apply border-[var(--brand-base)] bg-[var(--brand-base)];
-}
-.button:global(.ant-btn-default) {
-  @apply border-[var(--brand-base)] text-[var(--brand-base)];
+.userButton{
+  @apply text-base rounded-xl
 
-  /* @apply hover:bg-[#0E0C15]; */
 }
-.button:global(.ant-btn-dashed) {
-  @apply border-[var(--brand-base)] text-[var(--brand-base)];
 
-  /* @apply hover:bg-[#0E0C15]; */
-}
-.button:global(.ant-btn-ghost) {
-  @apply border-[var(--brand-base)] text-[var(--brand-base)];
-
-  /* @apply hover:bg-[#0E0C15]; */
-}
-.button:global(.ant-btn-link) {
-  @apply text-[var(--brand-base)];
-
-  /* @apply hover:bg-[#0E0C15]; */
-}
-.button:global(.ant-btn-text) {
-  @apply text-[var(--brand-base)];
-
-  /* @apply hover:bg-[#0E0C15]; */
-}

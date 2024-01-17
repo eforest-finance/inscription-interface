@@ -12,10 +12,6 @@ import useResponsive from 'hooks/useResponsive';
 import { useModal } from '@ebay/nice-modal-react';
 import SearchModal from 'components/Header/searchModal';
 import { sleep } from 'utils/common';
-import { isMobileDevices } from 'utils/isMobile';
-
-import { useDebounceFn } from 'ahooks';
-
 interface ISearchInputProps {
   irregular?: boolean;
   placeholder: string;
@@ -66,40 +62,12 @@ const SearchInput = ({
     setQuery('');
   }, [tokenType]);
 
-  function isEnglish(str: string) {
-    if (str == null || str.trim() === '') {
-      return false;
-    }
-    return /^[a-zA-Z]+$/.test(str);
-  }
-
-  const toUpperCase = (str: string) => {
-    if (!isEnglish(str) && str !== '') {
-      return;
-    }
-
-    if (str.length > limitLen) {
-      message.error(isNFT ? NFTOverflowMsg : tokenOverflowMsg);
-    }
-
-    setQuery(str.slice(0, limitLen).toUpperCase());
-  };
-
-  const { run } = useDebounceFn(toUpperCase, { wait: 300 });
-
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-
-    if (isMobileDevices()) {
-      // fix mobile input problem
-      setQuery(val);
-      run(val);
-    } else {
-      if (val.length > limitLen) {
-        message.error(isNFT ? NFTOverflowMsg : tokenOverflowMsg);
-      }
-      setQuery(val.slice(0, limitLen).toUpperCase());
+    if (val.length > limitLen) {
+      message.error(isNFT ? NFTOverflowMsg : tokenOverflowMsg);
     }
+    setQuery(val.slice(0, limitLen).toUpperCase());
   };
 
   const onMouseDownHandler = (e: MouseEvent) => {
@@ -116,12 +84,8 @@ const SearchInput = ({
 
   const onClickHandler = async () => {
     if (inputIsError || !query) {
-      inputIsError && message.error(errMsg);
-      inputIsErrorCb && inputIsErrorCb(true);
       message.error(errMsg);
       return;
-    } else {
-      inputIsErrorCb && inputIsErrorCb(false);
     }
 
     function formatLocalData(arr: string[] | undefined, newOne: string) {
@@ -170,6 +134,11 @@ const SearchInput = ({
     },
     [itemsFromLocal],
   );
+
+  useEffect(() => {
+    inputIsError && message.error(errMsg);
+    inputIsErrorCb && inputIsErrorCb(inputIsError);
+  }, [inputIsError, inputIsErrorCb]);
 
   return (
     <div

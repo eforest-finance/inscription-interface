@@ -1,9 +1,7 @@
 const rewritesConfig = require('./rewrites/index');
-
 function getBasePath() {
-  return '/symbolmarket';
+  return '/aelfinscription';
 }
-
 module.exports = {
   reactStrictMode: true,
   basePath: getBasePath(),

@@ -3,6 +3,7 @@ import { PortkeyProvider } from '@portkey/did-ui-react';
 import dynamic from 'next/dynamic';
 
 import { store } from 'redux/store';
+import { getBasePath } from 'utils/getBasePath';
 
 const APP_NAME = 'forest';
 
@@ -10,7 +11,7 @@ function addBasePath(url: string) {
   if (String(url).startsWith('http')) {
     return url;
   }
-  return `/symbolmarket${url}`;
+  return `${getBasePath()}${url}`;
 }
 
 const WebLoginProviderDynamic = dynamic(
@@ -24,7 +25,7 @@ const WebLoginProviderDynamic = dynamic(
       chainId: info.curChain || '',
       portkey: {
         useLocalStorage: true,
-        graphQLUrl: info.graphqlServer,
+        graphQLUrl: info.graphqlServer || '',
         connectUrl: addBasePath(info.connectServer || ''),
         socialLogin: {
           // Portkey: {

@@ -8,7 +8,6 @@ const useGetState = () => {
   const elfInfo = useSelector(getElfInfo);
 
   return {
-    createTokenProgress: infoState.createTokenProgress,
     isMobile: infoState.isMobile,
     elfInfo,
     itemsFromLocal: infoState.itemsFromLocal,

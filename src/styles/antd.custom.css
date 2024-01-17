@@ -1910,18 +1910,14 @@ html {
   display: inline-block;
   height: 20px;
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  /* stylelint-disable property-no-vendor-prefix */
   -webkit-transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;
-  /* stylelint-enable property-no-vendor-prefix */
 }
 .elf-scroll-number-only > p.elf-scroll-number-only-unit {
   height: 20px;
   margin: 0;
-  /* stylelint-disable property-no-vendor-prefix */
   -webkit-transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;
-  /* stylelint-enable property-no-vendor-prefix */
 }
 .elf-scroll-number-symbol {
   vertical-align: top;
@@ -15794,7 +15790,6 @@ textarea.elf-input-number {
 .elf-input-number-input[type='number']::-webkit-inner-spin-button,
 .elf-input-number-input[type='number']::-webkit-outer-spin-button {
   margin: 0;
-  /* stylelint-disable-next-line property-no-vendor-prefix */
   -webkit-appearance: none;
   appearance: none;
 }
@@ -17884,7 +17879,7 @@ textarea.elf-mentions {
 @media (max-width: 767px) {
   .elf-modal {
     max-width: calc(100vw - 16px);
-    margin: 8px auto;
+    margin: 0 auto;
   }
   .elf-modal-centered .elf-modal {
     flex: 1;
@@ -20475,7 +20470,6 @@ span.elf-radio + * {
   .elf-select-selector
   .elf-select-selection-search-input::-webkit-search-cancel-button {
   display: none;
-  /* stylelint-disable-next-line property-no-vendor-prefix */
   -webkit-appearance: none;
 }
 .elf-select:not(.elf-select-disabled):hover .elf-select-selector {
@@ -20916,7 +20910,6 @@ span.elf-radio + * {
 .elf-skeleton-active .elf-skeleton-input,
 .elf-skeleton-active .elf-skeleton-image {
   position: relative;
-  /* stylelint-disable-next-line property-no-vendor-prefix,value-no-vendor-prefix */
   z-index: 0;
   overflow: hidden;
   background: transparent;
@@ -26480,7 +26473,6 @@ div.elf-typography-edit-content {
 .elf-typography-edit-content textarea {
   height: 1em;
   margin: 0 !important;
-  /* stylelint-disable-next-line property-no-vendor-prefix */
   -moz-transition: none;
 }
 .elf-typography ul,
@@ -26540,11 +26532,9 @@ span.elf-typography-ellipsis-single-line {
   vertical-align: bottom;
 }
 .elf-typography-ellipsis-multiple-line {
-  /* stylelint-disable-next-line value-no-vendor-prefix */
   display: -webkit-box;
   overflow: hidden;
   -webkit-line-clamp: 3;
-  /*! autoprefixer: ignore next */
   -webkit-box-orient: vertical;
 }
 .elf-typography-rtl {

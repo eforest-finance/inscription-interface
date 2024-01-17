@@ -155,8 +155,7 @@ export function OperateBtn({ seedDetailInfo }: IOperateBtnProps) {
       return <GetSeedBtn seedDetailInfo={seedDetailInfo} />;
     } else if (status === SEED_STATUS.UNREGISTERED) {
       if (!seedDetailInfo.canBeBid) {
-        // return <GetSeedBtn seedDetailInfo={seedDetailInfo} />;
-        return null;
+        return <GetSeedBtn seedDetailInfo={seedDetailInfo} />;
       }
       if (!auctionEndTime) {
         return <PlaceBidBtn seedDetailInfo={seedDetailInfo} disabled={disabled} />;

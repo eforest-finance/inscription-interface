@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import BaseModal from '../../../components/Modal';
+import useGetState from 'redux/state/useGetState';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
@@ -10,7 +11,6 @@ import { useSelector } from 'react-redux';
 import { addPrefixSuffix } from 'utils/addressFormatting';
 
 import styles from './style.module.css';
-import useResponsive from 'hooks/useResponsive';
 
 interface ICreateTokenSuccessModalProps {
   seedName?: string;
@@ -20,7 +20,7 @@ interface ICreateTokenSuccessModalProps {
 
 export const CreateTokenSuccessModal = NiceModal.create(
   ({ seedName, symbol, tokenImage }: ICreateTokenSuccessModalProps) => {
-    const { isMobile } = useResponsive();
+    const { isMobile } = useGetState();
     const router = useRouter();
     const modal = useModal();
     const { walletInfo } = useSelector((store: any) => store.userInfo);
@@ -51,7 +51,7 @@ export const CreateTokenSuccessModal = NiceModal.create(
         </Button>
         <Button
           block
-          className={clsx('!h-[48px] mt-[16px]', isMobile ? '!ml-0' : '!ml-4')}
+          className={clsx('!h-[48px] mt-[16px] ml-4', isMobile && '!ml-0')}
           type="primary"
           onClick={goMyPage}>
           Issue Token Now

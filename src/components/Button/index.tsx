@@ -5,7 +5,7 @@ import styles from './index.module.css';
 function Button(props: ButtonProps) {
   const { children } = props;
   return (
-    <AntdButton className={`${styles.button} ${props.className}`} {...props}>
+    <AntdButton {...props} className={`${styles.userButton} ${props.className}`}>
       {children}
     </AntdButton>
   );

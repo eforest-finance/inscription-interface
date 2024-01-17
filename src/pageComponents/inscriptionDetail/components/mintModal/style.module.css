@@ -1,0 +1,89 @@
+/* stylelint-disable no-descending-specificity */
+.elf-form-vertical-custom {
+  @apply mt-[32px];
+  :global(.elf-form-item-label)> label {
+    @apply w-full;
+  }
+
+  :global(.elf-input) {
+    @apply !rounded-md;
+  }
+  :global(.elf-select-selector) {
+    @apply !rounded-md;
+  }
+  :global(.elf-input-affix-wrapper) {
+    @apply !bg-[#18161e] rounded-md border-[#231f30] shadow-none;
+    :global(.elf-input-clear-icon) {
+      line-height: 0;
+      &:hover {
+        svg > path {
+          @apply !fill-primary-border-hover;
+        }
+      }
+      &:active {
+        svg > path {
+          @apply !fill-primary-border-active;
+        }
+      }
+    }
+  }
+}
+
+.copy_button {
+  svg {
+    * {
+      @apply fill-primary-color;
+    }
+  }
+  :hover{
+    svg {
+      * {
+        @apply fill-primary-color-hover;
+      }
+    }
+  }
+  :active{
+    svg {
+      * {
+        @apply fill-primary-color-active;
+      }
+    }
+  }
+}
+
+.mint-modal-mobile {
+  :global(.elf-modal) {
+    @apply !w-screen !max-w-full !h-full;
+    :global(.elf-modal-content) {
+      @apply !h-full !pr-0;
+    }
+  }
+  :global{
+    .elf-modal-title{
+      @apply !pr-8;
+    }
+    .elf-modal-body{
+      @apply !pr-8;
+    }
+    .elf-modal-footer{
+      @apply !pr-8;
+    }
+  }
+}
+
+.mint-modal {
+  :global(.elf-modal-content) {
+    @apply !max-h-[80vh] !pr-0
+  }
+  :global{
+    .elf-modal-title{
+      @apply !pr-8;
+    }
+    .elf-modal-body{
+      @apply !pr-8;
+    }
+    .elf-modal-footer{
+      @apply !pr-8;
+    }
+  }
+}

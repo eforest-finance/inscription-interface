@@ -7,11 +7,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRequest } from 'ahooks';
 import { message } from 'antd';
 import { SEED_STATUS } from 'constants/seedDtail';
-import { CreateSeedProgressModal } from 'components/CreateSeedProgressModal';
 
 export function useCreateService(seedDetailInfo: ISeedDetailInfo) {
   const modal = useModal(CreatingSeedModal);
-  const createProgressModal = useModal(CreateSeedProgressModal);
   const { loginState, login } = useWebLogin();
   const { getAccountInfoSync } = useWalletSyncCompleted();
   const createSeedLogic = async () => {
@@ -21,7 +19,7 @@ export function useCreateService(seedDetailInfo: ISeedDetailInfo) {
     }
     const mainAddress = await getAccountInfoSync();
     if (!mainAddress) return;
-    createProgressModal.show();
+    modal.show();
     // const res = await createSeed({
     //   chainId: SupportedELFChainId.MAIN_NET,
     //   seed: seedDetailInfo.seedName.replace('SEED-', ''),
@@ -34,8 +32,6 @@ export function useCreateService(seedDetailInfo: ISeedDetailInfo) {
 export function useCreateSeedLogicForCreatingModal(seedInfo: ISeedDetailInfo) {
   const { seedName } = seedInfo;
   const [loading, setLoading] = useState<boolean>(false);
-
-  const createdAvailable = seedInfo.status === SEED_STATUS.AVAILABLE;
 
   const createSeedFn = useCallback(async () => {
     setLoading(true);
@@ -50,15 +46,13 @@ export function useCreateSeedLogicForCreatingModal(seedInfo: ISeedDetailInfo) {
     }
   }, [seedName]);
 
-  // useEffect(() => {
-  //   if (seedInfo.status === SEED_STATUS.AVAILABLE) {
-  //     createSeedFn();
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (seedInfo.status === SEED_STATUS.AVAILABLE) {
+      createSeedFn();
+    }
+  }, []);
 
   return {
     loading,
-    createdAvailable,
-    createSeedFn,
   };
 }

@@ -34,16 +34,11 @@ export function useGetSymbolService() {
       (seedDetailInfo?.id !== res.id || (seedDetailInfo?.id === res.id && !seedDetailInfo.canBeBid))
     ) {
       // need auction info to get to the forest
-      try {
-        const auctionINfo = await fetchAuctionInfo({ SeedSymbol: res.seedSymbol });
-        const flag = !!auctionINfo && Object.keys(auctionINfo).length > 0;
-        const result = { ...res, canBeBid: flag };
-        dispatch(setSeedInfo(result));
-        return result;
-      } catch (error) {
-        dispatch(setSeedInfo(res));
-        return res;
-      }
+      const auctionINfo = await fetchAuctionInfo({ SeedSymbol: res.seedSymbol });
+      const flag = !!auctionINfo && Object.keys(auctionINfo).length > 0;
+      const result = { ...res, canBeBid: flag };
+      dispatch(setSeedInfo(result));
+      return result;
     } else {
       const result = { ...res, canBeBid: seedDetailInfo?.id === res.id ? seedDetailInfo?.canBeBid : false };
       dispatch(setSeedInfo(result));
@@ -57,7 +52,6 @@ export function useGetSymbolService() {
     loadingDelay: 300,
     pollingWhenHidden: false,
     manual: true,
-    retryCount: -1,
   });
 
   const loadData = useCallback(async () => {

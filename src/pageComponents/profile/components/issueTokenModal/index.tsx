@@ -8,7 +8,7 @@ import { FormInstance } from 'antd/es/form/Form';
 import { ReactComponent as CloseBtn } from 'assets/images/close-white.svg';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { addPrefixSuffix, decodeAddress } from 'utils/addressFormatting';
-import elfIcon from 'assets/images/elf-icon.svg';
+import elfIcon from 'components/ELFLogo';
 import { useCreateService } from 'pageComponents/create/hooks/useCreateService';
 import LoadingModal from 'components/LoadingModal';
 import { SupportedELFChainId } from 'types';
@@ -300,7 +300,7 @@ const IssueTokenModal = NiceModal.create((props: IModalProps) => {
             </div>
           </div>
           <div className={clsx(styles.supply__item, 'mt-2')}>
-            <div className={styles.label}>Total Issued</div>
+            <div className={styles.label}>Current Supply</div>
             <div className={styles.value}>
               {thousandsNumber(divideDecimalsSupply(tokenInfo?.currentSupply as number, tokenInfo.decimals))}
             </div>

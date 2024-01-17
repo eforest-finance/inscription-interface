@@ -10,9 +10,6 @@ import styles from './index.module.css';
 import { useMount } from 'react-use';
 import clsx from 'clsx';
 import useResponsive from 'hooks/useResponsive';
-import { isMobileDevices } from 'utils/isMobile';
-
-import { useDebounceFn } from 'ahooks';
 
 interface IOptionItemProps {
   onSelectHandler: (data: any) => void;
@@ -119,48 +116,7 @@ const SearchInput = ({
     return /^[a-zA-Z]*$/.test(value);
   };
 
-  function isEnglish(str: string) {
-    if (str == null || str.trim() === '') {
-      return false;
-    }
-    return /^[a-zA-Z]+$/.test(str);
-  }
-
-  const toUpperCase = (str: string) => {
-    if (!isEnglish(str) && str !== '') {
-      return;
-    }
-    const limitLen = type === 'FT' ? 10 : 28;
-    const value = str.slice(0, limitLen).toUpperCase();
-    setQuery(value);
-
-    const data = {
-      value,
-      mySeeds: options.find((item) => item.symbol === value),
-    };
-
-    if (!checkInput(value)) {
-      setStatus('error');
-      setExpanded(false);
-      onChange && onChange('');
-    } else {
-      setStatus('');
-      debounceFetcher(value);
-      onChange && onChange(data);
-      setSelectValue('');
-      setExpanded(true);
-    }
-  };
-
-  const { run } = useDebounceFn(toUpperCase, { wait: 300 });
-
-  const onChangeHandlerForMobile = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setQuery(val);
-    run(val);
-  };
-
-  const onChangeHandlerForPC = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toUpperCase().slice(0, type === 'FT' ? 10 : 28);
     setQuery(value);
     const data = {
@@ -181,14 +137,6 @@ const SearchInput = ({
       setExpanded(true);
     }
     console.log('onChangeHandler');
-  };
-
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (isMobileDevices()) {
-      onChangeHandlerForMobile(e);
-    } else {
-      onChangeHandlerForPC(e);
-    }
   };
 
   const debounceFetcher = useMemo(() => {

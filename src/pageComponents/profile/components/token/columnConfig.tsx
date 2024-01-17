@@ -1,7 +1,7 @@
 import { ColumnsType } from 'antd/lib/table';
 import { divideDecimalsSupply, thousandsNumber } from 'utils/common';
 import { TokenActionType } from 'types';
-import elfIcon from 'assets/images/elf-icon.svg';
+import elfIcon from 'components/ELFLogo';
 import ViewInExplore from 'assets/images/viewInExplore.svg';
 import Image from 'next/image';
 import { Button } from 'antd';
@@ -116,7 +116,7 @@ export default function getColumns({
           render: (text, record) => <div>{thousandsNumber(divideDecimalsSupply(text, record.decimals))}</div>,
         },
         {
-          title: 'Total Issued',
+          title: 'Current Supply',
           className: 'w-[196px] min-w-[109px]',
           dataIndex: 'currentSupply',
           key: 'currentSupply',

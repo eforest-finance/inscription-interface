@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <div className={`${st['home-wrap']} relative`}>
       <Image
-        src={isSM ? '/symbolmarket/images/bg-top-mobile.png' : '/symbolmarket/images/bg-top-2x.png'}
+        src={isSM ? '/aelfinscription/images/bg-top-mobile.png' : '/aelfinscription/images/bg-top-2x.png'}
         rootClassName="!absolute w-[500px] top-[88px] pcMin:w-full pcMin:-top-20 "
         preview={false}
         alt=""
@@ -44,7 +44,7 @@ export default function Home() {
       <SeedCardList />
 
       <Image
-        src="/symbolmarket/images/bg-bot.png"
+        src="/aelfinscription/images/bg-bot.png"
         rootClassName="!absolute -bottom-[358px] md:-bottom-[278px] xl:-bottom-[221px] -right-[160px]"
         preview={false}
         alt=""

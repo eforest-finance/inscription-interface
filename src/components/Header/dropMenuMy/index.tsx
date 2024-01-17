@@ -12,6 +12,7 @@ import clsx from 'clsx';
 import isPortkeyApp from 'utils/isPortkeyApp';
 import { addPrefixSuffix } from 'utils/addressFormatting';
 import style from './index.module.css';
+import useScrollAndJudgeHomePage from 'hooks/useScrollAndJudgeHomePage';
 
 const DropMenuMy = ({ isMobile }: { isMobile: boolean }) => {
   const pathName = usePathname();
@@ -45,6 +46,8 @@ const DropMenuMy = ({ isMobile }: { isMobile: boolean }) => {
     }
   }, [pathName]);
 
+  const { isInscriptionPage } = useScrollAndJudgeHomePage();
+
   const menuLabelArr = useMemo(() => {
     let arr = [
       {
@@ -62,15 +65,20 @@ const DropMenuMy = ({ isMobile }: { isMobile: boolean }) => {
         href: '',
       },
     ];
+    if (isInscriptionPage) {
+      arr.splice(0, 2);
+    }
     if (walletType === WalletType.portkey) {
       arr.unshift({
         label: 'My Assets',
         href: '/assets',
       });
-      arr.splice(3, 0, {
-        label: 'Lock',
-        href: '',
-      });
+      if (!isInscriptionPage) {
+        arr.splice(3, 0, {
+          label: 'Lock',
+          href: '',
+        });
+      }
     }
     if (isPortkeyApp()) {
       arr = arr.filter((ele) => {
@@ -78,7 +86,7 @@ const DropMenuMy = ({ isMobile }: { isMobile: boolean }) => {
       });
     }
     return arr;
-  }, [walletType]);
+  }, [walletType, isInscriptionPage]);
 
   const onClickHandler = (ele: IMenuItem) => {
     setShowDropMenu(false);

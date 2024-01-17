@@ -111,18 +111,6 @@ function renderPriceInfo(seedDetailInfo: ISeedDetailInfo) {
   );
 }
 
-function renderCreatingTip(seedDetailInfo: ISeedDetailInfo) {
-  const tip = `The creation of this SEED is processed on the blockchain which will take around 1 to 4 minutes. After it's created, you can bid for this SEED in Forest NFT marketplace.`;
-  if (
-    seedDetailInfo?.status === SEED_STATUS.UNREGISTERED &&
-    seedDetailInfo.seedType === SEED_TYPE.UNIQUE &&
-    !seedDetailInfo.canBeBid
-  ) {
-    return <div>{tip}</div>;
-  }
-  return null;
-}
-
 function SeedInfo({ seedDetailInfo }: ISeedInfoProps) {
   const { seedType, status, auctionEndTime } = seedDetailInfo || {};
 
@@ -138,7 +126,6 @@ function SeedInfo({ seedDetailInfo }: ISeedInfoProps) {
         <span className="flex flex-wrap items-start justify-between -mt-px">
           {renderPriceInfo(seedDetailInfo)}
           {renderExpireWarningInfo(seedDetailInfo)}
-          {renderCreatingTip(seedDetailInfo)}
         </span>
       </div>
 

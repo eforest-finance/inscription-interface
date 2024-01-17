@@ -46,13 +46,9 @@ function Provider({ children }: { children: React.ReactNode }) {
             }
             return document.body;
           }}>
-          {loading ? (
-            <Loading></Loading>
-          ) : (
-            <WebLoginProvider>
-              <NiceModal.Provider> {children} </NiceModal.Provider>
-            </WebLoginProvider>
-          )}
+          <NiceModal.Provider>
+            {loading ? <Loading></Loading> : <WebLoginProvider>{children}</WebLoginProvider>}
+          </NiceModal.Provider>
         </ConfigProvider>
       </StoreProvider>
     </>

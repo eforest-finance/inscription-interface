@@ -15,10 +15,6 @@ const initialState: InfoStateType = {
     labelForSwitchButton: 'Token',
     key: '0',
   },
-  createTokenProgress: {
-    currentStep: '',
-    error: false,
-  },
 };
 
 // Actual Slice
@@ -36,9 +32,6 @@ export const infoSlice = createSlice({
     setSearchSelect(state, action) {
       state.selectedSearchTypeObj = action.payload;
     },
-    setCreateTokenProgress(state, action) {
-      state.createTokenProgress = { ...state.createTokenProgress, ...action.payload };
-    },
   },
 
   // Special reducer for hydrating the state. Special case for next-redux-wrapper
@@ -52,6 +45,6 @@ export const infoSlice = createSlice({
   },
 });
 
-export const { setIsMobile, setItemsFromLocal, setSearchSelect, setCreateTokenProgress } = infoSlice.actions;
+export const { setIsMobile, setItemsFromLocal, setSearchSelect } = infoSlice.actions;
 export const selectInfo = (state: AppState) => state.info;
 export default infoSlice.reducer;

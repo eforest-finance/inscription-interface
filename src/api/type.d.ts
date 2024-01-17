@@ -7,9 +7,6 @@ interface IConfigItems {
   rpcUrlAELF?: string;
   rpcUrlTDVV?: string;
   rpcUrlTDVW?: string;
-  showTsmInscription?: boolean;
-  tsmInscriptionText?: string;
-  tsmInscriptionLink?: string;
   identityPoolID?: string;
   bucket?: string;
   mainChainAddress?: string;
@@ -18,6 +15,9 @@ interface IConfigItems {
   forestTerminalUrl?: string;
   MainExplorerURL?: string;
   SideExplorerURL?: string;
+  mainCaAddress?: string;
+  sideCaAddress?: string;
+  inscriptionAddress?: string;
   [key: string]: string;
 }
 interface IConfigResponse {
@@ -196,6 +196,14 @@ interface IUsersAddressRes {
   instagram: string;
 }
 
+interface IInscribedReq {
+  rawTransaction: string;
+}
+
+interface IInscribedRes {
+  transactionId: string;
+}
+
 interface ITokenIssuerParams {
   issueChainId: number | string;
   tokenSymbol: string;
@@ -207,4 +215,13 @@ interface ITokenIssuerRes {
 interface ITransactionFeeRes {
   transactionFee: number;
   transactionFeeOfUsd: number;
+}
+
+interface IMintOfInscriptionParams {
+  tick: string;
+}
+
+interface IMintOfInscriptionRes {
+  tick: string;
+  minted: number;
 }

@@ -1,0 +1,21 @@
+.search {
+  @apply w-full;
+  :global{
+    .elf-input-affix-wrapper-status-error:not(.elf-input-affix-wrapper-disabled, .elf-input-affix-wrapper-borderless).elf-input-affix-wrapper{
+      @apply bg-inherit hover:bg-dark-bgc;
+    }
+  }
+  :global(.elf-input-affix-wrapper) {
+    @apply bg-dark-bgc border-primary-color leading-[48px] hover:border-primary-color-hover active:border-primary-color-active rounded-[12px] h-[48px];
+    
+  }
+  :global(.elf-input-clear-icon) {
+    @apply flex items-center;
+  }
+  :global(.elf-input) {
+    @apply bg-dark-bgc;
+  }
+  :global(.elf-input-prefix) {
+    @apply mr-2;
+  }
+}

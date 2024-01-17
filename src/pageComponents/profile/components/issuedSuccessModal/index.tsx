@@ -89,7 +89,7 @@ function IssueSuccessModal(props: IModalProps) {
             width={64}
             height={64}
             className="w-16 h-16 object-cover rounded-full"
-            src={data.tokenImage || '/symbolmarket/images/token-test.png'}
+            src={data.tokenImage || '/aelfinscription/images/token-test.png'}
             alt="seed"
           />
         </div>

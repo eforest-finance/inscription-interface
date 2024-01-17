@@ -1,0 +1,26 @@
+.custom-progress {
+  :global(.elf-progress-text) {
+    @apply text-white;
+
+    width: 4em;
+  }
+  :global(.elf-progress-inner) {
+    @apply bg-dark-progress-divider;
+  }
+  :global(.elf-progress-outer) {
+    margin-right: calc(-4em - 8px);
+    padding-right: calc(4em + 8px);
+  }
+  &.custom-progress-right {
+    :global {
+      .elf-progress-text {
+        @apply text-right;
+      }
+    }
+  }
+}
+.progress_container {
+  :global(.elf-progress-status-success .elf-progress-bg) {
+    @apply bg-primary-color;
+  }
+}

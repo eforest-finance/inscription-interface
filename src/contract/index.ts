@@ -2,6 +2,7 @@ import { multiTokenContractRequest } from './multiTokenContract';
 import { tokenAdapterContractRequest } from './tokenAdapterContract';
 import { proxyContractRequest } from './proxyAccountContract';
 import { symbolRegisterContractRequest } from './symbolRegisterContrack';
+import { inscriptionContract } from './inscriptionContract';
 import { IContractOptions, ContractMethodType, SupportedELFChainId, IContractError } from 'types';
 export interface IGetBalanceParams {
   symbol: string;
@@ -56,6 +57,24 @@ export const ForwardCallByContract = async (params: IForwardCallParams, chain?: 
   return res;
 };
 
+export interface InscriptionDeployContractProps {
+  seedSymbol: string;
+  tick: string;
+  max: number;
+  limit: number;
+  image: string;
+}
+
+export const InscriptionDeployContract = async (
+  params: InscriptionDeployContractProps,
+  chain?: Chain,
+): Promise<ISendResult> => {
+  const res: ISendResult = await inscriptionContract('DeployInscription', params, {
+    chain,
+  });
+  return res;
+};
+
 export const GetProxyAccountByContract = async (
   address: string,
   chain?: Chain,
@@ -77,4 +96,19 @@ export const BuyByContract = async ({ symbol, issuer }: IBuyParams) => {
     issueTo: issuer,
   });
   return res;
+};
+
+export const CheckDistributorBalance = async (
+  params: {
+    sender: string;
+    tick: string;
+    amt: number;
+  },
+  chain?: Chain,
+): Promise<boolean> => {
+  const res: boolean | ISendResult = await inscriptionContract('CheckDistributorBalance', params, {
+    chain,
+    type: ContractMethodType.VIEW,
+  });
+  return res as boolean;
 };

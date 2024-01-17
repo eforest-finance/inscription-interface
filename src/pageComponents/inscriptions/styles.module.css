@@ -1,0 +1,50 @@
+/* stylelint-disable no-descending-specificity */
+.sort_header {
+  @apply flex items-center cursor-pointer;
+  .sort-header-title {
+    @apply mr-[4px];
+  }
+  svg {
+    * {
+      @apply stroke-white fill-white;
+    }
+  }
+}
+.inscriptions__container {
+  @apply pt-6 md:pt-12;
+  .inscriptions__title {
+    @apply w-full text-center text-white leading-[48px] py-6 md:py-[60px] text-[40px];
+  }
+
+  :global(.elf-table-row) {
+    @apply cursor-pointer;
+  }
+
+  :global(.elf-table-empty .elf-table-tbody > tr > td) {
+    @apply border-none;
+  }
+}
+
+.empty__table {
+  :global(.elf-empty-footer) {
+    @apply flex justify-center mt-[24px];
+  }
+}
+.table__label {
+  @apply text-dark-caption text-sm leading-[22px] font-medium;
+}
+
+.table_items_container {
+  @apply flex w-full items-center justify-between mb-3;
+}
+
+.table__value {
+  @apply text-white text-sm leading-[22px] font-medium;
+}
+
+.table_progress {
+  @apply !w-[100px] !leading-3;
+  :global(.elf-progress-outer) {
+    @apply !pr-0 leading-3;
+  }
+}

@@ -10,7 +10,7 @@ interface ResponseType<T> {
 }
 
 const publicRuntimeConfig = {
-  basePath: '/symbolmarket',
+  basePath: '/aelfinscription',
 };
 
 class Request {

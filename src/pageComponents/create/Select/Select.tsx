@@ -1,7 +1,7 @@
 import { Select, Spin } from 'antd';
 import type { SelectProps } from 'antd/es/select';
 import debounce from 'lodash-es/debounce';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './select.module.css';
 import { InputStatus } from 'antd/lib/_util/statusUtils';
 import { useFetchSymbolList } from '../hooks/useFetchSymbolList';
@@ -16,11 +16,13 @@ export interface DebounceSelectProps<ValueType = any>
   extends Omit<SelectProps<ValueType | ValueType[]>, 'options' | 'children'> {
   fetchOptions: (search: string, tokenType: number) => Promise<ISeedInfo[]>;
   debounceTimeout?: number;
+  seedType?: number;
   onSelectCustomData?: (data: ValueType) => void;
 }
 
 function DebounceSelect<ValueType extends { key?: string; label: React.ReactNode; value: string | number } = any>({
   fetchOptions,
+  seedType = 0,
   debounceTimeout = 800,
   ...props
 }: DebounceSelectProps<ValueType>) {
@@ -38,7 +40,7 @@ function DebounceSelect<ValueType extends { key?: string; label: React.ReactNode
       setOptions([]);
       setFetching(true);
 
-      fetchOptions(value, 0).then((newOptions: ISeedInfo[]) => {
+      fetchOptions(value, seedType).then((newOptions: ISeedInfo[]) => {
         console.log('fetchOptions', newOptions);
         if (fetchId !== fetchRef.current) {
           // for fetch callback order
@@ -99,22 +101,28 @@ interface SymbolValue {
 }
 
 export const SymbolSelect = (props: {
+  placeholder?: string;
+  seedType?: number;
+  chainID?: string;
+  notFoundContent?: ReactNode;
   onChange?: SelectProps['onChange'];
   onSelectData?: (data: ISeedInfo) => void;
   defaultValue?: string;
 }) => {
   const [value, setValue] = useState<SymbolValue>();
-  const { handleFetchSeedList } = useFetchSymbolList();
+  const { handleFetchSeedList } = useFetchSymbolList(props.chainID);
   const { isMobile } = useResponsive();
 
   return (
     <DebounceSelect
       showArrow={true}
+      seedType={props.seedType}
       value={value || (props.defaultValue as unknown as SymbolValue)}
-      placeholder="Please enter letters (A-Z)"
+      placeholder={props.placeholder || 'Please enter letters (A-Z)'}
       className={styles['elf-debounce-select-input']}
       fetchOptions={handleFetchSeedList}
       optionLabelProp={'label'}
+      notFoundContent={props.notFoundContent}
       listHeight={isMobile ? 256 : 480}
       popupClassName={styles['elf-select-dropdown-custom']}
       onChange={(newValue, options) => {

@@ -1,0 +1,22 @@
+.forest-segmented {
+  @apply bg-dark-bgc border border-solid border-dark-border-default rounded-lg p-[4px];
+
+  :global {
+    .elf-segmented-item {
+      .elf-segmented-item-label {
+        @apply py-[5px] px-[12px] text-dark-clickable text-base font-semibold;
+      }
+
+      &.elf-segmented-item-selected {
+        @apply bg-primary-color rounded-lg;
+        .elf-segmented-item-label {
+          @apply  text-white text-base font-semibold;
+        }
+      }
+    }
+    .elf-segmented-thumb {
+      @apply bg-primary-color rounded-lg;
+    }
+    
+  }
+}

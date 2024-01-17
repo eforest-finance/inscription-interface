@@ -7,9 +7,10 @@ import clsx from 'clsx';
 import useResponsive from 'hooks/useResponsive';
 interface IModalProps extends ModalProps {
   subTitle?: string;
+  titleClassName?: string;
 }
 function Modal(props: IModalProps) {
-  const { children, className, title, subTitle } = props;
+  const { children, titleClassName, className, title, subTitle } = props;
 
   const { isMobile } = useResponsive();
 
@@ -29,7 +30,7 @@ function Modal(props: IModalProps) {
       closeIcon={<Close className={clsx('w-[16px] h-[16px]', styles.closeIcon)} />}
       title={
         <div>
-          <div className="pr-8 break-words">{title}</div>
+          <div className={`pr-8 break-words ${titleClassName}`}>{title}</div>
           {subTitle && <div className="text-min mt-2 text-dark-caption">{subTitle}</div>}
         </div>
       }>

@@ -4,7 +4,7 @@ const { NODE_ENV } = process.env;
 export const init = () =>
   Sentry.init({
     // Should add your own dsn
-    dsn: 'https://fa9c2025468d390d5d3bf4ba491d45ad@o4505006413840384.ingest.sentry.io/4506218529685504',
+    dsn: 'https://8d3f9d3cbbc2dd1d57e1cdc662fcf5c7@o4505006413840384.ingest.sentry.io/4506455731798016',
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
     tracesSampleRate: 1.0,

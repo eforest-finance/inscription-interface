@@ -14,7 +14,7 @@ import { Popover, Space } from 'antd';
 import elfIcon from 'components/ELFLogo';
 import { ReactComponent as DownArrow } from 'assets/images/down-arrow-thin.svg';
 
-const avatar = '/symbolmarket/images/avatar.png';
+const avatar = '/aelfinscription/images/avatar.png';
 
 function ELFAddress({
   address,
@@ -57,9 +57,7 @@ function ELFAddress({
 
   return (
     <div className={styles.address}>
-      <span className="text-xs text-[#796F94] mr-1">{`${prefix} ${
-        chain === SupportedELFChainId.MAIN_NET ? 'AELF' : chain
-      } ${process.env.NEXT_PUBLIC_APP_ENV === 'test' ? 'Testnet Address' : 'Address'}:`}</span>
+      <span className="text-xs text-[#796F94] mr-1">{`${prefix} Address:`}</span>
       {!loading ? renderAddress() : renderLoading()}
     </div>
   );
@@ -114,7 +112,7 @@ function Personal() {
         />
       </div>
       <div className={styles.info}>
-        <div className={styles.uname}>{userInfo.name || 'Unnamed'}</div>
+        <div className={styles.uname}>{userInfo.name || 'Unname'}</div>
         <Popover
           trigger="click"
           content={

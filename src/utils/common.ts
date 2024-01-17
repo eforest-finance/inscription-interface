@@ -1,6 +1,8 @@
 import { SupportedELFChainId } from 'types';
 import dayjs from 'dayjs';
 import BigNumber from 'bignumber.js';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 export const sleep = (time: number) => {
   return new Promise<void>((resolve) => {
     setTimeout(() => {
@@ -66,4 +68,13 @@ export const getDecimalsSupply = (supply: number, decimals: number) => {
 
 export const divideDecimalsSupply = (supply: number, decimals: number) => {
   return new BigNumber(supply).dividedBy(Math.pow(10, decimals)).toNumber();
+};
+
+export const formatterDate = (date: number | string) => {
+  return dayjs(date).format('YYYY/MM/DD HH:mm:ss');
+};
+
+export const dateFromNow = (date: number | string) => {
+  dayjs.extend(relativeTime);
+  return dayjs(date).fromNow();
 };

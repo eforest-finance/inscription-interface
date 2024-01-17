@@ -1,0 +1,122 @@
+/* stylelint-disable no-descending-specificity */
+.deploy_container {
+  @apply pt-[80px];
+}
+
+.elf-form-vertical-custom:global(.elf-form-large) {
+  @apply pt-[40px];
+
+  :global(.elf-form-item) {
+    @apply mb-10;
+  }
+
+  :global(.elf-form-item-label > label) {
+    @apply h-[24px] text-white text-lg leading-[26px] font-medium;
+  }
+
+  :global(.elf-form-item-label > label.elf-form-item-required:not(.elf-form-item-required-mark-optional)::before) {
+    /* display: none; */
+  }
+  :global(.elf-form-item-label > label.elf-form-item-required:not(.elf-form-item-required-mark-optional)::after) {
+    /* display: inline-block;
+    margin-right: 4px;
+    color: #ee3249;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: '*'; */
+  }
+
+  :global(.elf-form-item-label) {
+    @apply !overflow-visible pb-6;
+  }
+
+  :global(.elf-form-item-tooltip) {
+    @apply flex w-[16px] h-[16px] ml-[8px] items-center cursor-pointer;
+    svg > path {
+      @apply fill-[#7B7782];
+    }
+
+    &:hover {
+      svg > path {
+        @apply fill-primary-color;
+      }
+    }
+  }
+}
+
+.elf-form-vertical-custom {
+  :global(.elf-input) {
+    @apply !rounded-md;
+  }
+  :global(.elf-select-selector) {
+    @apply !rounded-md;
+  }
+  :global(.elf-input-affix-wrapper) {
+    @apply !bg-[#18161e] rounded-md border-[#231f30] shadow-none;
+    :global(.elf-input-clear-icon) {
+      line-height: 0;
+      &:hover {
+        svg > path {
+          @apply !fill-primary-border-hover;
+        }
+      }
+      &:active {
+        svg > path {
+          @apply !fill-primary-border-active;
+        }
+      }
+    }
+  }
+}
+
+.copy_button {
+  svg {
+    * {
+      @apply fill-primary-color;
+    }
+  }
+}
+
+.copy_button:hover {
+  svg {
+    * {
+      @apply fill-primary-color-hover;
+    }
+  }
+}
+.copy_button:active {
+  svg {
+    * {
+      @apply fill-primary-color-active;
+    }
+  }
+}
+
+.upload_button {
+  @apply rounded-[12px] text-sm font-medium !h-10 w-[119px] flex items-center justify-center;
+  svg {
+    @apply mr-2;
+  }
+}
+.upload_button:hover {
+  svg {
+    * {
+      @apply fill-primary-color-hover;
+    }
+  }
+}
+.upload_button:active {
+  svg {
+    * {
+      @apply fill-primary-color-active;
+    }
+  }
+}
+
+.custom_progress {
+  @apply !w-[full] !leading-3;
+  :global(.elf-progress-outer) {
+    @apply !pr-0 leading-3;
+  }
+}

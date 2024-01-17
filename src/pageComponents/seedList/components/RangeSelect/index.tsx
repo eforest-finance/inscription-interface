@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import RangeInput from './RangeInput';
-import { ReactComponent as ELFICon } from 'assets/images/elf-icon.svg';
+import { ReactComponent as ELFICon } from 'components/ELFLogo';
 import BigNumber from 'bignumber.js';
 const ZERO = new BigNumber(0);
 import styles from './RangeSelect.module.css';

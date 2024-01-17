@@ -5,9 +5,10 @@ import { getBasePath } from 'utils/getBasePath';
 
 const useScrollAndJudgeHomePage = () => {
   const pathname = usePathname();
-  console.log('useScrollAndJudgeHomePage', pathname);
   const isHomePage = pathname === '/' || pathname === getBasePath();
-  const isAssetsPage = pathname.includes('/assets');
+  const isInscriptionPage = pathname.includes('/aelfinscription');
+  const isAssets = pathname.includes('/assets');
+  const isNoHeaderPage = isAssets || isInscriptionPage;
   const [scrollTop, setScrollTop] = useState(0);
   const showHeaderMask = scrollTop > 10;
 
@@ -33,8 +34,8 @@ const useScrollAndJudgeHomePage = () => {
   }, [isHomePage, scrollHandler]);
 
   return useMemo(() => {
-    return { showHeaderMask, isHomePage, isAssetsPage };
-  }, [showHeaderMask, isHomePage, isAssetsPage]);
+    return { showHeaderMask, isHomePage, isNoHeaderPage, isAssets, isInscriptionPage };
+  }, [showHeaderMask, isHomePage, isNoHeaderPage, isAssets, isInscriptionPage]);
 };
 
 export default useScrollAndJudgeHomePage;

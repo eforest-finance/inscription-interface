@@ -7,7 +7,7 @@ const sentryWebpackPluginOptions = {
   configFile: '.sentryclirc',
   urlPrefix: '~/_next',
   org: 'blockchainforever',
-  project: 'symbol-market',
+  project: 'inscription',
 };
 module.exports = [
   (nextConfig) => (NODE_ENV === 'development' ? nextConfig : withSentryConfig(nextConfig, sentryWebpackPluginOptions)),

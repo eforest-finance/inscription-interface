@@ -47,7 +47,7 @@ function SeedImage({
             className={`break-all text-xs !text-white flex items-center leading-[18px] ${
               symbol && symbol.length > 5 ? styles.fiv : styles.eight
             } `}>
-            SEED-{symbol}
+            {symbol}
           </span>
         </div>
       )}

@@ -1,0 +1,6 @@
+
+.Inscription__footer {
+  @apply max-w-[1360px] mt-[40px] w-full text-sm text-center leading-[22px] text-dark-caption mx-auto py-5 bg-dark-bgc;
+
+  box-shadow: 0 1px 0 0 #252132 inset;
+}

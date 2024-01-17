@@ -1,19 +1,6 @@
-.header-wrap {
-  @apply  transition duration-300  h-[80px]  bg-transparent flex items-center justify-between absolute left-4 right-4 pcMin:left-10 pcMin:right-10 z-20 max-w-[1360px] gap-6 pc:left-auto pc:right-auto pc:w-full;
-  &.header-wrap-mask {
+.header-wrap{
+  @apply transition duration-300  h-[80px]  bg-transparent flex items-center justify-between absolute left-4 right-4 pcMin:left-10 pcMin:right-10 z-20 max-w-[1360px] gap-6 pc:left-auto pc:right-auto pc:w-full;
+  &.header-wrap-mask{
     @apply bg-dark-bgc;
   }
-}
-
-.inscription__button {
-  @apply px-6 bg-primary-bg lg:bg-transparent border-transparent text-sm font-medium border rounded-md  lg:border-white cursor-pointer border-solid text-white py-[14px];
-  
-}
-
-.inscription__button:hover {
-  @apply border-primary-color-hover text-primary-color-hover;
-}
-
-.inscription__button:active {
-  @apply border-primary-color-active text-primary-color-active;
 }

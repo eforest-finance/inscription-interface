@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useRafInterval, useUnmount } from 'ahooks';
 
-const PROGRESS_TIME = 75 * 1000;
+const PROGRESS_TIME = 2 * 75 * 1000;
 
 export function useProgress() {
   const [percent, setPercent] = useState(0);
 
-  const [accumulativeTime, setAccumulativeTime] = useState(0);
+  const [accumulativeTime, setAccumulativeTime] = useState(2000);
 
   const [progressing, setProgressing] = useState(false);
 
@@ -56,11 +56,6 @@ export function useProgress() {
     setProgressing(true);
   };
 
-  const reSet = () => {
-    setAccumulativeTime(0);
-    pause();
-  };
-
   const finish = () => {
     setProgressing(false);
     setStepTimeForFinish((15 * PROGRESS_TIME - accumulativeTime) / 30);
@@ -73,6 +68,5 @@ export function useProgress() {
     pause,
     start,
     reStart,
-    reSet,
   };
 }

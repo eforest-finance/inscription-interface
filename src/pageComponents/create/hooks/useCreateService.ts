@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import AElf from 'aelf-sdk';
 
 import { ApproveByContract, GetAllowanceByContract, CreateTokenByContract } from 'contract';
-import { fetchSyncToken, fetchSyncResult, fetchSaveTokenInfos, fetchSyncResultExists } from 'api/request';
+import { fetchSyncToken, fetchSyncResult, fetchSaveTokenInfos } from 'api/request';
 import { SupportedELFChainId } from 'constants/chain';
 import { CHAIN_ID_VALUE } from 'constants/chain';
 import { store } from 'redux/store';
@@ -11,9 +11,6 @@ import tokenContractJson from 'proto/token_contract.json';
 import { encodedParams } from 'utils/aelfUtils';
 import { message } from 'antd';
 import { formatErrorMsg } from 'utils/formatErrorMsg';
-import { useModal } from '@ebay/nice-modal-react';
-import { CreateTokenProgressModal } from 'components/CreateTokenProgressModal/index';
-import { setCreateTokenProgress } from 'redux/reducer/info';
 
 export enum CreateByEnum {
   Collection = 'collection',
@@ -27,22 +24,9 @@ export enum FailStepEnum {
   SynchronizeLoop,
 }
 
-export enum CreateTokenStepEnum {
-  Create = 0,
-  SaveInfo,
-  Sync,
-  BeforeApprove,
-  AfterApprove,
-  AfterCallContract,
-  BeforeCallContract,
-  Complete,
-}
-
 export function useCreateService() {
   const intervalRef = useRef<number | undefined | NodeJS.Timer>(undefined);
   const createResult = useRef<ICallSendResponse | undefined>(undefined);
-
-  const createTokenModal = useModal(CreateTokenProgressModal);
 
   useEffect(() => {
     return () => {
@@ -60,49 +44,32 @@ export function useCreateService() {
     return await fetchSyncResult(params);
   };
 
-  const getSyncResultExists = async (params: {
-    IssueChainId: string;
-    TokenSymbol: string;
-  }): Promise<{
-    exist: boolean;
-  }> => {
-    return await fetchSyncResultExists(params);
-  };
-
   const SynchronizeLoop = useCallback(
     async (params: ISyncChainParams): Promise<Boolean> => {
-      try {
-        const result = await getSynchronizeStatus(params);
-        if (result?.status === 'CrossChainTokenCreated') {
-          return true;
-        }
+      const result = await getSynchronizeStatus(params);
+      if (result?.status === 'CrossChainTokenCreated') {
+        return true;
+      }
 
-        if (result?.status === 'Failed') {
-          return false;
-        }
-      } catch (error) {
-        console.log('getSynchronizeStatus error', error);
+      if (result?.status === 'Failed') {
+        return false;
       }
 
       const intervalGetSynchronizeStatus = (): Promise<Boolean> => {
         return new Promise((resolve) => {
           intervalRef.current = setInterval(async () => {
-            try {
-              const res = await getSynchronizeStatus(params);
+            const res = await getSynchronizeStatus(params);
 
-              console.log('SynchronizeLoop', res.status);
+            console.log('SynchronizeLoop', result.status);
 
-              if (res?.status === 'CrossChainTokenCreated') {
-                resolve(true);
-                clearInterval(intervalRef.current);
-              }
+            if (res?.status === 'CrossChainTokenCreated') {
+              resolve(true);
+              clearInterval(intervalRef.current);
+            }
 
-              if (res?.status === 'Failed') {
-                resolve(false);
-                clearInterval(intervalRef.current);
-              }
-            } catch (error) {
-              console.log(console.log('getSynchronizeStatus error', error));
+            if (res?.status === 'Failed') {
+              resolve(false);
+              clearInterval(intervalRef.current);
             }
           }, 20 * 1000);
         });
@@ -113,50 +80,6 @@ export function useCreateService() {
     [getSynchronizeStatus],
   );
 
-  const SyncResultLoop = useCallback(
-    async (params: { IssueChainId: string; TokenSymbol: string }): Promise<Boolean> => {
-      try {
-        const result = await getSyncResultExists(params);
-        if (result.exist) {
-          store.dispatch(
-            setCreateTokenProgress({
-              currentStep: CreateTokenStepEnum.Complete,
-              error: false,
-            }),
-          );
-          return true;
-        }
-      } catch (error) {
-        console.log('getSyncResultExists error', error);
-      }
-
-      const intervalGetSyncResult = (): Promise<Boolean> => {
-        return new Promise((resolve) => {
-          intervalRef.current = setInterval(async () => {
-            try {
-              const res = await getSyncResultExists(params);
-              if (res.exist) {
-                store.dispatch(
-                  setCreateTokenProgress({
-                    currentStep: CreateTokenStepEnum.Complete,
-                    error: false,
-                  }),
-                );
-                resolve(true);
-                clearInterval(intervalRef.current);
-              }
-            } catch (error) {
-              console.log('getSyncResultExists error', error);
-            }
-          }, 20 * 1000);
-        });
-      };
-
-      return await intervalGetSyncResult();
-    },
-    [getSyncResultExists],
-  );
-
   const getProtoObject = () => {
     return AElf.pbjs.Root.fromJSON(tokenContractJson);
   };
@@ -164,13 +87,6 @@ export function useCreateService() {
   const createContractByToken = async (params: ICreateTokenParams) => {
     const info = store.getState().elfInfo.elfInfo;
     const walletInfo = store.getState().userInfo.walletInfo;
-
-    store.dispatch(
-      setCreateTokenProgress({
-        currentStep: CreateTokenStepEnum.BeforeApprove,
-        error: false,
-      }),
-    );
 
     try {
       const allowance = await GetAllowanceByContract(
@@ -188,7 +104,6 @@ export function useCreateService() {
         message.error(formatErrorMsg(allowance.errorMessage?.message || 'unknown error'));
         throw new Error('createContractByCollection fail');
       }
-
       let approveRes;
       if (Number(allowance?.allowance) < 1) {
         approveRes = await ApproveByContract(
@@ -203,21 +118,7 @@ export function useCreateService() {
         );
       }
 
-      store.dispatch(
-        setCreateTokenProgress({
-          currentStep: CreateTokenStepEnum.AfterApprove,
-          error: false,
-        }),
-      );
-
       console.log('token approve finish', approveRes);
-
-      store.dispatch(
-        setCreateTokenProgress({
-          currentStep: CreateTokenStepEnum.BeforeCallContract,
-          error: false,
-        }),
-      );
 
       const result = await CreateTokenByContract(params);
       console.log('createTokenAdapterContract finish', result);
@@ -231,14 +132,9 @@ export function useCreateService() {
   };
 
   const createContract = async (params: ICreateTokenParams) => {
-    store.dispatch(
-      setCreateTokenProgress({
-        currentStep: CreateTokenStepEnum.Create,
-        error: false,
-      }),
-    );
     try {
       const issueChain = params.issueChain as keyof typeof CHAIN_ID_VALUE;
+
       const contractParams = {
         ...params,
         issueChainId: CHAIN_ID_VALUE[issueChain],
@@ -246,22 +142,9 @@ export function useCreateService() {
 
       const result = await createContractByToken(contractParams);
 
-      store.dispatch(
-        setCreateTokenProgress({
-          currentStep: CreateTokenStepEnum.AfterCallContract,
-          error: false,
-        }),
-      );
-
       return result;
     } catch (error) {
       console.log('createContract fail', error);
-      store.dispatch(
-        setCreateTokenProgress({
-          currentStep: CreateTokenStepEnum.Create,
-          error: true,
-        }),
-      );
       return Promise.reject(error);
     }
   };
@@ -283,31 +166,7 @@ export function useCreateService() {
       previewImage: tokenLogoImage,
     };
 
-    store.dispatch(
-      setCreateTokenProgress({
-        currentStep: CreateTokenStepEnum.SaveInfo,
-        error: false,
-      }),
-    );
-
-    try {
-      await fetchSaveTokenInfos(saveTokenInfoParams);
-    } catch (error) {
-      console.log('fetchSaveTokenInfos error', error);
-      store.dispatch(
-        setCreateTokenProgress({
-          currentStep: CreateTokenStepEnum.SaveInfo,
-          error: true,
-        }),
-      );
-    }
-
-    store.dispatch(
-      setCreateTokenProgress({
-        currentStep: CreateTokenStepEnum.Sync,
-        error: false,
-      }),
-    );
+    await fetchSaveTokenInfos(saveTokenInfoParams);
 
     if (params.issueChain !== SupportedELFChainId.MAIN_NET) {
       // wait for confirm
@@ -319,13 +178,9 @@ export function useCreateService() {
       };
       console.log('=============== mainChain to sideChain notify', requestParams);
 
-      try {
-        const res = await fetchSyncToken(requestParams);
-      } catch (error) {
-        console.log('fetchSyncToken error', error);
-      }
+      const res = await fetchSyncToken(requestParams);
+      if (!res) throw new Error();
       await SynchronizeLoop(requestParams);
-      await SyncResultLoop({ IssueChainId: params.issueChain || '', TokenSymbol: params.symbol || '' });
     } else {
       const requestParams = {
         toChainId: info.curChain || '',
@@ -336,12 +191,6 @@ export function useCreateService() {
       console.log('=============== mainChain to sideChain notify', requestParams);
 
       const res = await fetchSyncToken(requestParams);
-      store.dispatch(
-        setCreateTokenProgress({
-          currentStep: CreateTokenStepEnum.Complete,
-          error: false,
-        }),
-      );
       if (!res) throw new Error();
     }
     return true;

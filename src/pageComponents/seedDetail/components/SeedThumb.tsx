@@ -39,7 +39,7 @@ function SeedThumb({ seedInfo }: ISeedThumbProps) {
         <div className="relative">
           <SeedSvg className="w-full h-full aspect-square" />
           <div className="absolute top-0 right-0 bottom-0 px-2 left-0 flex items-center justify-center">
-            <span className="text-white font-bold break-all text-base pcMin:text-[22px]">SEED-{seedInfo?.symbol}</span>
+            <span className="text-white font-bold break-all text-base pcMin:text-[22px]">{seedInfo?.symbol}</span>
           </div>
           <SeedBadge isLargeBadge={true} tokenType={tokenType} />
         </div>

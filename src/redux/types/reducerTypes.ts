@@ -1,4 +1,3 @@
-import { CreateTokenStepEnum } from 'pageComponents/create/hooks/useCreateService';
 import { WalletInfoType } from 'types';
 
 export type RadioGroupType = {
@@ -18,8 +17,4 @@ export type InfoStateType = {
   itemsFromLocal?: string[];
   selectedSearchTypeObj: RadioGroupType;
   walletInfo?: WalletInfoType;
-  createTokenProgress: {
-    currentStep: string | CreateTokenStepEnum;
-    error: false;
-  };
 };
