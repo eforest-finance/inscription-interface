@@ -300,7 +300,7 @@ const IssueTokenModal = NiceModal.create((props: IModalProps) => {
             </div>
           </div>
           <div className={clsx(styles.supply__item, 'mt-2')}>
-            <div className={styles.label}>Current Supply</div>
+            <div className={styles.label}>Total Issued</div>
             <div className={styles.value}>
               {thousandsNumber(divideDecimalsSupply(tokenInfo?.currentSupply as number, tokenInfo.decimals))}
             </div>

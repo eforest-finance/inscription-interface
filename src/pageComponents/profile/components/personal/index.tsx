@@ -114,7 +114,7 @@ function Personal() {
         />
       </div>
       <div className={styles.info}>
-        <div className={styles.uname}>{userInfo.name || 'Unname'}</div>
+        <div className={styles.uname}>{userInfo.name || 'Unnamed'}</div>
         <Popover
           trigger="click"
           content={
