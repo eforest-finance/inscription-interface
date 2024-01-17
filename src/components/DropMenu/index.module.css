@@ -1,0 +1,13 @@
+.elf-dropdown-dark {
+  :global {
+    .elf-dropdown-menu {
+      @apply p-0 rounded-md overflow-hidden;
+    }
+    .elf-dropdown-menu-item {
+      @apply p-0 text-white shadow-inset bg-dark-bgc active:text-primary-border-active hover:bg-dark-bgc-hover;
+    }
+    .elf-dropdown-menu-item-active {
+      @apply !bg-dark-bgc-hover;
+    }
+  }
+}

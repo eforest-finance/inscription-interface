@@ -1,0 +1,57 @@
+.issuedMain {
+  @apply flex items-center;
+  .seedImg {
+    @apply mr-4;
+    img {
+      @apply w-16 h-16;
+    }
+  }
+  .info {
+    @apply flex flex-col flex-1 text-white;
+    .town {
+      @apply text-sm leading-5;
+    }
+    .address {
+      @apply transition-colors text-base font-medium break-all leading-6 text-white;
+    }
+    path {
+      @apply fill-white hover:fill-primary-color;
+    }
+  }
+}
+
+.issueMain__mobile {
+  @apply flex-col;
+  .seedImg {
+    @apply mr-0 mb-4;
+  }
+  .info {
+    .town {
+      @apply text-center;
+    }
+    .address {
+      @apply text-center w-full break-all;
+    }
+  }
+}
+
+.issued__footer {
+  .footer__button {
+    @apply px-6 h-[48px] w-[300px] text-base leading-6 font-bold box-border py-3;
+  }
+  .limitMessage {
+    @apply text-dark-caption mb-2 text-xs leading-[18px] text-left;
+  }
+
+  :global(.elf-btn-default) {
+    @apply border-dark-border-default text-primary-color;
+  }
+
+  .footer_bottom {
+    @apply flex items-center justify-between;
+  }
+
+  .footer_bottom__mobile {
+    @apply flex-col-reverse;
+  }
+}

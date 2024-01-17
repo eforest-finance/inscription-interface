@@ -1,0 +1,20 @@
+.view-more-container {
+  &:hover {
+    /* @apply border-primary-border-hover; */
+    span {
+      @apply text-primary-color;
+    }
+    path {
+      @apply fill-primary-color;
+    }
+  }
+  &:active {
+    /* @apply border-primary-border-active text-primary-border-active; */
+    span {
+      @apply text-primary-border-active;
+    }
+    path {
+      @apply fill-primary-border-active;
+    }
+  }
+}

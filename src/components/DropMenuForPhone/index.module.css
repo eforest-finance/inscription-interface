@@ -1,0 +1,18 @@
+
+
+.elf-dropdown-phone-dark{
+  :global{
+    .elf-drawer-content{
+      @apply rounded-md shadow-inset bg-dark-bgc;
+    }
+    .elf-drawer-body{
+      @apply border-0 border-t border-solid border-[#252132];
+    }
+    .elf-drawer-header-title{
+      @apply h-[30px]
+    }
+    .elf-drawer-close{
+        @apply py-1 order-1  pr-4 mr-0;
+    }
+  }
+}

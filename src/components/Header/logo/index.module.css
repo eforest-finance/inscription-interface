@@ -1,0 +1,9 @@
+.logo-container{
+    @apply flex items-end gap-1 cursor-pointer;
+    .logo-wrap{
+      @apply w-9 h-9 relative flex justify-center items-center;
+    }
+    .logo-text{
+      @apply mb-[3px] hidden xl:inline-block;
+    }
+  }

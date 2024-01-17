@@ -1,0 +1,24 @@
+/* stylelint-disable no-descending-specificity */
+.myIcon:hover {
+  .myIcon-text {
+    @apply text-primary-border-hover;
+  }
+  svg > path {
+    @apply fill-primary-border-hover;
+  }
+}
+
+.myIcon:active {
+  .myIcon-text {
+    @apply text-primary-border-active;
+  }
+  svg > path {
+    @apply fill-primary-border-active;
+  }
+}
+
+.myIcon {
+  svg > * {
+    @apply transition-none;
+  }
+}

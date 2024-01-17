@@ -1,0 +1,24 @@
+.tabContainer {
+  :global(.elf-tabs-tab) {
+    @apply px-6 py-[22px] m-0;
+  }
+  :global(.elf-tabs-nav) {
+    @apply m-0 bg-dark-bgc;
+  }
+
+  :global(.elf-tabs-tab-active) {
+    @apply shadow-tab-active;
+  }
+  :global(.elf-tabs-tab-active .elf-tabs-tab-btn) {
+    @apply text-white font-medium leading-5;
+  }
+  :global(.elf-tabs-tab .elf-tabs-tab-btn) {
+    @apply text-dark-clickable font-medium leading-5;
+  }
+  :global(.elf-tabs .elf-tabs-nav::before) {
+    @apply border-dark-border-shadow;
+  }
+  :global(.elf-tabs-tab:hover .elf-tabs-tab-btn) {
+    @apply text-white;
+  }
+}

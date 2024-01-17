@@ -1,0 +1,9 @@
+.footer {
+  @apply flex justify-center w-full;
+  .footer__button__pc {
+    @apply w-[280px] h-12 px-6 py-3 text-base;
+  }
+  .footer__button__mobile {
+    @apply w-full;
+  }
+}

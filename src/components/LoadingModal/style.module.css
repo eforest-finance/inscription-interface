@@ -1,0 +1,8 @@
+.loading-modal {
+  :global(.elf-modal-content) {
+    @apply !p-0;
+  }
+  :global(.elf-modal-body) {
+    @apply !p-0;
+  }
+}

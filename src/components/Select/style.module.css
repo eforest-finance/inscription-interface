@@ -1,0 +1,35 @@
+/* stylelint-disable no-descending-specificity */
+.custom-popup {
+  @apply text-white p-0 rounded-[6px] border-[1px] border-solid border-primary-color bg-dark-bgc;
+
+  :global(.elf-select-item) {
+    @apply shadow-inset hover:bg-dark-bgc-hover p-4 text-white text-sm leading-5;
+  }
+  :global(.elf-select-item-option-active) {
+    @apply bg-dark-bgc text-primary-color;
+  }
+  :global(.elf-select-item-option-selected:not(.elf-select-item-option-disabled)) {
+    @apply bg-dark-bgc;
+  }
+}
+
+.custom-select {
+  @apply flex items-center;
+  :global(.elf-select:not(.elf-select-customize-input) .elf-select-selector) {
+    @apply hover:border-primary-border-hover active:border-primary-border-active border-dark-border-default !rounded-[6px] h-8 bg-dark-bgc text-white text-sm leading-5 px-2 py-[6px];
+  }
+  :global(.elf-select-single:not(.elf-select-customize-input) .elf-select-selector .elf-select-selection-search-input) {
+    @apply h-5;
+  }
+  :global(.elf-select-selection-item) {
+    @apply inline-block h-5 text-sm !leading-5;
+  }
+  :global(.elf-select-open > .elf-select-arrow) {
+    svg {
+      @apply rotate-180;
+      path {
+        @apply !fill-primary-color;
+      }
+    }
+  }
+}

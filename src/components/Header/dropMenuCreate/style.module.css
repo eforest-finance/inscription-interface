@@ -1,0 +1,18 @@
+.create-wrap {
+  @apply relative transition-none w-12 lg:border-none lg:w-[114px] h-12 justify-center gap-2 flex rounded-md border-[1px] border-solid items-center cursor-pointer bg-primary-bg border-primary-border lg:bg-transparent lg:border-white hover:border-primary-border-hover active:stroke-primary-border-active;
+  .bgSVG {
+    @apply hidden lg:inline-block absolute left-0 top-0 right-0 bottom-0;
+  }
+}
+
+.create-wrap:hover {
+  .bgSVG > path {
+    @apply stroke-primary-border-hover;
+  }
+}
+
+.create-wrap:active {
+  .bgSVG > path {
+    @apply stroke-primary-border-active;
+  }
+}

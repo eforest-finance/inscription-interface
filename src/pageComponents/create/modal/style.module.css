@@ -1,0 +1,15 @@
+.token-name-modal {
+  :global(.elf-modal-body) {
+    @apply !border-b-0;
+  }
+
+  :global(.elf-modal-footer) {
+    @apply !pt-4;
+  }
+}
+
+.create-token-modal-success-custom {
+  :global(.elf-modal-body) {
+    @apply !border-none;
+  }
+}

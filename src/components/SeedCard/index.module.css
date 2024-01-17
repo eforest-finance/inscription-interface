@@ -1,0 +1,11 @@
+.irregular-card-wrap {
+  @apply bg-card-default bg-clip-border bg-no-repeat bg-left relative;
+
+  background-size: 100% 100%;
+  &:hover {
+    @apply bg-card-hover;
+  }
+  &:active {
+    @apply bg-card-active;
+  }
+}

@@ -1,0 +1,9 @@
+.footer-container{
+
+
+    svg:not(.tsm-logo):hover{
+      path{
+        @apply fill-white;
+      }
+  }
+}

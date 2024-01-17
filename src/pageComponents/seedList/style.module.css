@@ -1,0 +1,9 @@
+.clear-all {
+  @apply flex items-center px-4 pt-4 pb-6;
+  .range-default-button {
+    @apply border-dark-border-default mr-3 active:text-primary-border-active hover:text-primary-border-hover bg-dark-bgc;
+  }
+  .range-default-button[disabled] {
+    @apply bg-dark-bgc-disable text-dark-caption;
+  }
+}

@@ -1,0 +1,24 @@
+/* stylelint-disable no-descending-specificity */
+.img-uploader-wrapper {
+  @apply flex flex-row items-center;
+  :global(.elf-upload-picture-card-wrapper) {
+    @apply w-auto;
+
+    :global(.elf-upload.elf-upload-select-picture-card) {
+      width: 96px;
+      height: 96px;
+      border-radius: 48px;
+      overflow: hidden;
+      svg {
+        fill: var(--elf-primary-color);
+      }
+    }
+  }
+}
+
+.elf-upload__hasimg {
+  @apply flex;
+  :global(.elf-upload.elf-upload-select-picture-card) {
+    @apply border-solid border-dark-border-default;
+  }
+}

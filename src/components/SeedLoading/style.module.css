@@ -1,0 +1,8 @@
+.custom-loading {
+  :global(.elf-spin-text) {
+    text-shadow: none !important;
+  }
+  :global(.elf-spin-container::after) {
+    @apply bg-black bg-opacity-80;
+  }
+}

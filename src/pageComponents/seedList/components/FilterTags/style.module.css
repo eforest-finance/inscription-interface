@@ -1,0 +1,25 @@
+.filter-tags {
+  @apply w-full flex items-center mt-4 mb-1;
+  .filter-tags-container {
+    @apply flex flex-wrap items-center gap-3;
+    .tag-item {
+      @apply flex items-center px-4 py-[6px] bg-nav-search-bg rounded-[6px];
+      .tag-label {
+        @apply flex items-center text-sm font-medium text-white mr-2;
+      }
+      svg:hover {
+        path {
+          @apply stroke-primary-border-hover;
+        }
+      }
+      svg:active {
+        path {
+          @apply stroke-primary-border-active;
+        }
+      }
+    }
+    .tag-item:last-child {
+      @apply !mr-0;
+    }
+  }
+}

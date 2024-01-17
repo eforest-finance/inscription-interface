@@ -1,0 +1,54 @@
+/* stylelint-disable no-descending-specificity */
+.TSMTable {
+  :global(.elf-table) {
+    @apply bg-dark-bgc text-white text-sm leading-5;
+  }
+  :global(.elf-table-tbody > tr > td) {
+    @apply border-dark-border-shadow py-4 pr-4 pl-0;
+  }
+  :global(.elf-table-tbody > tr > td:first-child) {
+    @apply border-dark-border-shadow py-4 pl-6;
+  }
+  :global(.elf-table-tbody > tr > td:last-child) {
+    @apply py-4 pr-6;
+  }
+  :global(.elf-table-thead > tr > th) {
+    @apply bg-dark-bgc text-dark-caption border-dark-border-shadow py-4 pr-4 pl-0;
+  }
+  :global(.elf-table-thead > tr > th:first-child) {
+    @apply bg-dark-bgc text-dark-caption border-dark-border-shadow py-4 pl-6;
+  }
+  :global(.elf-table-thead > tr > th:last-child) {
+    @apply pr-6;
+  }
+  :global(.elf-table-tbody > tr.elf-table-placeholder:hover > td) {
+    @apply bg-dark-bgc;
+  }
+  :global(.elf-table-tbody > tr > td.elf-table-cell-row-hover) {
+    @apply bg-dark-hover-list;
+  }
+  :global(.elf-table-tbody > tr.elf-table-row:hover > td) {
+    @apply bg-dark-hover-list;
+  }
+}
+
+.mobile-TSMTable {
+  :global(.elf-table-tbody > tr > td) {
+    @apply py-4 pr-4 pl-0;
+  }
+  :global(.elf-table-tbody > tr > td:first-child) {
+    @apply py-4 pr-4 pl-0;
+  }
+  :global(.elf-table-thead > tr > th) {
+    @apply py-4 pr-4 pl-0;
+  }
+  :global(.elf-table-thead > tr > th:first-child) {
+    @apply py-4 pr-4 pl-0;
+  }
+  :global(.elf-table-tbody > tr > td:last-child) {
+    @apply py-4 pr-0;
+  }
+  :global(.elf-table-thead > tr > th:last-child) {
+    @apply pr-0;
+  }
+}

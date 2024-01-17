@@ -1,0 +1,23 @@
+.elf-collapse-dark {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  @apply bg-dark-bgc border-dark-border-default border border-solid rounded-b-md lg:rounded-md overflow-x-hidden overflow-y-scroll lg:max-h-[1000px] w-full;
+  :global {
+    .elf-collapse-item {
+      @apply border-b py-2 bg-dark-bgc border-dark-border-shadow;
+      .elf-collapse-header {
+        @apply !p-4 lg:!px-6  !text-base !font-medium !text-white;
+      }
+      &:last-child {
+        @apply border-none;
+      }
+    }
+    .elf-collapse-content {
+      @apply border-none bg-dark-bgc;
+    }
+    .elf-collapse-content-box {
+      @apply !p-0;
+    }
+  }
+}

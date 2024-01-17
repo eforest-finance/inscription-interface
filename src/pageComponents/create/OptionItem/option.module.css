@@ -1,0 +1,15 @@
+.option-item-custom {
+  @apply flex justify-between items-center px-3 py-4 hover:bg-[#181327] cursor-pointer;
+  &.selected {
+    @apply bg-[#181327];
+  }
+
+  border-bottom: 1px solid #252132;
+
+  .info-card {
+    @apply flex flex-row items-center;
+  }
+  .info-expire {
+    @apply inline-block text-xs leading-[18px] text-[#796F94] font-normal;
+  }
+}

@@ -1,0 +1,33 @@
+.tab-container {
+  @apply pt-20 lg:pt-[100px] w-full relative z-10;
+  :global {
+    .elf-tabs-nav {
+      @apply mb-[24px] lg:mb-[36px];
+    }
+    .elf-tabs-tab {
+      @apply pb-[6px] text-lg lg:text-2xl lg:leading-[34px] text-dark-clickable hover:text-primary-border-hover font-bold relative;
+      &.elf-tabs-tab-active::after {
+        content: '';
+        background-image: url('../../assets/images/tab-active-line.png');
+        height: 6px;
+        width: 48px;
+        display: inline-block;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: absolute;
+        bottom: 0;
+        left: calc(50% - 24px);
+      }
+      &.elf-tabs-tab-active .elf-tabs-tab-btn {
+        @apply text-white;
+      }
+    }
+    .elf-tabs-tab:not(:first-child) {
+      @apply ml-6 lg:ml-12;
+    }
+    .elf-tabs-ink-bar {
+      @apply hidden;
+    }
+  }
+}

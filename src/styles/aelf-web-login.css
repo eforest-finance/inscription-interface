@@ -1,0 +1,189 @@
+.aelf-web-login.aelf-extra-wallets {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.aelf-web-login.aelf-extra-wallets .social-header {
+  width: 100% !important;
+}
+.aelf-web-login.aelf-extra-wallets .social-header .header {
+  display: flex !important;
+}
+.aelf-web-login.aelf-extra-wallets .social-header .header .header-btn {
+  padding: 0 !important;
+  margin: 24px -8px 0 auto !important;
+}
+.aelf-web-login.aelf-extra-wallets .social-header .title-icon {
+  width: 56px !important;
+  height: 56px !important;
+  margin: 16px auto !important;
+}
+.aelf-web-login.aelf-extra-wallets .social-header .title {
+  text-align: center !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 22px !important;
+  line-height: 28px !important;
+  color: #25272a !important;
+}
+.aelf-web-login.aelf-extra-wallets .default-header .title {
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  color: #5c6764 !important;
+}
+.aelf-web-login.aelf-extra-wallets .wallet-entries.social-content {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  margin-top: 32px !important;
+  margin-bottom: 48px !important;
+}
+.aelf-web-login.aelf-extra-wallets .wallet-entries.web2-content {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 8px !important;
+}
+.aelf-web-login.aelf-extra-wallets .social-content .plugin-entry {
+  width: 100% !important;
+  height: 56px !important;
+  padding-left: 40px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  border-radius: 4px !important;
+  border: 1px solid #c5cbd5 !important;
+  background: #fff !important;
+}
+.aelf-web-login.aelf-extra-wallets .wallet-entries.web2-content .plugin-entry {
+  height: 48px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.aelf-web-login.aelf-extra-wallets .social-content .plugin-entry .icon {
+  width: 28px !important;
+  height: 28px !important;
+  margin-right: 12px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+.aelf-web-login.aelf-extra-wallets .social-content .plugin-entry .name {
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  display: flex !important;
+  text-align: center !important;
+  color: #5c6764 !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.aelf-web-login.aelf-extra-wallets .wallet-entries.default-content {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 56px !important;
+  margin-top: 16px !important;
+  margin-bottom: 40px !important;
+}
+.aelf-web-login.aelf-extra-wallets .default-content .plugin-entry .icon {
+  width: 42px !important;
+  height: 42px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+.aelf-web-login.aelf-extra-wallets .default-content .plugin-entry .name {
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  display: flex !important;
+  text-align: center !important;
+  color: #5c6764 !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.aelf-web-logout-dialog {
+  display: flex !important;
+  flex-direction: column !important;
+}
+.aelf-web-logout-dialog-content {
+  padding: 0 32px 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+.aelf-web-logout-dialog-content:first-child {
+  border-bottom: 1px solid #dee2e8 !important;
+}
+.aelf-web-logout-dialog-content-mobile {
+  padding: 0 16px 24px !important;
+}
+
+.aelf-web-logout-dialog-close {
+  height: 24px !important;
+  margin-top: 20px !important;
+  margin-right: -11px !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+}
+
+.aelf-web-logout-dialog-content-mobile .aelf-web-logout-dialog-close {
+  margin-right: 9px !important;
+}
+
+.aelf-web-logout-dialog-title {
+  margin: 12px 0 !important;
+  line-height: 32px !important;
+  font-size: 24px !important;
+  text-align: center !important;
+  font-weight: 500 !important;
+  color: #252525 !important;
+  letter-spacing: -1px !important;
+}
+.aelf-web-logout-dialog-sub-title {
+  margin-top: 12px !important;
+  line-height: 24px !important;
+  font-size: 16px !important;
+  text-align: center !important;
+  color: #515a62 !important;
+  word-spacing: -2px !important;
+}
+.aelf-web-logout-dialog-btn {
+  margin: 16px 0 0 !important;
+  border-radius: 4px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  height: 48px !important;
+  margin-top: 16px !important;
+  font-size: 16px !important;
+}
+.aelf-web-logout-dialog .ok-btn {
+  background-color: #e7383a !important;
+  color: #fff !important;
+}
+.aelf-web-logout-dialog .cancel-btn {
+  color: #5b8ef4 !important;
+  border: 1px solid #5b8ef4 !important;
+}

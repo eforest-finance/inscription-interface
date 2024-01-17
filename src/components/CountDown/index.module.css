@@ -1,0 +1,51 @@
+.timer-count-down {
+  :global {
+    .elf-statistic-content {
+      @apply flex items-center text-xs font-medium flex-1 justify-center text-white;
+      path {
+        @apply fill-white;
+      }
+    }
+    .elf-statistic-content-prefix {
+      @apply flex items-center;
+    }
+  }
+  @apply absolute flex justify-center items-center bottom-[95px] right-[31px] bg-countdown-bg  opacity-60 rounded-md w-[116px] h-7 font-bold;
+  &.timer-count-down-irregular {
+    @apply w-[88px] top-1 right-2 bg-primary-color opacity-100 rounded-none;
+    :global {
+      .elf-statistic-content {
+        @apply text-countdown-text;
+        path {
+          @apply fill-countdown-text;
+        }
+      }
+    }
+    &::before {
+      content: '';
+      background-image: url('/symbolmarket/images/badgeLeft.png');
+      height: 28px;
+      width: 12px;
+      display: inline-block;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      bottom: 0;
+      @apply -left-[11px] lg:-left-3;
+    }
+    &::after {
+      content: '';
+      background-image: url('/symbolmarket/images/badgeRight.png');
+      height: 28px;
+      width: 12px;
+      display: inline-block;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      bottom: 0;
+      @apply -right-[11px] lg:-right-3;
+    }
+  }
+}

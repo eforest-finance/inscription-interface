@@ -1,0 +1,11 @@
+{
+  "px-to-rem.px-per-rem": 14,
+  "cSpell.enabled": true,
+  "css.lint.unknownAtRules": "ignore",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "tailwindCSS.emmetCompletions": true,
+  "emmet.triggerExpansionOnTab": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": true
+  }
+}

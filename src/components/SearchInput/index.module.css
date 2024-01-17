@@ -1,0 +1,50 @@
+.search-bar-wrap{
+  @apply w-full lg:flex-1 flex gap-1 lg:gap-2 border-solid border-0 border-l border-dark-border-default;
+  .search-bar-irregular {
+    @apply flex items-center flex-1 h-auto lg:h-[32px] relative pl-3;
+    input {
+      @apply placeholder:text-dark-caption text-white pl-3 text-base pr-6 lg:pr-9;
+    }
+  }
+  .search-icon{
+    @apply hidden;
+  }
+}
+
+.search-bar-irregular-wrap{
+  @apply w-full relative lg:w-auto flex gap-1 lg:gap-2;
+
+
+  .search-bar-irregular {
+    @apply flex items-center flex-1 bg-search-mobile pcMin:rounded-lg pcMin:bg-search-pc  p-3 pl-4 lg:p-6 lg:w-[604px] lg:h-[72px] bg-clip-border bg-no-repeat bg-left relative;
+
+    background-size: 100% 100%;
+    input {
+      @apply placeholder:text-dark-caption text-white p-0 text-base pr-8;
+    }
+  }
+  .search-icon{
+    @apply  w-14 h-14 pcMin:w-[72px] pcMin:h-[72px] cursor-pointer bg-query bg-contain bg-no-repeat bg-center hover:bg-query-hover active:bg-query-active;
+  }
+
+
+  /* &.search-bar-wrap-error{
+    .search-bar-irregular{
+      @apply bg-search-mobile-warning lg:bg-search-pc-warning;
+    }
+    .search-icon{
+      @apply bg-query-disabled cursor-not-allowed;
+    }
+  } */
+}
+.search-bar-wrap,.search-bar-irregular-wrap{
+  .clear-icon{
+    @apply absolute right-0 pcMin:right-2 w-8 h-8 flex justify-center items-center cursor-pointer;
+    &:hover path{
+      @apply fill-primary-border-hover
+    }
+    &:active path{
+      @apply fill-primary-border-active
+    }
+  }
+}

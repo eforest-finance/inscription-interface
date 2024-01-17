@@ -1,0 +1,5 @@
+.buy__modal {
+  :global(.elf-modal-body) {
+    @apply !border-b-0;
+  }
+}

@@ -1,0 +1,24 @@
+.search-panel-wrap{
+  @apply absolute top-[60px] pcMin:top-[76px] w-full border border-primary-color border-solid rounded-md shadow-dropMenu overflow-hidden;
+  .search-panel-item{
+    @apply pl-6 pr-4 py-4 shadow-inset bg-dark-bgc flex items-center justify-between gap-4 cursor-pointer hover:bg-dark-bgc-hover;
+  }
+  &.search-panel-wrap-nav{
+    @apply top-[54px] left-0;
+  }
+  &.search-panel-wrap-no-border{
+    @apply border-none;
+    .search-panel-item{
+      @apply pl-0 pr-0
+    }
+  }
+  .search-panel-item-clear-icon{
+    @apply  w-8 h-8 flex justify-center items-center cursor-pointer;
+    &:hover path{
+      @apply fill-primary-border-hover
+    }
+    &:active path{
+      @apply fill-primary-border-active
+    }
+  }
+}

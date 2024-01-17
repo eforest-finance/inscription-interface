@@ -1,0 +1,21 @@
+.search-bar-radio-button {
+  @apply border border-solid border-view-more-border mb-6 rounded-md pcMin:rounded-xl flex p-[1px] pcMin:p-[3px] bg-[#361846] cursor-pointer;
+  .radio-button {
+    @apply text-[#796F94] hover:text-primary-border-hover text-xs pcMin:text-base font-medium outline-none bg-transparent border-0 rounded pcMin:rounded-lg h-[26px] leading-[26px] w-[96px] pcMin:h-10 pcMin:leading-10 pcMin:w-[138px] text-center;
+  }
+  .radio-button-active {
+    @apply bg-[#1F1538] text-white hover:text-white;
+  }
+}
+
+.elf-drop-menu-custom {
+  @apply active:text-primary-border-active text-white;
+  svg * {
+    @apply transition-none;
+  }
+  &:active {
+    svg > path {
+      @apply fill-primary-border-active;
+    }
+  }
+}

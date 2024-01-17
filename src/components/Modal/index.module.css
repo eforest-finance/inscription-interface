@@ -1,0 +1,50 @@
+/* stylelint-disable no-descending-specificity */
+.modal:global(.elf-modal) {
+  max-width: calc(100vw - 32px);
+  @apply overflow-hidden;
+  :global(.elf-modal-content) {
+    @apply p-8 rounded-[6px] bg-dark-modal-bg max-h-full h-auto flex flex-col overflow-hidden;
+
+    :global(.elf-modal-body) {
+      @apply !border-b-0  box-border border-t-0 border-l-0 border-r-0  border-dashed border-dark-border-default px-0 py-[32px] flex-1 overflow-y-auto;
+    }
+    :global(.elf-modal-footer) {
+      @apply flex items-center justify-center px-0 border-t-0 pb-0 pt-[32px];
+      > button {
+        flex: 1;
+      }
+    }
+    :global(.elf-modal-header) {
+      @apply p-0 bg-dark-modal-bg rounded-tl-md border-b-0;
+      :global(.elf-modal-title) {
+        @apply text-primary-color text-xl leading-[30px];
+      }
+    }
+    :global(.elf-modal-close) {
+      @apply w-4 h-4 top-[39px] right-8;
+      :global(.elf-modal-close-x) {
+        @apply w-4 h-4 flex justify-center items-center;
+      }
+    }
+  }
+
+  .closeIcon:hover {
+    path {
+      @apply fill-primary-border-hover;
+    }
+  }
+  .closeIcon:active {
+    path {
+      @apply fill-primary-border-active;
+    }
+  }
+}
+.modal-mobile:global(.elf-modal) {
+  @apply overflow-hidden;
+  :global(.elf-modal-content) {
+    @apply px-5 py-6;
+    :global(.elf-modal-close) {
+      @apply top-[31px] right-6;
+    }
+  }
+}

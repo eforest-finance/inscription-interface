@@ -1,0 +1,32 @@
+.seedHeader {
+  @apply mb-4;
+  .title {
+    @apply flex items-start;
+    .menu {
+      @apply mr-4 rounded-[6px] bg-dark-bgc border-primary-color w-10 box-border h-10 p-3;
+    }
+    .menu:hover {
+      @apply border-primary-border-hover;
+      svg > g {
+        @apply fill-primary-border-hover;
+      }
+    }
+    .menu:active {
+      @apply border-primary-border-active;
+      svg > g {
+        @apply fill-primary-border-active;
+      }
+    }
+    :global(.elf-btn[disabled]) {
+      @apply border-dark-border-default bg-dark-bgc-disable;
+      svg {
+        path {
+          @apply fill-dark-caption;
+        }
+      }
+    }
+  }
+  .total {
+    @apply mt-4 text-dark-caption text-min;
+  }
+}

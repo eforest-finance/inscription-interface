@@ -1,0 +1,36 @@
+.personal {
+  @apply flex items-center py-12;
+  .avatar {
+    @apply mr-4;
+    .avatar__img {
+      @apply w-[98px] object-cover rounded-full h-[98px];
+    }
+  }
+  .info {
+    @apply flex flex-col flex-1 relative;
+    .uname {
+      @apply text-white font-bold text-2xl leading-[34px];
+    }
+    .address {
+      @apply flex flex-1 text-base break-all text-primary-color mt-1 flex-col;
+    }
+  }
+  .action {
+    display: inline-flex;
+    align-items: center;
+    color: inherit;
+    font-style: normal;
+    line-height: 0;
+    text-align: center;
+    text-transform: none;
+    vertical-align: -0.2em;
+    text-rendering: optimizelegibility;
+    -webkit-font-smoothing: antialiased;
+    margin-top: 2px;
+    margin-left: 8px;
+  }
+
+  path {
+    @apply hover:fill-primary-color;
+  }
+}

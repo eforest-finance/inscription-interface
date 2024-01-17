@@ -1,0 +1,13 @@
+[defaults]
+url=https://sentry.io/
+project=symbol-market
+org=blockchainforever
+
+[auth]
+token=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
+
+[log]
+level=debug
+
+[http]
+verify_ssl=false

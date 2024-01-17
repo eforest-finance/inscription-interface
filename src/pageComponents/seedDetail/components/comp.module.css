@@ -1,0 +1,21 @@
+.timer-counter-down {
+  @apply flex flex-row;
+  :global {
+    .elf-statistic-title {
+      @apply text-base font-medium text-white mb-0;
+    }
+    .elf-statistic-content {
+      @apply flex items-center text-base font-medium flex-1 justify-center text-white;
+    }
+    .elf-statistic-content-prefix {
+      @apply flex items-center;
+    }
+  }
+}
+
+.seed-info-left {
+  @apply flex flex-col min-w-[282px] py-4 border-0 border-t border-solid border-dark-border-default;
+}
+.seed-info-right {
+  @apply flex flex-col min-w-[282px] flex-1 py-4 border-0 border-t border-solid border-dark-border-default;
+}

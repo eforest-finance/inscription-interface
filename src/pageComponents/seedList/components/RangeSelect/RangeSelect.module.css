@@ -1,0 +1,37 @@
+.range-wrapper {
+  @apply flex w-full;
+  .range-input {
+    @apply flex-1 caret-primary-color box-border h-8 hover:border-primary-border-hover text-white focus:border-primary-color focus:shadow-none border-dark-border-default bg-nav-search-bg rounded-[6px] text-base leading-6 px-2 py-1;
+  }
+  .range-input::placeholder {
+    @apply !text-dark-caption;
+  }
+  :global(.elf-input-status-error) {
+    @apply !border-error-border !bg-nav-search-bg;
+  }
+}
+
+.pricing {
+  @apply mr-2 w-[60px] flex items-center px-2 py-[7px] bg-dark-bgc-disable rounded;
+}
+.range-select {
+  @apply bg-dark-bgc p-4;
+  .range-button {
+    @apply flex justify-between items-center;
+    .range-select-apply {
+      @apply w-full flex items-center justify-center !px-6 !py-[6px] text-sm leading-5 font-medium;
+    }
+    .range-default-button {
+      @apply border-[#423D4E] mr-2 active:text-primary-border-active hover:text-primary-border-hover bg-dark-bgc;
+    }
+    .range-default-button[disabled] {
+      @apply bg-dark-bgc-disable text-dark-caption;
+    }
+    .range-primary-button {
+      @apply border-primary-color hover:border-primary-border-hover hover:text-primary-border-hover bg-dark-bgc text-primary-color active:border-primary-border-active active:text-primary-border-active;
+    }
+    .range-primary-button[disabled] {
+      @apply border-dark-border-default bg-dark-bgc-disable text-dark-caption;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+/* stylelint-disable no-descending-specificity */
+.tokenMain {
+  .supply {
+    .supply__item {
+      @apply flex justify-between;
+      .label {
+        @apply text-sm leading-5 font-medium text-dark-caption;
+      }
+      .value {
+        @apply text-sm leading-5 font-medium text-white;
+      }
+    }
+  }
+}
+
+.token__footer {
+  @apply w-full -mt-8 pt-8 border-0 border-t border-solid border-dark-border-default;
+  :global(.elf-input-affix-wrapper) {
+    @apply py-1 !shadow-none border-dark-border-default pl-4 pr-1 !bg-nav-search-bg;
+  }
+  :global(.elf-input-number-input) {
+    @apply pl-4 caret-primary-color;
+  }
+  :global(.elf-input-affix-wrapper :not(.elf-input-affix-wrapper-status-error)) {
+    @apply hover:!border-primary-border-hover focus:!border-primary-color;
+  }
+
+  :global(.elf-input-affix-wrapper-status-error) {
+    @apply !border-error-border;
+  }
+
+  .efl-prefix,
+  .tDVV-prefix {
+    @apply px-4 py-[10px]  bg-dark-border-default text-sm font-medium text-dark-caption;
+  }
+  .efl-prefix {
+    @apply rounded-l-[6px];
+  }
+  .tDVV-prefix {
+    @apply rounded-r-[6px];
+  }
+  :global(.elf-input-suffix) {
+    @apply ml-0 mr-0;
+  }
+  :global(.elf-input-clear-icon) {
+    @apply flex items-center px-2;
+  }
+  .des-address {
+    @apply p-0;
+    :global(.elf-input-prefix) {
+      @apply mr-0;
+    }
+    :global(.elf-input-lg) {
+      @apply py-1 pl-3 pr-1;
+    }
+  }
+}
+
+.input-tip {
+  @apply border border-solid border-primary-color rounded-md;
+}

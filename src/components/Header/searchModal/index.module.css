@@ -1,0 +1,14 @@
+.search-modal-wrap {
+  @apply bg-dark-bgc w-full;
+  :global {
+    .elf-modal {
+      @apply !w-full !h-full !max-w-full !m-0;
+    }
+    .elf-modal-content {
+      @apply bg-transparent;
+    }
+    .elf-modal-body {
+      @apply p-4;
+    }
+  }
+}
