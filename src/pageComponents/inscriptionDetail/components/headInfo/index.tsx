@@ -17,7 +17,7 @@ const HeadInfo = ({ info, getInsDetail }: { info: UnionDetailType; getInsDetail:
   const { login, isLogin } = useWalletService();
   const elfInfo = store.getState().elfInfo.elfInfo;
 
-  const { getAccountInfoSync } = useWalletSyncCompleted();
+  const { getAccountInfoSync } = useWalletSyncCompleted(elfInfo.curChain);
   const jumpForest = useJumpForest();
 
   const onMint = async () => {
