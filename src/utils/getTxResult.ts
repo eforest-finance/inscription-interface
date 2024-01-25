@@ -52,8 +52,12 @@ const getRpcUrls = () => {
 //   throw Error({ ...txResult, Error: txResult.Error, TransactionId } || 'Transaction error');
 // }
 
-export async function getTxResult(TransactionId: string, chainId: Chain, reGetCount = 0): Promise<any> {
+export async function getTxResult(TransactionId: string, chainId: Chain, reGetCount = -280): Promise<any> {
   const rpcUrl = getRpcUrls()[chainId];
   const instance = getAElf(rpcUrl);
-  return getAelfTxResult(instance, TransactionId);
+  const txResult = await getAelfTxResult(instance, TransactionId, reGetCount);
+  if (txResult.Status.toLowerCase() === 'mined') {
+    return txResult;
+  }
+  throw Error({ ...txResult.Error, TransactionId } || 'Transaction error');
 }
