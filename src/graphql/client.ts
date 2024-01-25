@@ -4,7 +4,7 @@ import { getBasePath } from 'utils/getBasePath';
 let client: ApolloClient<NormalizedCacheObject> | null = null;
 
 export const graphQLClientProvider = (
-  graphqlUrl = `/AElfIndexer_Inscription/InscriptionIndexerSchema/graphql`,
+  graphqlUrl = `https://inscription-dapp.eforest.finance/AElfIndexer_Inscription/InscriptionIndexerSchema/graphql`,
   defaultOptions: DefaultOptions = {},
 ) => {
   if (!client) {

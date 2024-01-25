@@ -4165,7 +4165,7 @@ aelf-bridge@^0.0.10:
     socket.io-client "^2.3.0"
     uuid "^3.3.3"
 
-aelf-sdk@3.2.45-beta.0, aelf-sdk@^3.3.0:
+aelf-sdk@3.2.45-beta.0, aelf-sdk@3.4.1, aelf-sdk@^3.3.0:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/aelf-sdk/-/aelf-sdk-3.4.1.tgz#498afcf3fba256e624d2e00679a5ea6fa3937cad"
   integrity sha512-ab3wH8Xilw97hM2her4TgcPaa/Ftpr5TLa2h1UpSzbi9uBydJfQUlnKZL+BRIezwOaZmC1VdJJ847YhI+jvdMA==
