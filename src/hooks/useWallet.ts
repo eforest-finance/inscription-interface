@@ -30,6 +30,8 @@ import { ChainId } from '@portkey/types';
 import useDiscoverProvider from './useDiscoverProvider';
 import { MethodsWallet } from '@portkey/provider-types';
 import { setItemsFromLocal } from 'redux/reducer/info';
+import { GetBalanceByContract } from 'contract';
+import BigNumber from 'bignumber.js';
 
 export interface Manager {
   address: string;
@@ -195,6 +197,7 @@ export const useWalletSyncCompleted = (contractChainId = 'AELF') => {
         if (contractChainId === 'AELF') {
           return await getAccount();
         } else {
+          loading.current = false;
           return wallet.address;
         }
       }
@@ -313,4 +316,25 @@ export const useBroadcastChannel = () => {
     };
     window.addEventListener('storage', onStorageChange);
   }, []);
+};
+
+export const useGetBalance = (chainId: ChainId | undefined) => {
+  const { walletInfo } = useSelector((store: any) => store.userInfo);
+
+  const getBalance = useCallback(async () => {
+    try {
+      const { balance } = await GetBalanceByContract(
+        {
+          owner: walletInfo?.address,
+          symbol: 'ELF',
+        },
+        { chain: chainId },
+      );
+      return new BigNumber(balance).div(10 ** 8).toNumber();
+    } catch (error) {
+      return 0;
+    }
+  }, [chainId, walletInfo?.address]);
+
+  return getBalance;
 };

@@ -47,7 +47,7 @@ export const inscriptionContract = async <T, R>(
     const { transactionId, TransactionId } = result.result || result;
     const resTransactionId = TransactionId || transactionId;
     await sleep(1000);
-    const transaction = await getTxResult(resTransactionId!, curChain as Chain, 0);
+    const transaction = await getTxResult(resTransactionId!, curChain as Chain);
     console.log('=====inscriptionContract transaction: ', methodName, transaction);
     return { TransactionId: transaction.TransactionId, TransactionResult: transaction.txResult };
   } catch (error) {

@@ -232,7 +232,7 @@ function MintModal(props: IProps) {
         if (!transactionId) {
           showResultModal('fail');
         }
-        const { TransactionId } = await getTxResult(transactionId!, curChain as Chain, 0);
+        const { TransactionId } = await getTxResult(transactionId!, curChain as Chain);
         if (TransactionId) {
           showResultModal('success');
         }
