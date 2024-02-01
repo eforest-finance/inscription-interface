@@ -4,7 +4,7 @@ import useResponsive from 'hooks/useResponsive';
 import useDeployService from './useDeployService';
 import { useRouter } from 'next/navigation';
 import MintResultModal from 'pageComponents/inscriptionDetail/components/mintResultModal';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { InscriptionDeployContractProps } from 'contract';
 import Image from 'next/image';
 import Progress from 'components/Progress';
@@ -27,14 +27,20 @@ function AsyncDeployModal({ params }: { params: InscriptionDeployContractProps }
     setStatus('exception');
     cancel();
   }
+
+  const loading = useRef(false);
   const { deploy } = useDeployService();
   async function getDeployData() {
+    if (loading.current) return;
     try {
+      loading.current = true;
       await deploy(params);
+      loading.current = false;
       start();
       run();
     } catch (error) {
       modal.hide();
+      loading.current = false;
     }
   }
   useEffect(() => {

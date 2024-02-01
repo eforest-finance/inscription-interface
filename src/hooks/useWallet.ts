@@ -221,7 +221,7 @@ export const useWalletSyncCompleted = (contractChainId = 'AELF') => {
         const provider = await discoverProvider();
         const status = await provider?.request({
           method: MethodsWallet.GET_WALLET_MANAGER_SYNC_STATUS,
-          payload: { chainId: info.curChain },
+          payload: { chainId: contractChainId },
         });
         if (status) {
           return await getAccount();
