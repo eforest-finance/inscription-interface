@@ -1,5 +1,4 @@
 'use client';
-import { PortkeyProvider } from '@portkey/did-ui-react';
 import dynamic from 'next/dynamic';
 
 import { store } from 'redux/store';
@@ -14,9 +13,23 @@ function addBasePath(url: string) {
   return `${getBasePath()}${url}`;
 }
 
+const PortkeyProviderDynamic = dynamic(
+  async () => {
+    const info = store.getState().elfInfo.elfInfo;
+
+    const weblogin = await import('aelf-web-login').then((module) => module);
+    return weblogin.PortkeyProvider;
+  },
+  { ssr: false },
+) as any;
+
 const WebLoginProviderDynamic = dynamic(
   async () => {
     const info = store.getState().elfInfo.elfInfo;
+    const serverV1 = info.portkeyServerV1;
+    const serverV2 = info.portkeyServerV2;
+    const connectUrlV1 = info?.connectUrlV1;
+    const connectUrlV2 = info?.connectUrlV2;
 
     const webLogin = await import('aelf-web-login').then((module) => module);
 
@@ -26,17 +39,27 @@ const WebLoginProviderDynamic = dynamic(
       portkey: {
         useLocalStorage: true,
         graphQLUrl: info.graphqlServer || '',
-        connectUrl: addBasePath(info.connectServer || ''),
-        socialLogin: {
-          // Portkey: {
-          //   websiteName: APP_NAME,
-          //   websiteIcon: 'https://explorer.aelf.io/favicon.main.ico',
-          // },
-        },
+        connectUrl: addBasePath(connectUrlV1 || ''),
+        socialLogin: {},
         requestDefaults: {
           timeout: 80000,
-          baseURL: addBasePath(info.portkeyServer || ''),
+          baseURL: addBasePath(serverV1 || ''),
         },
+      },
+      portkeyV2: {
+        networkType: 'TESTNET',
+        useLocalStorage: true,
+        graphQLUrl: info.graphqlServer,
+        connectUrl: addBasePath(connectUrlV2 || ''),
+        loginConfig: {
+          recommendIndexes: [0, 1],
+          loginMethodsOrder: ['Google', 'Telegram', 'Apple', 'Phone', 'Email'],
+        },
+        requestDefaults: {
+          timeout: info.networkType === 'TESTNET' ? 300000 : 80000,
+          baseURL: addBasePath(serverV2 || ''),
+        },
+        serviceUrl: serverV2,
       },
       aelfReact: {
         appName: APP_NAME,
@@ -57,7 +80,7 @@ const WebLoginProviderDynamic = dynamic(
       },
       defaultRpcUrl:
         (info?.[`rpcUrl${String(info?.curChain).toUpperCase()}`] as unknown as string) || info?.rpcUrlTDVW || '',
-      networkType: info?.networkType,
+      networkType: info?.networkType || 'TESTNET',
     });
     return webLogin.WebLoginProvider;
   },
@@ -67,7 +90,7 @@ const WebLoginProviderDynamic = dynamic(
 export default ({ children }: { children: React.ReactNode }) => {
   const info = store.getState().elfInfo.elfInfo;
   return (
-    <PortkeyProvider networkType={info?.networkType}>
+    <PortkeyProviderDynamic networkType={info?.networkType}>
       <WebLoginProviderDynamic
         nightElf={{
           useMultiChain: true,
@@ -87,6 +110,6 @@ export default ({ children }: { children: React.ReactNode }) => {
         }}>
         {children}
       </WebLoginProviderDynamic>
-    </PortkeyProvider>
+    </PortkeyProviderDynamic>
   );
 };
