@@ -1,4 +1,4 @@
-import { Image } from 'antd';
+import { Image, message } from 'antd';
 import Button from 'components/Button';
 import Progress from 'components/Progress';
 import { UnionDetailType } from '../../hooks/useGetInscriptionDetail';
@@ -6,7 +6,7 @@ import { thousandsNumber } from 'utils/common';
 import { useModal } from '@ebay/nice-modal-react';
 import MintModal from '../mintModal';
 import { useWebLogin } from 'aelf-web-login';
-import { useWalletSyncCompleted, useWalletService } from 'hooks/useWallet';
+import { useWalletSyncCompleted, useWalletService, useGetBalance } from 'hooks/useWallet';
 import { useJumpForest } from 'hooks/useJumpForest';
 import BigNumber from 'bignumber.js';
 import { store } from 'redux/store';
@@ -17,15 +17,25 @@ const HeadInfo = ({ info, getInsDetail }: { info: UnionDetailType; getInsDetail:
   const { login, isLogin } = useWalletService();
   const elfInfo = store.getState().elfInfo.elfInfo;
 
-  const { getAccountInfoSync } = useWalletSyncCompleted();
+  const { getAccountInfoSync } = useWalletSyncCompleted(elfInfo.curChain);
   const jumpForest = useJumpForest();
+  const getBalance = useGetBalance(elfInfo.curChain);
 
   const onMint = async () => {
     if (!isLogin) {
       login();
       return;
     }
+    const balance = await getBalance();
+    if (new BigNumber(balance).lt(elfInfo.balanceLimitAmount)) {
+      message.error(
+        `Insufficient balance. Please make sure you have at least ${elfInfo.balanceLimitAmount} ELF on the SideChain in order to mint.`,
+      );
+      return;
+    }
+
     const mainAddress = await getAccountInfoSync();
+    console.log(mainAddress);
     if (!mainAddress) return;
     const totalSupply = new BigNumber(info.totalSupply);
     const mintedAmt = new BigNumber(info.mintedAmt);

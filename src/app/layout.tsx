@@ -34,7 +34,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
-          gtag('config', ''G-J0D8TQCBTF');
+          gtag('config', 'G-J0D8TQCBTF');
         `}
         </Script>
       </head>
