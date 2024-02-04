@@ -5,7 +5,6 @@ import { aelf } from '@portkey/utils';
 import { IPortkeyProvider, MethodsWallet } from '@portkey/provider-types';
 import { did } from '@portkey/did-ui-react';
 import deleteProvider from '@portkey/detect-provider';
-import { store, useSelector } from 'redux/store';
 import { WalletInfoType } from 'types';
 import { WalletType } from 'aelf-web-login';
 import { getRawTransactionNight } from './getRawTransactionNight';
