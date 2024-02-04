@@ -1,4 +1,5 @@
 'use client';
+import { NetworkType } from '@portkey/did-ui-react';
 import dynamic from 'next/dynamic';
 
 import { store } from 'redux/store';
@@ -30,6 +31,7 @@ const WebLoginProviderDynamic = dynamic(
     const serverV2 = info.portkeyServerV2;
     const connectUrlV1 = info?.connectUrlV1;
     const connectUrlV2 = info?.connectUrlV2;
+    const networkTypeV2 = (info.networkTypeV2 || 'TESTNET') as NetworkType;
 
     const webLogin = await import('aelf-web-login').then((module) => module);
 
@@ -47,7 +49,7 @@ const WebLoginProviderDynamic = dynamic(
         },
       },
       portkeyV2: {
-        networkType: 'TESTNET',
+        networkType: networkTypeV2,
         useLocalStorage: true,
         graphQLUrl: info.graphqlServer,
         connectUrl: addBasePath(connectUrlV2 || ''),
@@ -56,7 +58,7 @@ const WebLoginProviderDynamic = dynamic(
           loginMethodsOrder: ['Google', 'Telegram', 'Apple', 'Phone', 'Email'],
         },
         requestDefaults: {
-          timeout: info.networkType === 'TESTNET' ? 300000 : 80000,
+          timeout: networkTypeV2 === 'TESTNET' ? 300000 : 80000,
           baseURL: addBasePath(serverV2 || ''),
         },
         serviceUrl: serverV2,
@@ -90,7 +92,7 @@ const WebLoginProviderDynamic = dynamic(
 export default ({ children }: { children: React.ReactNode }) => {
   const info = store.getState().elfInfo.elfInfo;
   return (
-    <PortkeyProviderDynamic networkType={info?.networkType}>
+    <PortkeyProviderDynamic networkType={info?.networkType} networkTypeV2={info?.networkTypeV2}>
       <WebLoginProviderDynamic
         nightElf={{
           useMultiChain: true,
