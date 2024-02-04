@@ -51,7 +51,7 @@ const WebLoginProviderDynamic = dynamic(
       portkeyV2: {
         networkType: networkTypeV2,
         useLocalStorage: true,
-        graphQLUrl: info.graphqlServer,
+        graphQLUrl: info.graphqlServerV2,
         connectUrl: addBasePath(connectUrlV2 || ''),
         loginConfig: {
           recommendIndexes: [0, 1],

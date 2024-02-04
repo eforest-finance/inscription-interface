@@ -172,6 +172,7 @@ function MintModal(props: IProps) {
       const res = await getRawTransaction({
         walletType,
         walletInfo,
+        version,
         contractAddress: inscriptionAddress,
         caContractAddress: version === 'v1' ? sideCaAddress : sideCaAddressV2,
         methodName,

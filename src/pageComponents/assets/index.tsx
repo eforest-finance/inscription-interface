@@ -1,6 +1,6 @@
 'use client';
 
-import { Asset, PortkeyAssetProvider } from '@portkey-v1/did-ui-react';
+import { Asset as AssetV1, PortkeyAssetProvider as PortkeyAssetProviderV1 } from '@portkey-v1/did-ui-react';
 import { Asset as AssetV2, PortkeyAssetProvider as PortkeyAssetProviderV2 } from '@portkey/did-ui-react';
 
 import { useRouter } from 'next/navigation';
@@ -10,14 +10,14 @@ import { LeftOutlined } from '@ant-design/icons';
 
 import styles from './style.module.css';
 import { useWalletService } from 'hooks/useWallet';
-import { useSelector } from 'redux/store';
 
 export default function MyAsset() {
   const router = useRouter();
   const { wallet, walletType, login, version } = useWebLogin();
   const { isLogin } = useWalletService();
-
-  const info = useSelector((store) => store.elfInfo.elfInfo);
+  console.log(version, 'version');
+  const Asset = version === 'v1' ? AssetV1 : AssetV2;
+  const PortkeyAssetProvider = version === 'v1' ? PortkeyAssetProviderV1 : PortkeyAssetProviderV2;
 
   useEffect(() => {
     if (!isLogin) {
@@ -29,41 +29,22 @@ export default function MyAsset() {
 
   return (
     <div className={styles.asset}>
-      {version === 'v1' ? (
-        <PortkeyAssetProvider
-          originChainId={wallet?.portkeyInfo?.chainId as Chain}
-          pin={wallet?.portkeyInfo?.pin}
-          caHash={wallet?.portkeyInfo?.caInfo?.caHash}
-          didStorageKeyName={'forest'}>
-          <Asset
-            // faucet={{
-            //   faucetContractAddress: configInfo?.faucetContractAddress,
-            // }}
-            backIcon={<LeftOutlined />}
-            onOverviewBack={() => router.back()}
-            onLifeCycleChange={(lifeCycle) => {
-              console.log(lifeCycle, 'onLifeCycleChange');
-            }}
-          />
-        </PortkeyAssetProvider>
-      ) : (
-        <PortkeyAssetProviderV2
-          originChainId={wallet?.portkeyInfo?.chainId as Chain}
-          pin={wallet?.portkeyInfo?.pin}
-          caHash={wallet?.portkeyInfo?.caInfo?.caHash}
-          didStorageKeyName={'forest'}>
-          <AssetV2
-            // faucet={{
-            //   faucetContractAddress: configInfo?.faucetContractAddress,
-            // }}
-            backIcon={<LeftOutlined />}
-            onOverviewBack={() => router.back()}
-            onLifeCycleChange={(lifeCycle) => {
-              console.log(lifeCycle, 'onLifeCycleChange');
-            }}
-          />
-        </PortkeyAssetProviderV2>
-      )}
+      <PortkeyAssetProvider
+        originChainId={wallet?.portkeyInfo?.chainId as Chain}
+        pin={wallet?.portkeyInfo?.pin}
+        caHash={wallet?.portkeyInfo?.caInfo?.caHash}
+        didStorageKeyName={'forest'}>
+        <Asset
+          // faucet={{
+          //   faucetContractAddress: configInfo?.faucetContractAddress,
+          // }}
+          backIcon={<LeftOutlined />}
+          onOverviewBack={() => router.back()}
+          onLifeCycleChange={(lifeCycle) => {
+            console.log(lifeCycle, 'onLifeCycleChange');
+          }}
+        />
+      </PortkeyAssetProvider>
     </div>
   );
 }

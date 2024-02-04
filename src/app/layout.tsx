@@ -1,4 +1,5 @@
 import '@portkey/did-ui-react/dist/assets/index.css';
+import '@portkey-v1/did-ui-react/dist/assets/index.css';
 import 'aelf-web-login/dist/assets/index.css';
 import 'antd/dist/antd.css';
 import 'styles/aelf-web-login.css';
