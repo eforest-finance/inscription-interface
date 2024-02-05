@@ -14,19 +14,19 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "aelf-web-login": "2.0.0-beta.13",
-    "@portkey-v1/contracts": "1.5.4-alpha.19",
-    "@portkey-v1/did-ui-react": "1.5.4-alpha.19",
-    "@portkey-v1/request": "1.5.4-alpha.19",
-    "@portkey-v1/services": "1.5.4-alpha.19",
-    "@portkey-v1/types": "1.5.4-alpha.19",
-    "@portkey-v1/utils": "1.5.4-alpha.19",
-    "@portkey/contracts": "2.0.0-alpha.20",
-    "@portkey/did-ui-react": "2.0.0-alpha.20",
-    "@portkey/request": "2.0.0-alpha.20",
-    "@portkey/services": "2.0.0-alpha.20",
-    "@portkey/types": "2.0.0-alpha.20",
-    "@portkey/utils": "2.0.0-alpha.20",
+    "aelf-web-login": "2.0.0-beta.15",
+    "@portkey-v1/contracts": "1.5.4-alpha.20",
+    "@portkey-v1/did-ui-react": "1.5.4-alpha.20",
+    "@portkey-v1/request": "1.5.4-alpha.20",
+    "@portkey-v1/services": "1.5.4-alpha.20",
+    "@portkey-v1/types": "1.5.4-alpha.20",
+    "@portkey-v1/utils": "1.5.4-alpha.20",
+    "@portkey/contracts": "2.0.0-alpha.21",
+    "@portkey/did-ui-react": "2.0.0-alpha.21",
+    "@portkey/request": "2.0.0-alpha.21",
+    "@portkey/services": "2.0.0-alpha.21",
+    "@portkey/types": "2.0.0-alpha.21",
+    "@portkey/utils": "2.0.0-alpha.21",
     "@apollo/client": "^3.8.8",
     "@aws-sdk/client-cognito-identity": "^3.410.0",
     "@aws-sdk/client-s3": "^3.410.0",
@@ -97,8 +97,7 @@
     "url-loader": "^4.1.1"
   },
   "resolutions": {
-    "aelf-sdk": "3.4.1",
-    "@portkey/did-ui-react": "1.5.2-alpha.3"
+    "aelf-sdk": "3.4.1"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

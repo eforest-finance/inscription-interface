@@ -15,7 +15,6 @@ export default function MyAsset() {
   const router = useRouter();
   const { wallet, walletType, login, version } = useWebLogin();
   const { isLogin } = useWalletService();
-  console.log(version, 'version');
   const Asset = version === 'v1' ? AssetV1 : AssetV2;
   const PortkeyAssetProvider = version === 'v1' ? PortkeyAssetProviderV1 : PortkeyAssetProviderV2;
 

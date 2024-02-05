@@ -1,5 +1,4 @@
 import AElf from 'aelf-sdk';
-import { sleep } from './common';
 import { store } from 'redux/store';
 import { SupportedELFChainId } from 'types';
 import { getTxResult as getAelfTxResult } from '@portkey/contracts';

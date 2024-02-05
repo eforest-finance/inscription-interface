@@ -99,6 +99,7 @@ export default ({ children }: { children: React.ReactNode }) => {
           connectEagerly: true,
         }}
         portkey={{
+          keyboard: true,
           autoShowUnlock: false,
           checkAccountInfoSync: true,
         }}
