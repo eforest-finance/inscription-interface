@@ -97,7 +97,9 @@ export default ({ children }: { children: React.ReactNode }) => {
         }}
         portkey={{
           design: 'CryptoDesign',
-          keyboard: true,
+          keyboard: {
+            v2: true,
+          },
           autoShowUnlock: false,
           checkAccountInfoSync: true,
         }}
