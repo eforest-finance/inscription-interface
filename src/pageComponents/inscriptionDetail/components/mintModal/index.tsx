@@ -97,6 +97,7 @@ function MintModal(props: IProps) {
       onCancel();
     } else {
       modal.hide();
+      modal.remove;
     }
   };
 
@@ -155,6 +156,7 @@ function MintModal(props: IProps) {
     }
   };
   const { version } = useWebLogin();
+  console.log(version, 'version mint');
 
   const rawTransaction = async () => {
     if (!inscriptionAddress || !sideCaAddress || !sideCaAddressV2 || !rpcUrlTDVV || !curChain || !mintAmount) return;

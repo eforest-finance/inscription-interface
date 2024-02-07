@@ -53,10 +53,6 @@ const WebLoginProviderDynamic = dynamic(
         useLocalStorage: true,
         graphQLUrl: info.graphqlServerV2,
         connectUrl: addBasePath(connectUrlV2 || ''),
-        loginConfig: {
-          recommendIndexes: [0, 1],
-          loginMethodsOrder: ['Google', 'Telegram', 'Apple', 'Phone', 'Email'],
-        },
         requestDefaults: {
           timeout: networkTypeV2 === 'TESTNET' ? 300000 : 80000,
           baseURL: addBasePath(serverV2 || ''),
@@ -89,6 +85,7 @@ const WebLoginProviderDynamic = dynamic(
   { ssr: false },
 );
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default ({ children }: { children: React.ReactNode }) => {
   const info = store.getState().elfInfo.elfInfo;
   return (
@@ -99,6 +96,7 @@ export default ({ children }: { children: React.ReactNode }) => {
           connectEagerly: true,
         }}
         portkey={{
+          design: 'CryptoDesign',
           keyboard: true,
           autoShowUnlock: false,
           checkAccountInfoSync: true,

@@ -213,8 +213,8 @@ const getRawTransactionDiscover = async ({
 
     const aelfInstance = getAElf(rpcUrl);
     const { BestChainHeight, BestChainHash } = await aelfInstance.chain.getChainStatus();
-
-    const provider = await deleteProvider();
+    console.log(version, 'version');
+    const provider = await deleteProvider({ providerName: version === 'v1' ? 'portkey' : 'Portkey' });
     if (!provider) return;
     const fromManagerAddress = await provider.request({ method: MethodsWallet.GET_WALLET_CURRENT_MANAGER_ADDRESS });
     const transaction = await handleTransaction({
