@@ -18,6 +18,8 @@ interface IConfigItems {
   mainCaAddress?: string;
   sideCaAddress?: string;
   inscriptionAddress?: string;
+  isShowRampBuy?: boolean;
+  isShowRampSell?: boolean;
   [key: string]: string;
 }
 interface IConfigResponse {
