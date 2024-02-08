@@ -3,9 +3,9 @@ const { transform } = AElf.utils;
 import { getContractBasic, handleManagerForwardCall, getContractMethods } from '@portkey/contracts';
 import { aelf } from '@portkey/utils';
 import { IPortkeyProvider, MethodsWallet } from '@portkey/provider-types';
-import { did } from '@portkey/did-ui-react';
+import { did as didV2 } from '@portkey/did-ui-react';
+import { did as didV1 } from '@portkey-v1/did-ui-react';
 import deleteProvider from '@portkey/detect-provider';
-import { store, useSelector } from 'redux/store';
 import { WalletInfoType } from 'types';
 import { WalletType } from 'aelf-web-login';
 import { getRawTransactionNight } from './getRawTransactionNight';
@@ -186,22 +186,20 @@ const getRawTransactionDiscover = async ({
   caAddress,
   contractAddress,
   caContractAddress,
+  version,
   rpcUrl,
   params,
   methodName,
 }: any) => {
   try {
+    const did = version === 'v1' ? didV1 : didV2;
     const instance = aelf.getAelfInstance(rpcUrl);
-
     console.log('getRawTransaction caAddress', caAddress);
-
     const rst = await did.services.communityRecovery.getHolderInfoByManager({
       caAddresses: [caAddress],
     } as any);
     const caHash: string = rst[0].caHash || '';
-
     console.log('getRawTransaction caHash', caHash);
-
     const managerForwardCall = await createManagerForwardCall({
       caContractAddress,
       contractAddress,
@@ -215,8 +213,8 @@ const getRawTransactionDiscover = async ({
 
     const aelfInstance = getAElf(rpcUrl);
     const { BestChainHeight, BestChainHash } = await aelfInstance.chain.getChainStatus();
-
-    const provider = await deleteProvider();
+    console.log(version, 'version');
+    const provider = await deleteProvider({ providerName: version === 'v1' ? 'portkey' : 'Portkey' });
     if (!provider) return;
     const fromManagerAddress = await provider.request({ method: MethodsWallet.GET_WALLET_CURRENT_MANAGER_ADDRESS });
     const transaction = await handleTransaction({
@@ -240,6 +238,7 @@ interface IRowTransactionPrams {
   walletType: WalletType;
   params: any;
   methodName: string;
+  version: string;
   contractAddress: string;
   caContractAddress: string;
   rpcUrl: string;
@@ -254,9 +253,10 @@ export const getRawTransaction: (params: IRowTransactionPrams) => Promise<string
   walletType,
   params,
   rpcUrl,
+  version,
   chainId,
 }: IRowTransactionPrams) => {
-  console.log('getRawTransaction params', rpcUrl, methodName, chainId, walletType);
+  console.log('getRawTransaction params', rpcUrl, methodName, chainId, walletType, version);
   if (!rpcUrl || !chainId) return;
 
   let res = null;
@@ -281,6 +281,7 @@ export const getRawTransaction: (params: IRowTransactionPrams) => Promise<string
           contractAddress,
           caAddress: walletInfo.discoverInfo.address,
           caContractAddress,
+          version,
           rpcUrl,
           params,
           methodName,

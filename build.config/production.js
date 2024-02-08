@@ -8,6 +8,7 @@ module.exports = {
     },
   },
   experimental: {
+    esmExternals: 'loose',
     'react-use': {
       transform: 'react-use/lib/{{member}}',
     },

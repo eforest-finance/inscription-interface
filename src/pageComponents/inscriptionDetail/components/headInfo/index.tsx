@@ -13,14 +13,14 @@ import { store } from 'redux/store';
 
 const HeadInfo = ({ info, getInsDetail }: { info: UnionDetailType; getInsDetail: () => Promise<void> }) => {
   const mintModal = useModal(MintModal);
-  const { walletType } = useWebLogin();
+  const { walletType, version } = useWebLogin();
   const { login, isLogin } = useWalletService();
   const elfInfo = store.getState().elfInfo.elfInfo;
 
   const { getAccountInfoSync } = useWalletSyncCompleted(elfInfo.curChain);
   const jumpForest = useJumpForest();
   const getBalance = useGetBalance(elfInfo.curChain);
-
+  console.log(version, 'versionheadeheder');
   const onMint = async () => {
     if (!isLogin) {
       login();
