@@ -37,7 +37,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@sentry/nextjs": "^7.86.0",
     "@types/lodash-es": "^4.17.9",
-    "aelf-web-login": "^2.0.0-beta.21",
+    "aelf-web-login": "^2.0.0-beta.22",
     "antd": "^4.21.7",
     "axios": "^0.24.0",
     "eslint-plugin-no-inline-styles": "^1.0.5",
