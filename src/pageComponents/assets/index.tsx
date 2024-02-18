@@ -33,11 +33,7 @@ export default function MyAsset() {
 
   return (
     <div className={styles.asset}>
-      <PortkeyAssetProvider
-        originChainId={wallet?.portkeyInfo?.chainId as Chain}
-        pin={wallet?.portkeyInfo?.pin}
-        caHash={wallet?.portkeyInfo?.caInfo?.caHash}
-        didStorageKeyName={'forest'}>
+      <PortkeyAssetProvider originChainId={wallet?.portkeyInfo?.chainId as Chain} pin={wallet?.portkeyInfo?.pin}>
         <Asset
           // faucet={{
           //   faucetContractAddress: configInfo?.faucetContractAddress,
