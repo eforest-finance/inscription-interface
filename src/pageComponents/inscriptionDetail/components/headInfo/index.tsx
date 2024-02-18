@@ -20,7 +20,6 @@ const HeadInfo = ({ info, getInsDetail }: { info: UnionDetailType; getInsDetail:
   const { getAccountInfoSync } = useWalletSyncCompleted(elfInfo.curChain);
   const jumpForest = useJumpForest();
   const getBalance = useGetBalance(elfInfo.curChain);
-  console.log(version, 'versionheadeheder');
   const onMint = async () => {
     if (!isLogin) {
       login();
@@ -45,6 +44,7 @@ const HeadInfo = ({ info, getInsDetail }: { info: UnionDetailType; getInsDetail:
       tick: info?.tick,
       walletType,
       info,
+      version,
       symbol: `${info?.tick}-1`,
       image: info.image,
       getInsDetail,

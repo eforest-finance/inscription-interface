@@ -38,6 +38,7 @@ interface IProps {
   onCancel?: () => void;
   maxMintAmount: number;
   tick: string;
+  version: string;
   symbol: string;
   info: UnionDetailType;
   walletType: WalletType;
@@ -46,7 +47,7 @@ interface IProps {
 }
 
 function MintModal(props: IProps) {
-  const { maxMintAmount, image, symbol, info, tick, walletType, onCancel, getInsDetail } = props;
+  const { maxMintAmount, image, symbol, info, tick, walletType, version, onCancel, getInsDetail } = props;
   const loadModal = useModal(LoadingModal);
   const jumpForest = useJumpForest();
 
@@ -155,7 +156,7 @@ function MintModal(props: IProps) {
       setTokenBalance(0);
     }
   };
-  const { version } = useWebLogin();
+
   console.log(version, 'version mint');
 
   const rawTransaction = async () => {
