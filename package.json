@@ -43,6 +43,7 @@
     "eslint-plugin-no-inline-styles": "^1.0.5",
     "graphql": "^16.8.1",
     "lodash-es": "^4.17.21",
+    "aelf-sdk": "3.4.1",
     "lottie-react": "^2.4.0",
     "next": "13.4.4",
     "next-babel-conditional-ssg-ssr": "^1.0.0",
