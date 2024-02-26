@@ -18,6 +18,7 @@ import { useScrollTop } from 'hooks/useRedirectHome';
 import { InscriptionFooter } from 'components/InscriptionFooter';
 
 const Layout = dynamic(async () => {
+  //
   return (props: React.PropsWithChildren<{}>) => {
     const { children } = props;
     const { showHeaderMask, isHomePage, isNoHeaderPage, isAssets, isInscriptionPage } = useScrollAndJudgeHomePage();

@@ -25,7 +25,8 @@ import { useSelector } from 'react-redux';
 import { useModal } from '@ebay/nice-modal-react';
 import TipsModal from 'pageComponents/profile/components/TipsModal';
 import { TipsMessage } from 'constants/seedDtail';
-import { did } from '@portkey/did-ui-react';
+import { did as didV2 } from '@portkey/did-ui-react';
+import { did as didV1 } from '@portkey-v1/did-ui-react';
 import { ChainId } from '@portkey/types';
 import useDiscoverProvider from './useDiscoverProvider';
 import { MethodsWallet } from '@portkey/provider-types';
@@ -150,11 +151,12 @@ export const useWalletSyncCompleted = (contractChainId = 'AELF') => {
   const loading = useRef<boolean>(false);
   const info = store.getState().elfInfo.elfInfo;
   const getAccountByChainId = useGetAccount('AELF');
-  const { wallet, walletType } = useWebLogin();
+  const { wallet, walletType, version } = useWebLogin();
   const tipsModal = useModal(TipsModal);
   const { walletInfo } = cloneDeep(useSelector((store: any) => store.userInfo));
   const [, setLocalWalletInfo] = useLocalStorage<WalletInfoType>(storages.walletInfo);
   const { discoverProvider } = useDiscoverProvider();
+  const did = version === 'v1' ? didV1 : didV2;
   const errorFunc = () => {
     tipsModal.show({ content: TipsMessage.Synchronizing });
     loading.current = false;
@@ -221,7 +223,7 @@ export const useWalletSyncCompleted = (contractChainId = 'AELF') => {
         const provider = await discoverProvider();
         const status = await provider?.request({
           method: MethodsWallet.GET_WALLET_MANAGER_SYNC_STATUS,
-          payload: { chainId: info.curChain },
+          payload: { chainId: contractChainId },
         });
         if (status) {
           return await getAccount();

@@ -1,6 +1,6 @@
-import { ChainId, IPortkeyProvider, MethodsWallet } from '@portkey/provider-types';
+import { ChainId, IPortkeyProvider } from '@portkey/provider-types';
 import AElf from 'aelf-sdk';
-import { handleManagerForwardCall, getContractMethods } from '@portkey/contracts';
+import { getContractMethods } from '@portkey/contracts';
 import BN, { isBN } from 'bn.js';
 import { aelf } from '@portkey/utils';
 

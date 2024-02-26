@@ -6,6 +6,6 @@
   "tailwindCSS.emmetCompletions": true,
   "emmet.triggerExpansionOnTab": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.stylelint": true
+    "source.fixAll.stylelint": "explicit"
   }
 }

@@ -1,5 +1,5 @@
 interface IConfigItems {
-  networkType?: string;
+  networkType?: 'TESTNET' | 'MAIN';
   connectServer?: string;
   graphqlServer?: string;
   portkeyServer?: string;
@@ -18,6 +18,8 @@ interface IConfigItems {
   mainCaAddress?: string;
   sideCaAddress?: string;
   inscriptionAddress?: string;
+  isShowRampBuy?: boolean;
+  isShowRampSell?: boolean;
   [key: string]: string;
 }
 interface IConfigResponse {
@@ -129,6 +131,7 @@ interface ITokenParams {
   timestamp?: number;
   accountInfo?: Array<{ chainId: string; address: string }>;
   source: string;
+  version: string;
 }
 
 interface ISymbolInfoParams {

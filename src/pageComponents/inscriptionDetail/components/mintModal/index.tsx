@@ -18,7 +18,7 @@ import { fetchTransactionFee } from 'api/seedDetail';
 import { GetBalanceByContract, CheckDistributorBalance } from 'contract';
 import MintResultModal from '../mintResultModal';
 import { getRawTransaction } from 'utils/aelfUtils';
-import { WalletType } from 'aelf-web-login';
+import { WalletType, useWebLogin } from 'aelf-web-login';
 import { inscribed } from 'api/request';
 import { getTxResult } from 'utils/getTxResult';
 import LoadingModal from 'components/LoadingModal';
@@ -38,6 +38,7 @@ interface IProps {
   onCancel?: () => void;
   maxMintAmount: number;
   tick: string;
+  version: string;
   symbol: string;
   info: UnionDetailType;
   walletType: WalletType;
@@ -46,7 +47,7 @@ interface IProps {
 }
 
 function MintModal(props: IProps) {
-  const { maxMintAmount, image, symbol, info, tick, walletType, onCancel, getInsDetail } = props;
+  const { maxMintAmount, image, symbol, info, tick, walletType, version, onCancel, getInsDetail } = props;
   const loadModal = useModal(LoadingModal);
   const jumpForest = useJumpForest();
 
@@ -54,7 +55,9 @@ function MintModal(props: IProps) {
   const modal = useModal();
   const mintResultModal = useModal(MintResultModal);
   const [form] = Form.useForm();
-  const { curChain, rpcUrlTDVV, inscriptionAddress, sideCaAddress } = useSelector((store) => store.elfInfo.elfInfo);
+  const { curChain, rpcUrlTDVV, inscriptionAddress, sideCaAddress, sideCaAddressV2 } = useSelector(
+    (store) => store.elfInfo.elfInfo,
+  );
   const { isMobile } = useResponsive();
   const [loading, setLoading] = useState(false);
   const [tokenBalance, setTokenBalance] = useState<number>();
@@ -95,6 +98,7 @@ function MintModal(props: IProps) {
       onCancel();
     } else {
       modal.hide();
+      modal.remove;
     }
   };
 
@@ -153,8 +157,10 @@ function MintModal(props: IProps) {
     }
   };
 
+  console.log(version, 'version mint');
+
   const rawTransaction = async () => {
-    if (!inscriptionAddress || !sideCaAddress || !rpcUrlTDVV || !curChain || !mintAmount) return;
+    if (!inscriptionAddress || !sideCaAddress || !sideCaAddressV2 || !rpcUrlTDVV || !curChain || !mintAmount) return;
     try {
       const checked = await CheckDistributorBalance(
         {
@@ -165,12 +171,13 @@ function MintModal(props: IProps) {
         curChain,
       );
       const methodName = checked ? 'Inscribe' : 'MintInscription';
-      console.log('CheckDistributorBalance', checked, methodName);
+      console.log('CheckDistributorBalance', checked, methodName, version);
       const res = await getRawTransaction({
         walletType,
         walletInfo,
+        version,
         contractAddress: inscriptionAddress,
-        caContractAddress: sideCaAddress,
+        caContractAddress: version === 'v1' ? sideCaAddress : sideCaAddressV2,
         methodName,
         params: {
           tick,
