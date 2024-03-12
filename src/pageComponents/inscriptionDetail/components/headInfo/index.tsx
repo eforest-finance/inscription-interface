@@ -34,7 +34,6 @@ const HeadInfo = ({ info, getInsDetail }: { info: UnionDetailType; getInsDetail:
     }
 
     const mainAddress = await getAccountInfoSync();
-    console.log(mainAddress);
     if (!mainAddress) return;
     const totalSupply = new BigNumber(info.totalSupply);
     const mintedAmt = new BigNumber(info.mintedAmt);
