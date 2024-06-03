@@ -1,14 +1,21 @@
-FROM node:16.16.0
+FROM node:18.16.0 as base
 
-ARG web=/opt/workspace/aelf-example
+WORKDIR /opt/workspace
 
-WORKDIR ${web}
+COPY . .
 
-COPY . ${web}
-
-RUN yarn \
+RUN yarn config set \
+    registry https://registry.yarnpkg.com/ \
+    && yarn \
     && yarn build
 
-ENTRYPOINT yarn start
 
-EXPOSE 3000
+FROM node:18.16.0-alpine
+
+WORKDIR /opt/workspace
+
+COPY --from=base /opt/workspace /opt/workspace
+
+ENTRYPOINT yarn start -p 3002
+
+EXPOSE 3002
