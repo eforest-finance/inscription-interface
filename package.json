@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "NODE_OPTIONS='--max-old-space-size=10240' NEXT_PUBLIC_APP_ENV=development NODE_ENV=development next dev",
     "out": "SKIP_SSR=1 next build && next export",
+    "build": "NODE_ENV=production NEXT_PUBLIC_APP_ENV=production next build",
     "build:production": "NODE_ENV=production NEXT_PUBLIC_APP_ENV=production next build",
     "build:dev": "NEXT_PUBLIC_APP_ENV=development NODE_ENV=development next build",
     "build:test": "NODE_ENV=test NEXT_PUBLIC_APP_ENV=test next build",
