@@ -68,8 +68,10 @@ type CreateHandleManagerForwardCall = {
 };
 
 const getSignature = async ({ provider, data }: { provider: IPortkeyProvider; data: string }) => {
+  // const hexData = Buffer.from(data).toString('hex');
   const signature = await provider.request({
     method: MethodsWallet.GET_WALLET_SIGNATURE,
+    // method: 'wallet_getManagerSignature',
     payload: { data },
   });
   if (!signature || signature.recoveryParam == null) return {}; // TODO

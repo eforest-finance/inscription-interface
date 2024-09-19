@@ -5,6 +5,7 @@ import { fetchToken } from 'api/request';
 import { message } from 'antd';
 import { getOriginalAddress } from 'utils/addressFormatting';
 import { useRequest } from 'ahooks';
+import deleteProvider from '@portkey/detect-provider';
 
 const AElf = require('aelf-sdk');
 
@@ -34,16 +35,54 @@ export const useGetToken = () => {
     } else {
       localStorage.removeItem(storages.accountInfo);
     }
+
     const timestamp = Date.now();
-    const sign = await getSignature({
-      appName: 'forest',
-      address: wallet.address,
-      signInfo: AElf.utils.sha256(`${wallet.address}-${timestamp}`),
-    });
-    if (sign?.errorMessage) {
-      message.error(sign.errorMessage);
-      return;
+    let sign = null;
+
+    if (walletType === WalletType.discover) {
+      const text = `Welcome to provider example! Please make sure you understand the effect of this signature.`;
+      const signStr = `signature: ${wallet?.address}-${timestamp}`;
+      const hexDataStr = `${text}\n\n${signStr}`;
+      const hexData = Buffer.from(hexDataStr).toString('hex');
+
+      const provider: any = await deleteProvider({
+        providerName: version === 'v1' ? 'portkey' : 'Portkey',
+      });
+
+      const signature = await provider.request({
+        method: 'wallet_getManagerSignature',
+        payload: { hexData },
+      });
+
+      if (!signature || signature.recoveryParam == null) return {};
+
+      const signatureStr = [
+        signature.r.toString(16, 64),
+        signature.s.toString(16, 64),
+        `0${signature.recoveryParam.toString()}`,
+      ].join('');
+      sign = { signature: signatureStr };
+    } else {
+      sign = await getSignature({
+        appName: 'forest',
+        address: wallet.address,
+        signInfo: AElf.utils.sha256(`${wallet.address}-${timestamp}`),
+      });
+      if (sign?.errorMessage) {
+        message.error(sign.errorMessage);
+        return;
+      }
     }
+    // const sign = await getSignature({
+    //   appName: 'forest',
+    //   address: wallet.address,
+    //   signInfo: AElf.utils.sha256(`${wallet.address}-${timestamp}`),
+    // });
+    // if (sign?.errorMessage) {
+    //   message.error(sign.errorMessage);
+    //   return;
+    // }
+
     let extraParam = {};
     if (walletType === WalletType.elf) {
       extraParam = {
@@ -74,7 +113,17 @@ export const useGetToken = () => {
       version: version === 'v1' ? 'v1' : 'v2',
       ...extraParam,
     } as ITokenParams);
-  }, [loginState, getSignature, wallet]);
+  }, [
+    loginState,
+    wallet.address,
+    wallet.publicKey,
+    wallet?.portkeyInfo,
+    wallet.discoverInfo,
+    getSignature,
+    walletType,
+    runAsync,
+    version,
+  ]);
 
   return { getToken };
 };
