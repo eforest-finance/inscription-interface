@@ -7,8 +7,9 @@ import { did as didV2 } from '@portkey/did-ui-react';
 import { did as didV1 } from '@portkey-v1/did-ui-react';
 import deleteProvider from '@portkey/detect-provider';
 import { WalletInfoType } from 'types';
-import { WalletType } from 'aelf-web-login';
+import { WalletType, useWebLogin } from 'aelf-web-login';
 import { getRawTransactionNight } from './getRawTransactionNight';
+
 // did.setConfig({
 //   graphQLUrl: 'http://192.168.66.203:8083/AElfIndexer_DApp/PortKeyIndexerCASchema/graphql',
 // });
@@ -67,13 +68,22 @@ type CreateHandleManagerForwardCall = {
   instance: any;
 };
 
-const getSignature = async ({ provider, data }: { provider: IPortkeyProvider; data: string }) => {
-  // const hexData = Buffer.from(data).toString('hex');
+const getSignature = async ({
+  provider,
+  data,
+  walletType,
+}: {
+  provider: IPortkeyProvider;
+  data: string;
+  walletType?: string;
+}) => {
+  // const isDiscover = walletType === WalletType.discover;
+
   const signature = await provider.request({
     method: MethodsWallet.GET_WALLET_SIGNATURE,
-    // method: 'wallet_getManagerSignature',
     payload: { data },
   });
+
   if (!signature || signature.recoveryParam == null) return {}; // TODO
   const signatureStr = [signature.r, signature.s, `0${signature.recoveryParam.toString()}`].join('');
   return { signature, signatureStr };
@@ -87,6 +97,7 @@ export const handleTransaction = async ({
   contractAddress,
   functionName,
   provider,
+  walletType,
 }: any) => {
   // Create transaction
   const rawTx = getRawTx({
@@ -97,6 +108,7 @@ export const handleTransaction = async ({
     contractAddress,
     functionName,
   });
+
   rawTx.params = Buffer.from(rawTx.params, 'hex');
 
   const ser = AElf.pbUtils.Transaction.encode(rawTx).finish();
@@ -104,8 +116,9 @@ export const handleTransaction = async ({
   const m = AElf.utils.sha256(ser);
   // signature
   let signatureStr = '';
-  const signatureRes = await getSignature({ provider, data: m });
+  const signatureRes = await getSignature({ provider, data: m, walletType });
   signatureStr = signatureRes.signatureStr || '';
+
   if (!signatureStr) return;
 
   let tx = {
@@ -192,6 +205,7 @@ const getRawTransactionDiscover = async ({
   rpcUrl,
   params,
   methodName,
+  walletType,
 }: any) => {
   try {
     const did = version === 'v1' ? didV1 : didV2;
@@ -227,6 +241,7 @@ const getRawTransactionDiscover = async ({
       contractAddress: caContractAddress,
       functionName: 'ManagerForwardCall',
       provider,
+      walletType,
     });
     console.log('getRawTransaction transaction', transaction);
     return transaction;
@@ -287,6 +302,7 @@ export const getRawTransaction: (params: IRowTransactionPrams) => Promise<string
           rpcUrl,
           params,
           methodName,
+          walletType,
         });
         break;
       case WalletType.elf:

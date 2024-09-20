@@ -40,7 +40,7 @@ export const useGetToken = () => {
     let sign = null;
 
     if (walletType === WalletType.discover) {
-      const text = `Welcome to provider example! Please make sure you understand the effect of this signature.`;
+      const text = `Welcome! Click to sign in to aelf Inscriptions. This request will not trigger a blockchain transaction or cost any gas fees.`;
       const signStr = `signature: ${wallet?.address}-${timestamp}`;
       const hexDataStr = `${text}\n\n${signStr}`;
       const hexData = Buffer.from(hexDataStr).toString('hex');
