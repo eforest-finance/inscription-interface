@@ -53,6 +53,10 @@ const WebLoginProviderDynamic = dynamic(
         useLocalStorage: true,
         graphQLUrl: info.graphqlServerV2,
         connectUrl: addBasePath(connectUrlV2 || ''),
+        referralInfo: {
+          referralCode: '',
+          projectCode: '13021',
+        },
         requestDefaults: {
           timeout: networkTypeV2 === 'TESTNET' ? 300000 : 80000,
           baseURL: addBasePath(serverV2 || ''),
