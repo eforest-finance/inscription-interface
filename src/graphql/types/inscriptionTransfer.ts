@@ -33,7 +33,7 @@ export type InscriptionTransferQueryRes = {
 };
 
 export const InscriptionTransferDocument = gql`
-  query inscriptionTransfer($input: GetInscriptionTransferInput) {
+  query inscriptionTransfer($input: GetInscriptionTransferInput!) {
     inscriptionTransfer(input: $input) {
       transactionId
       method
