@@ -47,7 +47,7 @@ export type IssuedInscriptionQueryRes = {
 };
 
 export const IssuedInscriptionDocument = gql`
-  query issuedInscription($input: GetIssuedInscriptionInput) {
+  query issuedInscription($input: GetIssuedInscriptionInput!) {
     issuedInscription(input: $input) {
       totalCount
       items {
