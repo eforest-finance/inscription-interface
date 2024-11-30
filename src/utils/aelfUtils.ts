@@ -7,8 +7,8 @@ import { did as didV2 } from '@portkey/did-ui-react';
 import { did as didV1 } from '@portkey-v1/did-ui-react';
 import deleteProvider from '@portkey/detect-provider';
 import { WalletInfoType } from 'types';
-import { WalletType, useWebLogin } from 'aelf-web-login';
 import { getRawTransactionNight } from './getRawTransactionNight';
+import { WalletTypeEnum as WalletType } from '@aelf-web-login/wallet-adapter-base';
 
 // did.setConfig({
 //   graphQLUrl: 'http://192.168.66.203:8083/AElfIndexer_DApp/PortKeyIndexerCASchema/graphql',
@@ -255,7 +255,7 @@ interface IRowTransactionPrams {
   walletType: WalletType;
   params: any;
   methodName: string;
-  version: string;
+  version?: string;
   contractAddress: string;
   caContractAddress: string;
   rpcUrl: string;
@@ -280,7 +280,7 @@ export const getRawTransaction: (params: IRowTransactionPrams) => Promise<string
 
   try {
     switch (walletType) {
-      case WalletType.portkey:
+      case WalletType.aa:
         if (!walletInfo.portkeyInfo) return;
         res = await getRawTransactionPortkey({
           caHash: walletInfo.portkeyInfo.caInfo.caHash,

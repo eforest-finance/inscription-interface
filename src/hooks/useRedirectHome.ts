@@ -1,4 +1,3 @@
-import { WebLoginState, useWebLogin } from 'aelf-web-login';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useLocation } from 'react-use';
@@ -7,9 +6,10 @@ import { useModal } from '@ebay/nice-modal-react';
 import { useLocalStorage } from 'react-use';
 import { WalletInfoType } from 'types';
 import { storages } from 'storages';
+import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 
 export function useRedirectHome() {
-  const { loginState } = useWebLogin();
+  const { isConnected } = useConnectWallet();
   const router = useRouter();
   const [localWalletInfo] = useLocalStorage<WalletInfoType>(storages.walletInfo);
   console.log(localWalletInfo, 'localWalletInfo');
@@ -23,7 +23,7 @@ export function useRedirectHome() {
   //   }, 3000);
   // }, [loginState]);
   useEffect(() => {
-    if (loginState === WebLoginState.lock) {
+    if (!isConnected) {
       router.replace('/');
       return;
     }
@@ -32,7 +32,7 @@ export function useRedirectHome() {
     } else {
       router.replace('/');
     }
-  }, [localWalletInfo, loginState]);
+  }, [localWalletInfo, isConnected]);
 }
 
 export function useScrollTop() {

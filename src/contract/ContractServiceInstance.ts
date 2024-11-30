@@ -1,5 +1,4 @@
-import { CallContractParams } from 'aelf-web-login';
-import { WebLoginInterface } from 'aelf-web-login/dist/types/context';
+import { ICallContractParams } from '@aelf-web-login/wallet-adapter-base';
 import { SupportedELFChainId } from 'constants/chain';
 
 export interface IWebLoginArgs {
@@ -7,7 +6,7 @@ export interface IWebLoginArgs {
   chainId: string;
 }
 
-type MethodType = <T, R>(params: CallContractParams<T>) => Promise<R>;
+type MethodType = <T, R>(params: ICallContractParams<T>) => Promise<R>;
 
 export default class WebLoginInstance {
   public contract: any;
@@ -74,7 +73,7 @@ export default class WebLoginInstance {
     return this.context; // wallet, login, loginState
   }
 
-  contractSendMethod<T, R>(chain: Chain, params: CallContractParams<T>): Promise<R> {
+  contractSendMethod<T, R>(chain: Chain, params: ICallContractParams<T>): Promise<R> {
     switch (chain) {
       case SupportedELFChainId.MAIN_NET:
         return this.aelfSendMethod!(params);
@@ -86,7 +85,7 @@ export default class WebLoginInstance {
     throw new Error('Error: Invalid chainId');
   }
 
-  contractViewMethod<T, R>(chain: Chain, params: CallContractParams<T>): Promise<R> {
+  contractViewMethod<T, R>(chain: Chain, params: ICallContractParams<T>): Promise<R> {
     switch (chain) {
       case SupportedELFChainId.MAIN_NET:
         return this.aelfViewMethod!(params);
@@ -98,7 +97,7 @@ export default class WebLoginInstance {
     throw new Error('Error: Invalid chainId');
   }
 
-  callContract<T>(params: CallContractParams<T>) {
+  callContract<T>(params: ICallContractParams<T>) {
     return this.context?.callContract(params);
   }
 }

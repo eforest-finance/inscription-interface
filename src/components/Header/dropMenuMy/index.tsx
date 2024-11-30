@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useWalletService } from 'hooks/useWallet';
 import { Button, MenuProps } from 'antd';
 import { useState, useMemo, memo, useEffect, useCallback } from 'react';
-import { WalletType } from 'aelf-web-login';
+
 import { useSelector } from 'redux/store';
 import useBackToHomeByRoute from 'hooks/useBackToHomeByRoute';
 import clsx from 'clsx';
@@ -13,6 +13,7 @@ import isPortkeyApp from 'utils/isPortkeyApp';
 import { addPrefixSuffix } from 'utils/addressFormatting';
 import style from './index.module.css';
 import useScrollAndJudgeHomePage from 'hooks/useScrollAndJudgeHomePage';
+import { TSignatureParams, WalletTypeEnum } from '@aelf-web-login/wallet-adapter-base';
 
 const DropMenuMy = ({ isMobile }: { isMobile: boolean }) => {
   const pathName = usePathname();
@@ -68,7 +69,7 @@ const DropMenuMy = ({ isMobile }: { isMobile: boolean }) => {
     if (isInscriptionPage) {
       arr.splice(0, 2);
     }
-    if (walletType === WalletType.portkey) {
+    if (walletType === WalletTypeEnum.aa) {
       arr.unshift({
         label: 'My Assets',
         href: '/assets',

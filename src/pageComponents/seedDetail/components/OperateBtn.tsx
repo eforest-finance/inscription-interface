@@ -3,13 +3,13 @@ import Image from 'next/image';
 import { ConfirmPayModal, useModal, PaymentSuccessModal, JumpForestModal } from '../modal';
 import { SEED_STATUS, SEED_TYPE, TipsMessage } from 'constants/seedDtail';
 import { useCreateService } from '../hooks/useCreateService';
-import { WebLoginState, useWebLogin } from 'aelf-web-login';
 import { useWalletSyncCompleted } from 'hooks/useWallet';
 import telegram from 'assets/images/telegram-sm.svg';
 import { store } from 'redux/store';
 import { useJumpForest } from 'hooks/useJumpForest';
 import { SupportedELFChainId } from 'types';
 import TipsModal from 'pageComponents/profile/components/TipsModal';
+import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 
 interface IOperateBtnProps {
   seedDetailInfo: ISeedDetailInfo;
@@ -17,13 +17,13 @@ interface IOperateBtnProps {
 }
 
 export function BuyBtn({ seedDetailInfo, disabled }: IOperateBtnProps) {
-  const { loginState, login } = useWebLogin();
+  const { isConnected, connectWallet } = useConnectWallet();
   const buyModal = useModal(ConfirmPayModal);
   const paySucModal = useModal(PaymentSuccessModal);
   const { getAccountInfoSync } = useWalletSyncCompleted();
   const onBuy = async () => {
-    if (loginState !== WebLoginState.logined) {
-      login();
+    if (!isConnected) {
+      connectWallet();
       return;
     }
 

@@ -9,10 +9,7 @@ const graphqlUrlPrefix =
     : 'https://test-indexer-api.aefinder.io/api/app/graphql/inscription';
 console.log(graphqlUrlPrefix, 'graphqlUrlPrefix');
 
-export const graphQLClientProvider = (
-  graphqlUrl = `${graphqlUrlPrefix}/api/app/graphql/inscription`,
-  defaultOptions: DefaultOptions = {},
-) => {
+export const graphQLClientProvider = (graphqlUrl = graphqlUrlPrefix, defaultOptions: DefaultOptions = {}) => {
   if (!client) {
     client = new ApolloClient({
       cache: new InMemoryCache(),

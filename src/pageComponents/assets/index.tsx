@@ -1,46 +1,60 @@
 'use client';
 
-import { Asset as AssetV1, PortkeyAssetProvider as PortkeyAssetProviderV1 } from '@portkey-v1/did-ui-react';
-import { Asset as AssetV2, PortkeyAssetProvider as PortkeyAssetProviderV2 } from '@portkey/did-ui-react';
-
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { WalletType, useWebLogin } from 'aelf-web-login';
+import { PortkeyAssetProvider, Asset, did } from '@portkey/did-ui-react';
 import { LeftOutlined } from '@ant-design/icons';
 
 import styles from './style.module.css';
 import { useWalletService } from 'hooks/useWallet';
-import { store } from 'redux/store';
+import { useSelector } from 'redux/store';
+import { TSignatureParams, WalletTypeEnum, LoginStatusEnum } from '@aelf-web-login/wallet-adapter-base';
+import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 
 export default function MyAsset() {
   const router = useRouter();
-  const { wallet, walletType, login, version } = useWebLogin();
-  const { isLogin } = useWalletService();
-  const Asset = version === 'v1' ? AssetV1 : AssetV2;
-  const PortkeyAssetProvider = version === 'v1' ? PortkeyAssetProviderV1 : PortkeyAssetProviderV2;
+  // const { wallet, walletType, login } = useWebLogin();
+  const {
+    walletInfo: wallet,
+    walletType,
+    disConnectWallet,
+    getSignature,
+    isConnected,
+    connectWallet,
+  } = useConnectWallet();
 
-  const info = store.getState().elfInfo.elfInfo;
+  const info = useSelector((store) => store.elfInfo.elfInfo);
 
-  // console.log('isShowRampBuy', info.isShowRampBuy, info.isShowRampSell);
+  const { isShowRampBuy, isShowRampSell } = info;
+
+  // const { PortkeyAssetProvider, Asset } = useComponentFlex();
 
   useEffect(() => {
-    if (!isLogin) {
-      login();
-    } else if (walletType !== WalletType.portkey) {
+    if (!isConnected) {
+      connectWallet();
+    } else if (walletType !== WalletTypeEnum.aa) {
       router.push('/');
     }
-  }, [isLogin, router, walletType]);
+  }, [isConnected, router, walletType]);
+
+  const isLoginOnChain = did.didWallet.isLoginStatus === LoginStatusEnum.SUCCESS;
 
   return (
     <div className={styles.asset}>
-      <PortkeyAssetProvider originChainId={wallet?.portkeyInfo?.chainId as Chain} pin={wallet?.portkeyInfo?.pin}>
+      <PortkeyAssetProvider
+        originChainId={wallet?.extraInfo?.portkeyInfo?.chainId as Chain}
+        pin={wallet?.extraInfo?.portkeyInfo?.pin}
+        isLoginOnChain={isLoginOnChain}
+        // caHash={wallet?.portkeyInfo?.caInfo?.caHash}
+        // didStorageKeyName={'TSM'}
+      >
         <Asset
+          isShowRamp={isShowRampBuy || isShowRampSell}
+          isShowRampBuy={isShowRampBuy}
+          isShowRampSell={isShowRampSell}
           // faucet={{
           //   faucetContractAddress: configInfo?.faucetContractAddress,
           // }}
-          isShowRamp={info.isShowRampBuy || info.isShowRampSell}
-          isShowRampBuy={info.isShowRampBuy}
-          isShowRampSell={info.isShowRampSell}
           backIcon={<LeftOutlined />}
           onOverviewBack={() => router.back()}
           onLifeCycleChange={(lifeCycle) => {

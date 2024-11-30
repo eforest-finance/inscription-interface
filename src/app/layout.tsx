@@ -7,7 +7,7 @@ import 'styles/antd.custom.css';
 import 'styles/global.css';
 import 'styles/theme.css';
 import Layout from 'pageComponents/home/layout';
-import Provider from 'provider/';
+import Provider from 'provider';
 import React from 'react';
 import Script from 'next/script';
 
