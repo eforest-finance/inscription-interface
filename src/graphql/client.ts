@@ -5,14 +5,11 @@ let client: ApolloClient<NormalizedCacheObject> | null = null;
 const { NEXT_PUBLIC_APP_ENV } = process.env;
 const graphqlUrlPrefix =
   NEXT_PUBLIC_APP_ENV === 'production'
-    ? 'https://inscription-dapp.eforest.finance'
-    : 'https://test-dapp.eforest.finance';
+    ? 'https://indexer-api.aefinder.io/api/app/graphql/inscription'
+    : 'https://test-indexer-api.aefinder.io/api/app/graphql/inscription';
 console.log(graphqlUrlPrefix, 'graphqlUrlPrefix');
 
-export const graphQLClientProvider = (
-  graphqlUrl = `${graphqlUrlPrefix}/AElfIndexer_Inscription/InscriptionIndexerSchema/graphql`,
-  defaultOptions: DefaultOptions = {},
-) => {
+export const graphQLClientProvider = (graphqlUrl = graphqlUrlPrefix, defaultOptions: DefaultOptions = {}) => {
   if (!client) {
     client = new ApolloClient({
       cache: new InMemoryCache(),

@@ -28,7 +28,7 @@ export type InscriptionQuery = {
 };
 
 export const InscriptionDocument = gql`
-  query inscription($input: GetInscriptionInput) {
+  query inscription($input: GetInscriptionInput!) {
     inscription(input: $input) {
       tick
       totalSupply
