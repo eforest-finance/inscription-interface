@@ -158,7 +158,7 @@ function MintModal(props: IProps) {
     }
   };
 
-  console.log(version, 'version mint');
+  // console.log(version, 'version mint');
 
   const rawTransaction = async () => {
     if (!inscriptionAddress || !sideCaAddress || !sideCaAddressV2 || !rpcUrlTDVV || !curChain || !mintAmount) return;

@@ -12,11 +12,11 @@ export interface IGetBalanceParams {
 export const GetBalanceByContract = async (
   params: IGetBalanceParams,
   options?: IContractOptions,
-): Promise<{ data: { balance: number } }> => {
-  const res = await multiTokenContractRequest('GetBalance', params, {
+): Promise<{ data: { balance: string } }> => {
+  const res = (await multiTokenContractRequest('GetBalance', params, {
     ...options,
     type: ContractMethodType.VIEW,
-  });
+  })) as { data: { balance: string } };
   return res;
 };
 

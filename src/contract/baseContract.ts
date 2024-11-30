@@ -2,6 +2,7 @@ import { SupportedELFChainId, IContractOptions, ContractMethodType, ISendResult,
 import { store } from 'redux/store';
 import { ICallContractParams } from '@aelf-web-login/wallet-adapter-base';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
+import { LoginStatusEnum } from '@aelf-web-login/wallet-adapter-base';
 
 export type MethodType = <T, R>(params: ICallContractParams<T>) => Promise<R>;
 
@@ -21,6 +22,9 @@ const chainAndRPCMap: ChainAndRpcMapType = {};
 
 export function useRegisterContractServiceMethod() {
   const info = store.getState().elfInfo.elfInfo;
+  const { callSendMethod, callViewMethod, loginOnChainStatus } = useConnectWallet();
+
+  // if (loginOnChainStatus == LoginStatusEnum.SUCCESS) {
   [SupportedELFChainId.MAIN_NET, SupportedELFChainId.TDVV_NET, SupportedELFChainId.TDVW_NET].forEach((chain) => {
     chainAndRPCMap[`${chain}`] = {
       chainId: chain,
@@ -28,32 +32,9 @@ export function useRegisterContractServiceMethod() {
     };
   });
 
-  const { callSendMethod, callViewMethod, isLocking, isConnected, loginError, walletType } = useConnectWallet();
-
-  // const { callSendMethod: callAELFSendMethod, callViewMethod: callAELFViewMethod } = useCallContract(
-  //   chainAndRPCMap[SupportedELFChainId.MAIN_NET],
-  // );
-  // const { callSendMethod: callTDVVSendMethod, callViewMethod: callTDVVViewMethod } = useCallContract(
-  //   chainAndRPCMap[SupportedELFChainId.TDVV_NET],
-  // );
-  // const { callSendMethod: callTDVWSendMethod, callViewMethod: callTDVWViewMethod } = useCallContract(
-  //   chainAndRPCMap[SupportedELFChainId.TDVW_NET],
-  // );
-
-  // contractMethodMap[SupportedELFChainId.MAIN_NET] = {
-  //   callSendMethod: callAELFSendMethod,
-  //   callViewMethod: callAELFViewMethod,
-  // } as ICallMethodMap;
-  // contractMethodMap[SupportedELFChainId.TDVV_NET] = {
-  //   callSendMethod: callTDVVSendMethod,
-  //   callViewMethod: callTDVVViewMethod,
-  // } as ICallMethodMap;
-  // contractMethodMap[SupportedELFChainId.TDVW_NET] = {
-  //   callSendMethod: callTDVWSendMethod,
-  //   callViewMethod: callTDVWViewMethod,
-  // } as ICallMethodMap;
   contractMethodMap.callSendMethod = callSendMethod;
   contractMethodMap.callViewMethod = callViewMethod;
+  // }
 }
 
 export function GetContractServiceMethod(

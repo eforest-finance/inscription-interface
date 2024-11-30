@@ -23,6 +23,7 @@ import BigNumber from 'bignumber.js';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 
 import { WalletTypeEnum } from '@aelf-web-login/wallet-adapter-base';
+import { LoginStatusEnum } from '@aelf-web-login/wallet-adapter-base';
 
 export interface Manager {
   address: string;
@@ -33,7 +34,7 @@ export const useWalletInit = () => {
   const [, setLocalWalletInfo] = useLocalStorage<WalletInfoType>(storages.walletInfo);
   // const { getSignatureAndPublicKey } = useDiscoverProvider();
 
-  const { walletInfo: wallet, walletType, isConnected, getAccountByChainId } = useConnectWallet();
+  const { walletInfo: wallet, walletType, isConnected, getAccountByChainId, loginOnChainStatus } = useConnectWallet();
 
   // const getAccountInAELF = getAccountByChainId('AELF');
   const { getToken } = useGetToken();
@@ -109,7 +110,7 @@ export const useWalletInit = () => {
       );
       dispatch(setItemsFromLocal([]));
     }
-  }, [isConnected, wallet?.address]);
+  }, [isConnected, wallet?.address, loginOnChainStatus]);
 };
 export const useWalletService = () => {
   const {
@@ -203,14 +204,14 @@ export const useGetBalance = (chainId: ChainId | undefined) => {
 
   const getBalance = useCallback(async () => {
     try {
-      const { balance } = await GetBalanceByContract(
+      const balance = await GetBalanceByContract(
         {
           owner: walletInfo?.address,
           symbol: 'ELF',
         },
         { chain: chainId },
       );
-      return new BigNumber(balance).div(10 ** 8).toNumber();
+      return new BigNumber(balance.data.balance).div(10 ** 8).toNumber();
     } catch (error) {
       return 0;
     }

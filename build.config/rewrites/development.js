@@ -8,7 +8,7 @@ module.exports = [
   { source: `${getBasePath()}/cms/:path*`, destination: 'http://18.166.65.26:3104/:path*', basePath: false },
   {
     source: `${getBasePath()}/connect/:path*`,
-    destination: 'https://test.symbolmarket.io/connect/:path*',
+    destination: 'https://test.eforest.finance/connect/:path*',
     basePath: false,
   },
   // {
