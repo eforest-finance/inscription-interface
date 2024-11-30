@@ -3,6 +3,7 @@ import { store } from 'redux/store';
 import { ICallContractParams } from '@aelf-web-login/wallet-adapter-base';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 import { LoginStatusEnum } from '@aelf-web-login/wallet-adapter-base';
+import { useEffect } from 'react';
 
 export type MethodType = <T, R>(params: ICallContractParams<T>) => Promise<R>;
 
@@ -22,9 +23,7 @@ const chainAndRPCMap: ChainAndRpcMapType = {};
 
 export function useRegisterContractServiceMethod() {
   const info = store.getState().elfInfo.elfInfo;
-  const { callSendMethod, callViewMethod, loginOnChainStatus } = useConnectWallet();
-
-  // if (loginOnChainStatus == LoginStatusEnum.SUCCESS) {
+  const { callSendMethod, callViewMethod } = useConnectWallet();
   [SupportedELFChainId.MAIN_NET, SupportedELFChainId.TDVV_NET, SupportedELFChainId.TDVW_NET].forEach((chain) => {
     chainAndRPCMap[`${chain}`] = {
       chainId: chain,
@@ -34,7 +33,6 @@ export function useRegisterContractServiceMethod() {
 
   contractMethodMap.callSendMethod = callSendMethod;
   contractMethodMap.callViewMethod = callViewMethod;
-  // }
 }
 
 export function GetContractServiceMethod(

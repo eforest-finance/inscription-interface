@@ -42,7 +42,7 @@ export const useGetToken = () => {
     let sign = null;
 
     if (walletType === WalletTypeEnum.discover) {
-      const text = `Welcome! Click to sign in to Symbol Market. This request will not trigger a blockchain transaction or cost any gas fees.`;
+      const text = `Welcome! Click to sign in to aelf Inscriptions. This request will not trigger a blockchain transaction or cost any gas fees.`;
       const signStr = `signature: ${wallet?.address}-${timestamp}`;
       const hexDataStr = `${text}\n\n${signStr}`;
       const hexData = Buffer.from(hexDataStr).toString('hex');
