@@ -5,23 +5,23 @@ import {
   InscriptionDeployContractProps,
 } from 'contract';
 import { store } from 'redux/store';
-import { SupportedELFChainId } from 'constants/chain';
 import { formatErrorMsg } from 'utils/formatErrorMsg';
 import { message } from 'antd';
 
 export default function useDeployService() {
   const info = store.getState().elfInfo.elfInfo;
-  const walletInfo = store.getState().userInfo.walletInfo;
+  const WalletInfo = store.getState().userInfo.walletInfo;
+
   const deploy = async (params: InscriptionDeployContractProps) => {
     try {
       const allowance = await GetAllowanceByContract(
         {
           spender: info?.inscriptionAddress || '',
           symbol: params.seedSymbol || '',
-          owner: walletInfo.aelfChainAddress || '',
+          owner: WalletInfo.aelfChainAddress || '',
         },
         {
-          chain: SupportedELFChainId.MAIN_NET,
+          chain: 'AELF',
         },
       );
 
@@ -38,7 +38,7 @@ export default function useDeployService() {
             amount: '1',
           },
           {
-            chain: SupportedELFChainId.MAIN_NET,
+            chain: 'AELF',
           },
         );
       }

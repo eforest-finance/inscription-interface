@@ -43,6 +43,7 @@ export const GetAllowanceByContract = async (
   params: IGetAllowanceParams,
   options?: IContractOptions,
 ): Promise<IGetAllowanceResponse & IContractError> => {
+  console.log('options----options', options);
   const res = (await multiTokenContractRequest('GetAllowance', params, {
     ...options,
     type: ContractMethodType.VIEW,
