@@ -87,7 +87,7 @@ export const useGetToken = () => {
     let extraParam = {};
     if (walletType === WalletTypeEnum.elf) {
       extraParam = {
-        pubkey: wallet.publicKey,
+        pubkey: wallet?.extraInfo?.publicKey,
         source: 'nightElf',
       };
     }

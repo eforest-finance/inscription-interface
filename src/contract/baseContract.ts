@@ -41,22 +41,22 @@ export function GetContractServiceMethod(
 ): <T, R>(params: ICallContractParams<T>, sendOptions?: undefined) => Promise<R> {
   const info = store.getState().elfInfo.elfInfo;
 
-  // const chainAndRPCMap: ChainAndRpcMapType = {};
+  const chainAndRPCMap: ChainAndRpcMapType = {};
 
-  // [SupportedELFChainId.MAIN_NET, SupportedELFChainId.TDVV_NET, SupportedELFChainId.TDVW_NET].forEach((chain) => {
-  //   chainAndRPCMap[`${chain}`] = {
-  //     chainId: chain,
-  //     rpcUrl: info?.[`rpcUrl${String(chain).toUpperCase()}`],
-  //   };
-  // });
+  [SupportedELFChainId.MAIN_NET, SupportedELFChainId.TDVV_NET, SupportedELFChainId.TDVW_NET].forEach((chain) => {
+    chainAndRPCMap[`${chain}`] = {
+      chainId: chain,
+      rpcUrl: info?.[`rpcUrl${String(chain).toUpperCase()}`],
+    };
+  });
 
-  // if (!chainAndRPCMap[chain]) {
-  //   throw new Error('Error: Invalid chainId');
-  // }
+  if (!chainAndRPCMap[chain]) {
+    throw new Error('Error: Invalid chainId');
+  }
 
-  // if (!chainAndRPCMap[chain]?.rpcUrl) {
-  //   throw new Error('Error: Empty rpcUrl');
-  // }
+  if (!chainAndRPCMap[chain]?.rpcUrl) {
+    throw new Error('Error: Empty rpcUrl');
+  }
 
   const { callSendMethod, callViewMethod } = contractMethodMap as ICallMethodMap;
   if (type === ContractMethodType.VIEW) {

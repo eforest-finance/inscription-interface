@@ -27,8 +27,11 @@ export const inscriptionContract = async <T, R>(
 
   const CallContractMethod = GetContractServiceMethod(curChain, options?.type);
 
+  console.log('curChain-----curChain', curChain);
+
   try {
     const res: R = await CallContractMethod({
+      chainId: curChain,
       contractAddress,
       methodName,
       args: params,

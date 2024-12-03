@@ -7,6 +7,7 @@ import {
 import { store } from 'redux/store';
 import { formatErrorMsg } from 'utils/formatErrorMsg';
 import { message } from 'antd';
+import { SupportedELFChainId } from 'types';
 
 export default function useDeployService() {
   const info = store.getState().elfInfo.elfInfo;
@@ -21,24 +22,26 @@ export default function useDeployService() {
           owner: WalletInfo.aelfChainAddress || '',
         },
         {
-          chain: 'AELF',
+          chain: SupportedELFChainId.MAIN_NET,
         },
       );
+
+      console.log('allowance--allowance', allowance);
 
       if (allowance.error) {
         message.error(formatErrorMsg(allowance.errorMessage?.message || 'unknown error'));
         throw new Error('createContractByCollection fail');
       }
       let approveRes;
-      if (Number(allowance?.allowance) < 1) {
+      if (Number(allowance?.data?.allowance) < 1) {
         approveRes = await ApproveByContract(
           {
             spender: info?.inscriptionAddress,
-            symbol: params.seedSymbol,
+            symbol: params.seedSymbol || '',
             amount: '1',
           },
           {
-            chain: 'AELF',
+            chain: SupportedELFChainId.MAIN_NET,
           },
         );
       }
