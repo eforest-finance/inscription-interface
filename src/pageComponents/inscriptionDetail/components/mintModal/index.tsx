@@ -173,6 +173,7 @@ function MintModal(props: IProps) {
       );
       const methodName = checked ? 'Inscribe' : 'MintInscription';
       console.log('CheckDistributorBalance', checked, methodName, version);
+
       const res = await getRawTransaction({
         walletType,
         walletInfo,
@@ -232,10 +233,12 @@ function MintModal(props: IProps) {
     setLoading(true);
     try {
       const res = await rawTransaction();
+
       if (res) {
         const { transactionId } = await inscribed({
           rawTransaction: res,
         });
+
         if (!transactionId) {
           showResultModal('fail');
         }

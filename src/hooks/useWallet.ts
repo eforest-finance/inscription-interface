@@ -29,10 +29,9 @@ export interface Manager {
   address: string;
   extraData: string;
 }
-
 export const useWalletInit = () => {
   const [, setLocalWalletInfo] = useLocalStorage<WalletInfoType>(storages.walletInfo);
-  // const { getSignatureAndPublicKey } = useDiscoverProvider();
+  const { getSignatureAndPublicKey } = useDiscoverProvider();
 
   const { walletInfo: wallet, walletType, isConnected, getAccountByChainId, loginOnChainStatus } = useConnectWallet();
 
@@ -52,6 +51,7 @@ export const useWalletInit = () => {
     }
 
     if (isConnected && wallet) {
+      console.log('walletInfo', wallet);
       // console.log('login success');
       // message.info('login success');
       const walletInfo: WalletInfoType = {
@@ -71,7 +71,7 @@ export const useWalletInit = () => {
       }
 
       if (walletType === WalletTypeEnum.aa) {
-        walletInfo.portkeyInfo = Object.assign({}, walletInfo?.extraInfo?.portkeyInfo);
+        walletInfo.portkeyInfo = wallet?.extraInfo?.portkeyInfo;
       }
 
       console.log(wallet);
@@ -87,10 +87,11 @@ export const useWalletInit = () => {
             console.log('getAccountInAELF error', error);
           })
           .finally(() => {
+            console.log('loginOnChainStatus', loginOnChainStatus, walletInfo);
             dispatch(setWalletInfo(cloneDeep(walletInfo)));
             setLocalWalletInfo(cloneDeep(walletInfo));
           });
-      }, 1000);
+      }, 2000);
     }
   };
 
@@ -110,8 +111,90 @@ export const useWalletInit = () => {
       );
       dispatch(setItemsFromLocal([]));
     }
-  }, [isConnected, wallet?.address, loginOnChainStatus]);
+  }, [isConnected, wallet?.address]);
 };
+// export const useWalletInit = () => {
+//   const [, setLocalWalletInfo] = useLocalStorage<WalletInfoType>(storages.walletInfo);
+//   // const { getSignatureAndPublicKey } = useDiscoverProvider();
+
+//   const { walletInfo: wallet, walletType, isConnected, getAccountByChainId, loginOnChainStatus } = useConnectWallet();
+
+//   // const getAccountInAELF = getAccountByChainId('AELF');
+//   const { getToken } = useGetToken();
+//   const { getUserInfo } = useUserInfo();
+
+//   const backToHomeByRoute = useBackToHomeByRoute();
+
+//   // register Contract method
+//   useRegisterContractServiceMethod();
+
+//   const updateWallet = () => {
+//     if (!isConnected) {
+//       backToHomeByRoute();
+//       return;
+//     }
+
+//     if (isConnected && wallet) {
+//       // console.log('login success');
+//       // message.info('login success');
+//       const walletInfo: WalletInfoType = {
+//         address: wallet?.address || '',
+//         publicKey: wallet?.extraInfo.publicKey,
+//         aelfChainAddress: '',
+//       };
+//       if (walletType === WalletTypeEnum.elf) {
+//         walletInfo.aelfChainAddress = wallet?.address || '';
+//       }
+//       if (walletType === WalletTypeEnum.discover) {
+//         walletInfo.discoverInfo = {
+//           accounts: wallet?.extraInfo.accounts || {},
+//           address: wallet.address || '',
+//           nickName: wallet?.extraInfo?.nickName,
+//         };
+//       }
+
+//       if (walletType === WalletTypeEnum.aa) {
+//         walletInfo.portkeyInfo = Object.assign({}, walletInfo?.extraInfo?.portkeyInfo);
+//       }
+
+//       console.log(wallet);
+
+//       getToken();
+//       getUserInfo(wallet.address);
+//       setTimeout(() => {
+//         getAccountByChainId('AELF')
+//           .then((aelfChainAddress: string) => {
+//             walletInfo.aelfChainAddress = getOriginalAddress(aelfChainAddress);
+//           })
+//           .catch((error) => {
+//             console.log('getAccountInAELF error', error);
+//           })
+//           .finally(() => {
+//             dispatch(setWalletInfo(cloneDeep(walletInfo)));
+//             setLocalWalletInfo(cloneDeep(walletInfo));
+//           });
+//       }, 1000);
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (isConnected) {
+//       updateWallet();
+//     }
+//     if (!isConnected) {
+//       backToHomeByRoute();
+//       localStorage.removeItem(storages.accountInfo);
+//       localStorage.removeItem(storages.walletInfo);
+//       dispatch(
+//         setWalletInfo({
+//           address: '',
+//           aelfChainAddress: '',
+//         }),
+//       );
+//       dispatch(setItemsFromLocal([]));
+//     }
+//   }, [isConnected, wallet?.address, loginOnChainStatus]);
+// };
 export const useWalletService = () => {
   const {
     walletInfo: wallet,
@@ -128,8 +211,8 @@ export const useWalletService = () => {
 export const useWalletSyncCompleted = () => {
   const { getWalletSyncIsCompleted } = useConnectWallet();
 
-  const loading = useRef<boolean>(false);
-  const info = store.getState().elfInfo.elfInfo;
+  // const loading = useRef<boolean>(false);
+  // const info = store.getState().elfInfo.elfInfo;
 
   // console.log(walletType, wallet, 'walletType');
 
@@ -138,15 +221,15 @@ export const useWalletSyncCompleted = () => {
     return address;
   };
 
-  const tipsModal = useModal(TipsModal);
-  const { walletInfo } = cloneDeep(useSelector((store: any) => store.userInfo));
-  const [, setLocalWalletInfo] = useLocalStorage<WalletInfoType>(storages.walletInfo);
-  const { discoverProvider } = useDiscoverProvider();
-  const errorFunc = () => {
-    tipsModal.show({ content: TipsMessage.Synchronizing });
-    loading.current = false;
-    return '';
-  };
+  // const tipsModal = useModal(TipsModal);
+  // const { walletInfo } = cloneDeep(useSelector((store: any) => store.userInfo));
+  // const [, setLocalWalletInfo] = useLocalStorage<WalletInfoType>(storages.walletInfo);
+  // const { discoverProvider } = useDiscoverProvider();
+  // const errorFunc = () => {
+  //   tipsModal.show({ content: TipsMessage.Synchronizing });
+  //   loading.current = false;
+  //   return '';
+  // };
 
   return { getAccountInfoSync };
 };
@@ -155,6 +238,8 @@ export const useCheckLoginAndToken = () => {
   const { getToken } = useGetToken();
   const [hasToken, setHasToken] = useState<Boolean>(false);
   const { connectWallet, disConnectWallet, isConnected, walletInfo, walletType } = useConnectWallet();
+
+  console.log('walletInfo----walletInfo', walletInfo);
 
   const checkLogin = async () => {
     const accountInfo = JSON.parse(localStorage.getItem(storages.accountInfo) || '{}');
@@ -177,7 +262,7 @@ export const useCheckLoginAndToken = () => {
   }, []);
 
   return {
-    isOK: isConnected && hasToken,
+    isOK: isConnected && hasToken && walletInfo?.address,
     checkLogin,
   };
 };
