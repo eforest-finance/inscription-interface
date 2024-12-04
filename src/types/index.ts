@@ -1,5 +1,3 @@
-import { DiscoverInfo, PortkeyInfo } from 'aelf-web-login';
-
 export type TokenInfo = {
   decimals: number;
   symbol: string;
@@ -70,8 +68,8 @@ export type WalletInfoType = {
   publicKey?: string;
   token?: string;
   aelfChainAddress?: string;
-  discoverInfo?: DiscoverInfo;
-  portkeyInfo?: PortkeyInfo;
+  discoverInfo?: any;
+  portkeyInfo?: any;
 };
 
 export enum SeedTypesEnum {

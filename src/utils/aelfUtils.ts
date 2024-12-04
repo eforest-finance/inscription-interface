@@ -3,12 +3,15 @@ const { transform } = AElf.utils;
 import { getContractBasic, handleManagerForwardCall, getContractMethods } from '@portkey/contracts';
 import { aelf } from '@portkey/utils';
 import { IPortkeyProvider, MethodsWallet } from '@portkey/provider-types';
-import { did as didV2 } from '@portkey/did-ui-react';
-import { did as didV1 } from '@portkey-v1/did-ui-react';
+import { did } from '@portkey/did-ui-react';
 import deleteProvider from '@portkey/detect-provider';
 import { WalletInfoType } from 'types';
-import { WalletType, useWebLogin } from 'aelf-web-login';
-import { getRawTransactionNight } from './getRawTransactionNight';
+// import { getRawTransactionNight } from './getRawTransactionNight';
+import { WalletTypeEnum } from '@aelf-web-login/wallet-adapter-base';
+
+import { getRawTransactionPortkey } from './getRawTransactionPortkey';
+import { getRawTransactionDiscover } from './getRawTransactionDiscover';
+import { getRawTransactionNightELF } from './getRawTransactionNightELF';
 
 // did.setConfig({
 //   graphQLUrl: 'http://192.168.66.203:8083/AElfIndexer_DApp/PortKeyIndexerCASchema/graphql',
@@ -165,97 +168,12 @@ export const createManagerForwardCall = async ({
   return protoInputType.encode(message).finish();
 };
 
-const getRawTransactionPortkey = async ({
-  caHash,
-  privateKey,
-  contractAddress,
-  caContractAddress,
-  rpcUrl,
-  params,
-  methodName,
-}: IRowTransactionPortkeyParams) => {
-  try {
-    const contract = await getContractBasic({
-      callType: 'ca',
-      caHash: caHash,
-      account: aelf.getWallet(privateKey),
-      contractAddress: contractAddress,
-      caContractAddress: caContractAddress,
-      rpcUrl: rpcUrl,
-    });
-    console.log('getRawTransaction Portkey caHash', caHash);
-    console.log('getRawTransaction Portkey privateKey', privateKey);
-    console.log('getRawTransaction Portkey contract', contract);
-
-    const a = await contract.encodedTx(methodName, params);
-
-    return a.data;
-  } catch (error) {
-    console.log('getRawTransaction error', error);
-
-    return null;
-  }
-};
-
-const getRawTransactionDiscover = async ({
-  caAddress,
-  contractAddress,
-  caContractAddress,
-  version,
-  rpcUrl,
-  params,
-  methodName,
-  walletType,
-}: any) => {
-  try {
-    const did = version === 'v1' ? didV1 : didV2;
-    const instance = aelf.getAelfInstance(rpcUrl);
-    console.log('getRawTransaction caAddress', caAddress);
-    const rst = await did.services.communityRecovery.getHolderInfoByManager({
-      caAddresses: [caAddress],
-    } as any);
-    const caHash: string = rst[0].caHash || '';
-    console.log('getRawTransaction caHash', caHash);
-    const managerForwardCall = await createManagerForwardCall({
-      caContractAddress,
-      contractAddress,
-      caHash,
-      methodName,
-      args: params,
-      instance,
-    });
-
-    const transactionParams = AElf.utils.uint8ArrayToHex(managerForwardCall);
-
-    const aelfInstance = getAElf(rpcUrl);
-    const { BestChainHeight, BestChainHash } = await aelfInstance.chain.getChainStatus();
-    console.log(version, 'version');
-    const provider = await deleteProvider({ providerName: version === 'v1' ? 'portkey' : 'Portkey' });
-    if (!provider) return;
-    const fromManagerAddress = await provider.request({ method: MethodsWallet.GET_WALLET_CURRENT_MANAGER_ADDRESS });
-    const transaction = await handleTransaction({
-      blockHeightInput: BestChainHeight,
-      blockHashInput: BestChainHash,
-      packedInput: transactionParams,
-      address: fromManagerAddress,
-      contractAddress: caContractAddress,
-      functionName: 'ManagerForwardCall',
-      provider,
-      walletType,
-    });
-    console.log('getRawTransaction transaction', transaction);
-    return transaction;
-  } catch (error) {
-    return null;
-  }
-};
-
 interface IRowTransactionPrams {
   walletInfo: WalletInfoType;
-  walletType: WalletType;
+  walletType: WalletTypeEnum;
   params: any;
   methodName: string;
-  version: string;
+  version?: string;
   contractAddress: string;
   caContractAddress: string;
   rpcUrl: string;
@@ -279,9 +197,10 @@ export const getRawTransaction: (params: IRowTransactionPrams) => Promise<string
   let res = null;
 
   try {
+    console.log('walletType---walletType', walletType);
+
     switch (walletType) {
-      case WalletType.portkey:
-        if (!walletInfo.portkeyInfo) return;
+      case WalletTypeEnum.aa:
         res = await getRawTransactionPortkey({
           caHash: walletInfo.portkeyInfo.caInfo.caHash,
           privateKey: walletInfo.portkeyInfo.walletInfo.privateKey,
@@ -292,7 +211,7 @@ export const getRawTransaction: (params: IRowTransactionPrams) => Promise<string
           methodName,
         });
         break;
-      case WalletType.discover:
+      case WalletTypeEnum.discover:
         if (!walletInfo.discoverInfo) return;
         res = await getRawTransactionDiscover({
           contractAddress,
@@ -305,9 +224,9 @@ export const getRawTransaction: (params: IRowTransactionPrams) => Promise<string
           walletType,
         });
         break;
-      case WalletType.elf:
+      case WalletTypeEnum.elf:
         console.log('address', walletInfo.address);
-        res = await getRawTransactionNight({
+        res = await getRawTransactionNightELF({
           contractAddress,
           params,
           chainId,

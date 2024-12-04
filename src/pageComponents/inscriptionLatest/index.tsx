@@ -11,6 +11,8 @@ import { MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { dateFromNow, thousandsNumber } from 'utils/common';
 
+import elfIcon from 'components/ELFLogo';
+
 function Card(item: InscriptionTransferQuery) {
   const jumpExplorer = useJumpExplorer();
   const info = useSelector((store: any) => store.elfInfo.elfInfo);
@@ -25,7 +27,7 @@ function Card(item: InscriptionTransferQuery) {
       <div className="border-solid border-primary-border rounded-xl">
         <div className="relative">
           <Image
-            src={item?.inscriptionImage}
+            src={item?.inscriptionImage || elfIcon}
             alt=""
             width={400}
             height={400}

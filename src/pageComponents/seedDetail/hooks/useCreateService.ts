@@ -1,20 +1,18 @@
 import { SupportedELFChainId } from 'types';
-import { createSeed, fetchSyncResultOfAuctionSeed } from 'api/seedDetail';
+import { createSeed } from 'api/seedDetail';
 import { CreatingSeedModal, useModal } from '../modal';
 import { useWalletSyncCompleted } from 'hooks/useWallet';
-import { useWebLogin, WebLoginState } from 'aelf-web-login';
 import { useCallback, useEffect, useState } from 'react';
-import { useRequest } from 'ahooks';
-import { message } from 'antd';
 import { SEED_STATUS } from 'constants/seedDtail';
+import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 
 export function useCreateService(seedDetailInfo: ISeedDetailInfo) {
   const modal = useModal(CreatingSeedModal);
-  const { loginState, login } = useWebLogin();
+  const { isConnected, connectWallet } = useConnectWallet();
   const { getAccountInfoSync } = useWalletSyncCompleted();
   const createSeedLogic = async () => {
-    if (loginState !== WebLoginState.logined) {
-      login();
+    if (!isConnected) {
+      connectWallet();
       return;
     }
     const mainAddress = await getAccountInfoSync();

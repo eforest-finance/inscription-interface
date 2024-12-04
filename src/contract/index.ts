@@ -12,11 +12,11 @@ export interface IGetBalanceParams {
 export const GetBalanceByContract = async (
   params: IGetBalanceParams,
   options?: IContractOptions,
-): Promise<{ balance: number }> => {
+): Promise<{ data: { balance: string } }> => {
   const res = (await multiTokenContractRequest('GetBalance', params, {
     ...options,
     type: ContractMethodType.VIEW,
-  })) as { balance: number };
+  })) as { data: { balance: string } };
   return res;
 };
 
@@ -39,14 +39,11 @@ export const CreateTokenByContract = async (params: ICreateTokenParams): Promise
   return res;
 };
 
-export const GetAllowanceByContract = async (
-  params: IGetAllowanceParams,
-  options?: IContractOptions,
-): Promise<IGetAllowanceResponse & IContractError> => {
-  const res = (await multiTokenContractRequest('GetAllowance', params, {
+export const GetAllowanceByContract = async (params: IGetAllowanceParams, options?: IContractOptions): Promise<any> => {
+  const res = await multiTokenContractRequest('GetAllowance', params, {
     ...options,
     type: ContractMethodType.VIEW,
-  })) as IGetAllowanceResponse & IContractError;
+  });
   return res;
 };
 
@@ -65,12 +62,9 @@ export interface InscriptionDeployContractProps {
   image: string;
 }
 
-export const InscriptionDeployContract = async (
-  params: InscriptionDeployContractProps,
-  chain?: Chain,
-): Promise<ISendResult> => {
+export const InscriptionDeployContract = async (params: InscriptionDeployContractProps): Promise<ISendResult> => {
   const res: ISendResult = await inscriptionContract('DeployInscription', params, {
-    chain,
+    chain: SupportedELFChainId.MAIN_NET,
   });
   return res;
 };

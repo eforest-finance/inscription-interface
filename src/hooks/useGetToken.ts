@@ -1,4 +1,3 @@
-import { useWebLogin, WalletType, WebLoginState } from 'aelf-web-login';
 import { useCallback } from 'react';
 import { storages } from 'storages';
 import { fetchToken } from 'api/request';
@@ -6,11 +5,15 @@ import { message } from 'antd';
 import { getOriginalAddress } from 'utils/addressFormatting';
 import { useRequest } from 'ahooks';
 import deleteProvider from '@portkey/detect-provider';
+import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
+import { TSignatureParams, WalletTypeEnum } from '@aelf-web-login/wallet-adapter-base';
 
 const AElf = require('aelf-sdk');
 
 export const useGetToken = () => {
-  const { loginState, wallet, getSignature, walletType, version } = useWebLogin();
+  const { walletInfo: wallet, walletType, disConnectWallet, getSignature, isConnected } = useConnectWallet();
+
+  // const { loginState, wallet, getSignature, walletType, version } = useWebLogin();
 
   const { runAsync } = useRequest(fetchToken, {
     retryCount: 3,
@@ -28,25 +31,24 @@ export const useGetToken = () => {
   });
 
   const getToken = useCallback(async () => {
-    if (loginState !== WebLoginState.logined) return;
+    if (!isConnected) return;
     const accountInfo = JSON.parse(localStorage.getItem(storages.accountInfo) || '{}');
     if (accountInfo?.token && Date.now() < accountInfo?.expirationTime && accountInfo.account === wallet.address) {
       return;
     } else {
       localStorage.removeItem(storages.accountInfo);
     }
-
     const timestamp = Date.now();
     let sign = null;
 
-    if (walletType === WalletType.discover) {
+    if (walletType === WalletTypeEnum.discover) {
       const text = `Welcome! Click to sign in to aelf Inscriptions. This request will not trigger a blockchain transaction or cost any gas fees.`;
       const signStr = `signature: ${wallet?.address}-${timestamp}`;
       const hexDataStr = `${text}\n\n${signStr}`;
       const hexData = Buffer.from(hexDataStr).toString('hex');
 
       const provider: any = await deleteProvider({
-        providerName: version === 'v1' ? 'portkey' : 'Portkey',
+        providerName: 'Portkey',
       });
 
       const signature = await provider.request({
@@ -82,21 +84,22 @@ export const useGetToken = () => {
     //   message.error(sign.errorMessage);
     //   return;
     // }
-
     let extraParam = {};
-    if (walletType === WalletType.elf) {
+    if (walletType === WalletTypeEnum.elf) {
       extraParam = {
-        pubkey: wallet.publicKey,
+        pubkey: wallet?.extraInfo?.publicKey,
         source: 'nightElf',
       };
     }
-    if (walletType === WalletType.portkey || walletType === WalletType.discover) {
-      const accounts = Object.entries((wallet?.portkeyInfo || wallet.discoverInfo || { accounts: {} })?.accounts);
-      const accountInfo = accounts.map(([chainId, address]) => ({
-        chainId,
-        address: getOriginalAddress(walletType === WalletType.portkey ? address : address[0]),
-      }));
-      console.log('accountInfo', accountInfo);
+
+    if (walletType === WalletTypeEnum.discover) {
+      const accounts = wallet.extraInfo.accounts;
+      const accountInfo = Object.keys(accounts).map((key) => {
+        return {
+          chainId: key,
+          address: getOriginalAddress(accounts[key][0]),
+        };
+      });
 
       extraParam = {
         source: 'portkey',
@@ -104,26 +107,49 @@ export const useGetToken = () => {
       };
     }
 
+    if (walletType === WalletTypeEnum.aa) {
+      const accounts = wallet.extraInfo.portkeyInfo.accounts;
+      const accountInfo = Object.keys(accounts).map((key) => {
+        return {
+          chainId: key,
+          address: getOriginalAddress(accounts[key]),
+        };
+      });
+      // const accountInfo = accounts.map(([chainId, address]) => ({
+      //   chainId,
+      //   address: getOriginalAddress(walletType === WalletTypeEnum.aa ? address : (address as Array<any>)[0]),
+      // }));
+
+      extraParam = {
+        source: 'portkey',
+        accountInfo: JSON.stringify(accountInfo),
+      };
+    }
+
+    // if (walletType === WalletTypeEnum.aa || walletType === WalletTypeEnum.discover) {
+    //   const accounts = Object.entries((wallet?.portkeyInfo || wallet.discoverInfo || { accounts: {} })?.accounts);
+    //   const accountInfo = accounts.map(([chainId, address]) => ({
+    //     chainId,
+    //     address: getOriginalAddress(walletType === WalletType.portkey ? address : address[0]),
+    //   }));
+    //   console.log('accountInfo', accountInfo);
+
+    //   extraParam = {
+    //     source: 'portkey',
+    //     accountInfo: JSON.stringify(accountInfo),
+    //   };
+    // }
+
     runAsync({
       grant_type: 'signature',
       scope: 'NFTMarketServer',
       client_id: 'NFTMarketServer_App',
       timestamp,
-      signature: sign.signature,
-      version: version === 'v1' ? 'v1' : 'v2',
+      version: 'v2',
+      signature: sign?.signature,
       ...extraParam,
     } as ITokenParams);
-  }, [
-    loginState,
-    wallet.address,
-    wallet.publicKey,
-    wallet?.portkeyInfo,
-    wallet.discoverInfo,
-    getSignature,
-    walletType,
-    runAsync,
-    version,
-  ]);
+  }, [isConnected, getSignature, wallet]);
 
   return { getToken };
 };

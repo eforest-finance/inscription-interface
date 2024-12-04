@@ -4,13 +4,12 @@ let client: ApolloClient<NormalizedCacheObject> | null = null;
 
 const { NEXT_PUBLIC_APP_ENV } = process.env;
 const graphqlUrlPrefix =
-  NEXT_PUBLIC_APP_ENV === 'production' ? 'https://indexer-api.aefinder.io' : 'https://test-indexer-api.aefinder.io';
+  NEXT_PUBLIC_APP_ENV === 'production'
+    ? 'https://indexer-api.aefinder.io/api/app/graphql/inscription'
+    : 'https://test-indexer-api.aefinder.io/api/app/graphql/inscription';
 console.log(graphqlUrlPrefix, 'graphqlUrlPrefix');
 
-export const graphQLClientProvider = (
-  graphqlUrl = `${graphqlUrlPrefix}/api/app/graphql/inscription`,
-  defaultOptions: DefaultOptions = {},
-) => {
+export const graphQLClientProvider = (graphqlUrl = graphqlUrlPrefix, defaultOptions: DefaultOptions = {}) => {
   if (!client) {
     client = new ApolloClient({
       cache: new InMemoryCache(),
