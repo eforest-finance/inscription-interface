@@ -1,8 +1,11 @@
-import { CallContractParams, useCallContract, useWebLogin } from 'aelf-web-login';
 import { SupportedELFChainId, IContractOptions, ContractMethodType, ISendResult, IContractError } from 'types';
 import { store } from 'redux/store';
+import { ICallContractParams } from '@aelf-web-login/wallet-adapter-base';
+import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
+import { LoginStatusEnum } from '@aelf-web-login/wallet-adapter-base';
+import { useEffect } from 'react';
 
-type MethodType = <T, R>(params: CallContractParams<T>) => Promise<R>;
+export type MethodType = <T, R>(params: ICallContractParams<T>) => Promise<R>;
 
 type ChainAndRpcMapType = {
   [key in SupportedELFChainId]?: {
@@ -14,49 +17,28 @@ interface ICallMethodMap {
   callSendMethod: MethodType;
   callViewMethod: MethodType;
 }
-type contractMethodMapType = {
-  [key in SupportedELFChainId]?: ICallMethodMap;
-};
 
-export const contractMethodMap: contractMethodMapType = {};
+export const contractMethodMap = {} as any;
 const chainAndRPCMap: ChainAndRpcMapType = {};
 
 export function useRegisterContractServiceMethod() {
   const info = store.getState().elfInfo.elfInfo;
+  const { callSendMethod, callViewMethod } = useConnectWallet();
   [SupportedELFChainId.MAIN_NET, SupportedELFChainId.TDVV_NET, SupportedELFChainId.TDVW_NET].forEach((chain) => {
     chainAndRPCMap[`${chain}`] = {
       chainId: chain,
       rpcUrl: info?.[`rpcUrl${String(chain).toUpperCase()}`],
     };
   });
-  const { callSendMethod: callAELFSendMethod, callViewMethod: callAELFViewMethod } = useCallContract(
-    chainAndRPCMap[SupportedELFChainId.MAIN_NET],
-  );
-  const { callSendMethod: callTDVVSendMethod, callViewMethod: callTDVVViewMethod } = useCallContract(
-    chainAndRPCMap[SupportedELFChainId.TDVV_NET],
-  );
-  const { callSendMethod: callTDVWSendMethod, callViewMethod: callTDVWViewMethod } = useCallContract(
-    chainAndRPCMap[SupportedELFChainId.TDVW_NET],
-  );
 
-  contractMethodMap[SupportedELFChainId.MAIN_NET] = {
-    callSendMethod: callAELFSendMethod,
-    callViewMethod: callAELFViewMethod,
-  } as ICallMethodMap;
-  contractMethodMap[SupportedELFChainId.TDVV_NET] = {
-    callSendMethod: callTDVVSendMethod,
-    callViewMethod: callTDVVViewMethod,
-  } as ICallMethodMap;
-  contractMethodMap[SupportedELFChainId.TDVW_NET] = {
-    callSendMethod: callTDVWSendMethod,
-    callViewMethod: callTDVWViewMethod,
-  } as ICallMethodMap;
+  contractMethodMap.callSendMethod = callSendMethod;
+  contractMethodMap.callViewMethod = callViewMethod;
 }
 
 export function GetContractServiceMethod(
   chain: Chain,
   type?: ContractMethodType,
-): <T, R>(params: CallContractParams<T>, sendOptions?: undefined) => Promise<R> {
+): <T, R>(params: ICallContractParams<T>, sendOptions?: undefined) => Promise<R> {
   const info = store.getState().elfInfo.elfInfo;
 
   const chainAndRPCMap: ChainAndRpcMapType = {};
@@ -76,8 +58,7 @@ export function GetContractServiceMethod(
     throw new Error('Error: Empty rpcUrl');
   }
 
-  const { callSendMethod, callViewMethod } = contractMethodMap[chain] as ICallMethodMap;
-
+  const { callSendMethod, callViewMethod } = contractMethodMap as ICallMethodMap;
   if (type === ContractMethodType.VIEW) {
     return callViewMethod;
   } else {

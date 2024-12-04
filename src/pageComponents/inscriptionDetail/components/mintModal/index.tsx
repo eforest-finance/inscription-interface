@@ -18,7 +18,6 @@ import { fetchTransactionFee } from 'api/seedDetail';
 import { GetBalanceByContract, CheckDistributorBalance } from 'contract';
 import MintResultModal from '../mintResultModal';
 import { getRawTransaction } from 'utils/aelfUtils';
-import { WalletType, useWebLogin } from 'aelf-web-login';
 import { inscribed } from 'api/request';
 import { getTxResult } from 'utils/getTxResult';
 import LoadingModal from 'components/LoadingModal';
@@ -26,6 +25,7 @@ import { fixedPrice } from 'utils/calculate';
 import { INSCRIPTION_CONTRACT_NAME } from 'utils/contant';
 import { useJumpForest } from 'hooks/useJumpForest';
 import { UnionDetailType } from 'pageComponents/inscriptionDetail/hooks/useGetInscriptionDetail';
+import { WalletTypeEnum } from '@aelf-web-login/wallet-adapter-base';
 
 interface IInscriptionInformation {
   p: string;
@@ -38,10 +38,10 @@ interface IProps {
   onCancel?: () => void;
   maxMintAmount: number;
   tick: string;
-  version: string;
+  version?: string;
   symbol: string;
   info: UnionDetailType;
-  walletType: WalletType;
+  walletType: WalletTypeEnum;
   image?: string;
   getInsDetail?: () => Promise<void>;
 }
@@ -144,20 +144,21 @@ function MintModal(props: IProps) {
 
   const getBalance = async () => {
     try {
-      const { balance } = await GetBalanceByContract(
+      const balance = await GetBalanceByContract(
         {
           owner: walletInfo?.address,
           symbol: 'ELF',
         },
         { chain: curChain },
       );
-      setTokenBalance(Number(balance) / 10 ** 8);
+
+      setTokenBalance(Number(balance?.data?.balance) / 10 ** 8);
     } catch (error) {
       setTokenBalance(0);
     }
   };
 
-  console.log(version, 'version mint');
+  // console.log(version, 'version mint');
 
   const rawTransaction = async () => {
     if (!inscriptionAddress || !sideCaAddress || !sideCaAddressV2 || !rpcUrlTDVV || !curChain || !mintAmount) return;
@@ -172,12 +173,12 @@ function MintModal(props: IProps) {
       );
       const methodName = checked ? 'Inscribe' : 'MintInscription';
       console.log('CheckDistributorBalance', checked, methodName, version);
+
       const res = await getRawTransaction({
         walletType,
         walletInfo,
-        version,
         contractAddress: inscriptionAddress,
-        caContractAddress: version === 'v1' ? sideCaAddress : sideCaAddressV2,
+        caContractAddress: sideCaAddressV2,
         methodName,
         params: {
           tick,
@@ -232,10 +233,12 @@ function MintModal(props: IProps) {
     setLoading(true);
     try {
       const res = await rawTransaction();
+
       if (res) {
         const { transactionId } = await inscribed({
           rawTransaction: res,
         });
+
         if (!transactionId) {
           showResultModal('fail');
         }

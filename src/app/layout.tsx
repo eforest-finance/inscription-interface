@@ -1,13 +1,11 @@
 import '@portkey/did-ui-react/dist/assets/index.css';
-import '@portkey-v1/did-ui-react/dist/assets/index.css';
-import 'aelf-web-login/dist/assets/index.css';
 import 'antd/dist/antd.css';
 import 'styles/aelf-web-login.css';
 import 'styles/antd.custom.css';
 import 'styles/global.css';
 import 'styles/theme.css';
 import Layout from 'pageComponents/home/layout';
-import Provider from 'provider/';
+import Provider from 'provider';
 import React from 'react';
 import Script from 'next/script';
 

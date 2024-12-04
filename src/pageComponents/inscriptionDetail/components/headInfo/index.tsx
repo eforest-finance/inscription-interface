@@ -5,7 +5,6 @@ import { UnionDetailType } from '../../hooks/useGetInscriptionDetail';
 import { thousandsNumber } from 'utils/common';
 import { useModal } from '@ebay/nice-modal-react';
 import MintModal from '../mintModal';
-import { useWebLogin } from 'aelf-web-login';
 import { useWalletSyncCompleted, useWalletService, useGetBalance } from 'hooks/useWallet';
 import { useJumpForest } from 'hooks/useJumpForest';
 import BigNumber from 'bignumber.js';
@@ -13,9 +12,10 @@ import { store } from 'redux/store';
 
 const HeadInfo = ({ info, getInsDetail }: { info: UnionDetailType; getInsDetail: () => Promise<void> }) => {
   const mintModal = useModal(MintModal);
-  const { walletType, version } = useWebLogin();
-  const { login, isLogin } = useWalletService();
+  const { login, isLogin, walletType } = useWalletService();
   const elfInfo = store.getState().elfInfo.elfInfo;
+
+  console.log('elfInfo', elfInfo);
 
   const { getAccountInfoSync } = useWalletSyncCompleted(elfInfo.curChain);
   const jumpForest = useJumpForest();
@@ -44,7 +44,6 @@ const HeadInfo = ({ info, getInsDetail }: { info: UnionDetailType; getInsDetail:
       tick: info?.tick,
       walletType,
       info,
-      version,
       symbol: `${info?.tick}-1`,
       image: info.image,
       getInsDetail,

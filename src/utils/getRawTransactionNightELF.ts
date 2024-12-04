@@ -1,17 +1,10 @@
 import { ChainId, IPortkeyProvider } from '@portkey/provider-types';
-import AElf from 'aelf-sdk';
+
 import { getContractMethods } from '@portkey/contracts';
-import BN, { isBN } from 'bn.js';
 import { aelf } from '@portkey/utils';
+const AElf = require('aelf-sdk');
 
-export function zeroFill(str: string | BN) {
-  return isBN(str) ? str.toString(16, 64) : str.padStart(64, '0');
-}
-
-// const httpProviders: any = {};
 export function getAElf(rpcUrl: string) {
-  // const rpc = getNodeByChainId(chainId).rpcUrl;
-  // if (!httpProviders[rpc]) httpProviders[rpc] = new AElf(new AElf.providers.HttpProvider(rpc));
   return new AElf(new AElf.providers.HttpProvider(rpcUrl));
 }
 
@@ -120,7 +113,7 @@ export interface CreateTransactionParams {
   account: string;
 }
 
-export const getRawTransactionNight = async ({
+export const getRawTransactionNightELF = async ({
   account,
   contractAddress,
   params,
@@ -128,13 +121,9 @@ export const getRawTransactionNight = async ({
   methodName,
   rpcUrl,
 }: CreateTransactionParams) => {
-  console.log(typeof Buffer);
-
-  console.log('getRawTransactionNight', contractAddress, params, chainId, methodName, rpcUrl);
-
   const provider = new (window as any).NightElf.AElf({
     httpProvider: [rpcUrl],
-    appName: 'TSM',
+    appName: 'forest',
     pure: true,
   });
 
@@ -146,8 +135,6 @@ export const getRawTransactionNight = async ({
     args: params,
     instance,
   });
-
-  console.log('getRawTransactionNight result', result);
 
   const transactionParams = AElf.utils.uint8ArrayToHex(result);
 
@@ -163,6 +150,5 @@ export const getRawTransactionNight = async ({
     functionName: methodName,
     provider,
   });
-  console.log('getRawTransactionNight transaction', transaction);
   return transaction;
 };
